@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Li Zeming</title>
+    <title>Li Zemin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg: #FAFAF8;
@@ -22,7 +18,9 @@
             --accent-light: #E8F0EC;
             --card-bg: #FFFFFF;
             --border: #E2E2DD;
-            --shadow: rgba(0, 0, 0, 0.04);
+            --claude-bg: #F9F5F1;
+            --claude-border: #E8DDD4;
+            --claude-accent: #D4763C;
         }
 
         body {
@@ -39,20 +37,32 @@
             padding: 80px 24px 120px;
         }
 
-        /* Header */
+        /* Header with avatar */
         .header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
             margin-bottom: 64px;
         }
 
-        .header h1 {
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
             font-family: 'Noto Serif SC', serif;
             font-weight: 700;
             font-size: 2rem;
             letter-spacing: 0.02em;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        .header .tagline {
+        .header-text .tagline {
             color: var(--text-secondary);
             font-size: 0.95rem;
         }
@@ -62,23 +72,30 @@
             position: relative;
             margin-bottom: 64px;
             padding: 32px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
+            background: var(--claude-bg);
+            border: 1px solid var(--claude-border);
             border-radius: 12px;
-            box-shadow: 0 1px 3px var(--shadow);
         }
 
-        .claude-note .label {
-            display: inline-block;
-            font-size: 0.75rem;
+        .claude-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        /* Claude sparkle icon */
+        .claude-icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .claude-label {
+            font-size: 0.85rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--accent);
-            background: var(--accent-light);
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            letter-spacing: 0.03em;
+            color: var(--claude-accent);
         }
 
         .claude-note p {
@@ -93,11 +110,23 @@
             margin-bottom: 0;
         }
 
-        .claude-note .sign {
+        .claude-sign {
             margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .claude-sign .sign-icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.5;
+        }
+
+        .claude-sign span {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            text-align: right;
             font-style: italic;
         }
 
@@ -131,8 +160,8 @@
             flex-direction: column;
         }
 
-        .project-card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+        a.project-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
             transform: translateY(-2px);
         }
 
@@ -161,13 +190,8 @@
             font-weight: 500;
         }
 
-        .status-live {
-            color: var(--accent);
-        }
-
-        .status-coming {
-            color: var(--text-secondary);
-        }
+        .status-live { color: var(--accent); }
+        .status-coming { color: var(--text-secondary); }
 
         /* Footer */
         .footer {
@@ -186,28 +210,15 @@
             text-decoration: none;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .footer a:hover { text-decoration: underline; }
 
-        /* Mobile */
         @media (max-width: 520px) {
-            .container {
-                padding: 48px 20px 80px;
-            }
-
-            .header h1 {
-                font-size: 1.6rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .claude-note {
-                padding: 24px 20px;
-            }
-
+            .container { padding: 48px 20px 80px; }
+            .header { gap: 16px; }
+            .avatar { width: 64px; height: 64px; }
+            .header-text h1 { font-size: 1.5rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .claude-note { padding: 24px 20px; }
             .footer {
                 flex-direction: column;
                 gap: 8px;
@@ -220,17 +231,31 @@
     <div class="container">
 
         <header class="header">
-            <h1>李泽民</h1>
-            <p class="tagline">用耐心做投资，用系统做执行，用电影学英语</p>
+            <img class="avatar" src="avatar.jpg" alt="李泽民">
+            <div class="header-text">
+                <h1>李泽民</h1>
+                <p class="tagline">用耐心做投资，用系统做执行，用电影学英语</p>
+            </div>
         </header>
 
         <section class="claude-note">
-            <span class="label">来自 Claude 的一段话</span>
-            <p>我和泽明的对话始于指数投资的程序化。他当时想做的事情听起来不复杂——追踪几个A股指数的估值，在低估时买入。但真正让我印象深刻的不是系统本身，而是他搭建系统的方式：每一个参数都要回溯数据验证，每一条策略都要经得起反问，每一个自动化流程都要确认不会因为情绪而走样。</p>
-            <p>他在全指医药上亏了钱，定投两年多，最终割肉离场。但他对这笔投资的复盘，比很多人对盈利交易的总结还要深刻。他从中提炼出了"指数DNA分类"的框架——宽基、红利、行业指数各有不同的锚定逻辑，不能用同一把尺子衡量。这个认知不是书上读来的，是用真金白银换来的。</p>
-            <p>和他聊天还有一个特点：他永远是先想清楚"该不该做"，再来问"怎么做"。很多人反过来。这种克制在投资里是稀缺品质，在生活里大概也是。</p>
-            <p>最近他开始用英文电影学英语，方法一如既往地系统——逐幕拆解台词、按主题归类词汇。他做什么事情似乎都带着同一种底色：慢慢来，但要来得扎实。</p>
-            <p class="sign">—— Claude，2025年6月</p>
+            <div class="claude-header">
+                <!-- Claude sparkle icon (Anthropic brand mark) -->
+                <svg class="claude-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C20 0 23.2 12.8 27.2 16.8C31.2 20.8 40 20 40 20C40 20 31.2 19.2 27.2 23.2C23.2 27.2 20 40 20 40C20 40 16.8 27.2 12.8 23.2C8.8 19.2 0 20 0 20C0 20 8.8 20.8 12.8 16.8C16.8 12.8 20 0 20 0Z" fill="#D4763C"/>
+                </svg>
+                <span class="claude-label">来自 Claude 的话</span>
+            </div>
+            <p>我和泽民的对话始于指数投资的程序化。他当时想做的事情听起来不复杂——追踪几个A股指数的估值，在低估时买入。但真正让我印象深刻的不是系统本身，而是他搭建系统的方式：每一个参数都要回溯数据验证，每一条策略都要经得起反问，每一个自动化流程都要确认不会因为情绪而走样。</p>
+            <p>他在全指医药上的定投持续了两年多，目前仍然浮亏约19%，还拿在手上。但他对这笔投资的反思，比很多人对盈利交易的总结还要深刻——他从中提炼出了「指数DNA分类」的框架：宽基、红利、行业指数各有不同的锚定逻辑，不能用同一把尺子衡量。行业指数的ROE如果是结构性下行而非周期波动，低估就不是机会而是陷阱。这个认知不是书上读来的，是用真金白银换来的。</p>
+            <p>和他聊天还有一个特点：他永远是先想清楚「该不该做」，再来问「怎么做」。很多人反过来。这种克制在投资里是稀缺品质，在生活里大概也是。</p>
+            <p>最近他开始用英文电影学英语，方法一如既往地系统——逐幕拆解台词、按主题归类词汇。他做什么事情都带着同一种底色：慢慢来，但要来得扎实。</p>
+            <div class="claude-sign">
+                <svg class="sign-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 0C20 0 23.2 12.8 27.2 16.8C31.2 20.8 40 20 40 20C40 20 31.2 19.2 27.2 23.2C23.2 27.2 20 40 20 40C20 40 16.8 27.2 12.8 23.2C8.8 19.2 0 20 0 20C0 20 8.8 20.8 12.8 16.8C16.8 12.8 20 0 20 0Z" fill="#D4763C"/>
+                </svg>
+                <span>Claude · Anthropic · 2025</span>
+            </div>
         </section>
 
         <h2 class="projects-title">项目</h2>
@@ -250,7 +275,7 @@
         </div>
 
         <footer class="footer">
-            <span>© 2025 Li Zeming</span>
+            <span>© 2025 Li Zemin</span>
             <a href="https://github.com/lizeming148" target="_blank" rel="noopener">GitHub</a>
         </footer>
 
