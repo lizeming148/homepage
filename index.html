@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Li Zeming</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --accent: #2B5B4B;
+            --accent-light: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E2E2DD;
+            --shadow: rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Serif SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 80px 24px 120px;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 64px;
+        }
+
+        .header h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        .header .tagline {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Claude's Note */
+        .claude-note {
+            position: relative;
+            margin-bottom: 64px;
+            padding: 32px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px var(--shadow);
+        }
+
+        .claude-note .label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .claude-note p {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            line-height: 1.9;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .claude-note p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .claude-note .sign {
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* Projects */
+        .projects-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--text);
+            display: inline-block;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.2s ease, transform 0.15s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .project-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+
+        .project-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .project-card .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .project-card .status {
+            margin-top: 16px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-live {
+            color: var(--accent);
+        }
+
+        .status-coming {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 520px) {
+            .container {
+                padding: 48px 20px 80px;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .claude-note {
+                padding: 24px 20px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header class="header">
+            <h1>李泽民</h1>
+            <p class="tagline">用耐心做投资，用系统做执行，用电影学英语</p>
+        </header>
+
+        <section class="claude-note">
+            <span class="label">来自 Claude 的一段话</span>
+            <p>我和泽明的对话始于指数投资的程序化。他当时想做的事情听起来不复杂——追踪几个A股指数的估值，在低估时买入。但真正让我印象深刻的不是系统本身，而是他搭建系统的方式：每一个参数都要回溯数据验证，每一条策略都要经得起反问，每一个自动化流程都要确认不会因为情绪而走样。</p>
+            <p>他在全指医药上亏了钱，定投两年多，最终割肉离场。但他对这笔投资的复盘，比很多人对盈利交易的总结还要深刻。他从中提炼出了"指数DNA分类"的框架——宽基、红利、行业指数各有不同的锚定逻辑，不能用同一把尺子衡量。这个认知不是书上读来的，是用真金白银换来的。</p>
+            <p>和他聊天还有一个特点：他永远是先想清楚"该不该做"，再来问"怎么做"。很多人反过来。这种克制在投资里是稀缺品质，在生活里大概也是。</p>
+            <p>最近他开始用英文电影学英语，方法一如既往地系统——逐幕拆解台词、按主题归类词汇。他做什么事情似乎都带着同一种底色：慢慢来，但要来得扎实。</p>
+            <p class="sign">—— Claude，2025年6月</p>
+        </section>
+
+        <h2 class="projects-title">项目</h2>
+        <div class="projects-grid">
+            <a class="project-card" href="https://english.lizeming.net" target="_blank" rel="noopener">
+                <span class="icon">📖</span>
+                <h3>英语学习</h3>
+                <p class="desc">通过经典英文电影学习英语。逐幕台词解析，主题词汇归类，适合配合观影使用。</p>
+                <span class="status status-live">● 12 Angry Men 已上线</span>
+            </a>
+            <div class="project-card" style="cursor: default;">
+                <span class="icon">📊</span>
+                <h3>指数投资</h3>
+                <p class="desc">A股指数估值追踪与策略信号。沪深300、中证红利的实时估值状态与历史数据可视化。</p>
+                <span class="status status-coming">○ 即将上线</span>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <span>© 2025 Li Zeming</span>
+            <a href="https://github.com/lizeming148" target="_blank" rel="noopener">GitHub</a>
+        </footer>
+
+    </div>
+</body>
+</html>
