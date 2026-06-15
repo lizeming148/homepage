@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>做投资 — lizeming.net</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --text-tertiary: #8A8A88;
+            --accent: #2B5B4B;
+            --accent-soft: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E0;
+            --border-soft: #EFEFEA;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 920px; margin: 0 auto; padding: 64px 24px 100px; }
+
+        .hero { text-align: center; margin-bottom: 56px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 14px; }
+        .hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 560px; margin: 0 auto; line-height: 1.85; }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 44px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 9px 26px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .tab:hover { border-color: var(--accent); color: var(--accent); }
+        .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+        .section-block { margin-bottom: 56px; }
+        .section-block[hidden] { display: none; }
+        .section-head { margin-bottom: 28px; }
+        .section-sub { font-size: 0.88rem; color: var(--text-tertiary); letter-spacing: 0.02em; }
+
+        .topic-tag {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: 999px;
+            padding: 4px 12px;
+            margin-bottom: 12px;
+        }
+
+        /* Featured comparison card */
+        .feature-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: linear-gradient(135deg, #1f2430 0%, #2B5B4B 100%);
+            border-radius: 16px;
+            padding: 32px 34px;
+            margin-bottom: 28px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .feature-card .f-label { font-family: 'Inter', sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+        .feature-card h3 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin: 8px 0 10px; }
+        .feature-card p { color: rgba(255,255,255,0.82); font-size: 0.9rem; line-height: 1.8; max-width: 640px; }
+        .feature-card .f-arrow { display: inline-block; margin-top: 14px; color: #fff; font-size: 0.85rem; font-weight: 500; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+        .stock-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stock-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .stock-head {
+            height: 96px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 22px;
+            color: #fff;
+        }
+        .stock-head.midea { background: linear-gradient(135deg, #0a7d4d 0%, #084f33 100%); }
+        .stock-head.gree  { background: linear-gradient(135deg, #B07A2B 0%, #7a4f12 100%); }
+        .stock-head.haier { background: linear-gradient(135deg, #2f5fae 0%, #213f73 100%); }
+        .stock-head .name { font-family: 'Noto Serif SC', serif; font-size: 1.3rem; font-weight: 700; }
+        .stock-head .code { font-family: 'Inter', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+        .stock-body { padding: 16px 22px 20px; display: flex; flex-direction: column; flex: 1; }
+        .stock-body .desc { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.72; flex: 1; }
+        .stock-body .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+        .stock-body .meta-info { font-size: 0.76rem; color: var(--text-tertiary); }
+        .stock-body .arrow { font-size: 0.8rem; color: var(--accent); font-weight: 500; }
+
+        .coming-soon {
+            border: 1px dashed var(--border);
+            border-radius: 14px;
+            padding: 48px 24px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.92rem;
+            background: var(--card-bg);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-tertiary); text-decoration: none; border-bottom: 1px dotted var(--text-tertiary); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 720px) {
+            .container { padding: 48px 20px 80px; }
+            .hero h1 { font-size: 1.8rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header class="hero">
+        <h1>做投资</h1>
+        <p>用耐心做投资，用系统做执行。从财报的字里行间，到指数的估值分位——把模糊的直觉，拆成可验证、可复盘的信号。</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab active" type="button" data-target="panel-text">财报语义分析</button>
+        <button class="tab" type="button" data-target="panel-valuation">估值策略</button>
+    </nav>
+
+    <section class="section-block" id="panel-text">
+        <div class="section-head">
+            <span class="topic-tag">专题 · 白电三巨头</span>
+            <p class="section-sub">以投资者视角，逐字读三家 2016–2025 年报「管理层讨论与分析」全文，看措辞、语气与战略重心的十年演变。纯文本语义分析，不只看数字。</p>
+        </div>
+
+        <a class="feature-card" href="/invest/白电三巨头_横向对比.html" data-date="2026-06-15">
+            <span class="f-label">综合对比 · 起点推荐</span>
+            <h3>白电三巨头 · 管理层讨论横向对比</h3>
+            <p>格力 / 美的 / 海尔，同一套维度并排打分：战略主题着墨热力图（每万字词频）、统一维度打分矩阵、谁更早押注全球化与 AI。一页看懂三家十年叙事的分野。</p>
+            <span class="f-arrow">查看对比 →</span>
+        </a>
+
+        <div class="cards-grid">
+
+            <a class="stock-card" href="/invest/美的集团_管理层讨论十年分析_2016-2025.html" data-date="2026-06-14">
+                <div class="stock-head midea">
+                    <div class="name">美的集团</div>
+                    <div class="code">000333.SZ</div>
+                </div>
+                <div class="stock-body">
+                    <p class="desc">纪律性极强的「全球科技集团」叙事，战略主轴十年仅升级一次便逐字坚守。靠并购真正建成 ToB 第二引擎，营收十年近 3 倍——增长靠并购与全球化驱动，整合风险是关注点。</p>
+                    <div class="meta">
+                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                        <span class="arrow">阅读分析 →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="stock-card" href="/invest/格力电器_管理层讨论十年分析_2016-2025.html" data-date="2026-06-14">
+                <div class="stock-head gree">
+                    <div class="name">格力电器</div>
+                    <div class="code">000651.SZ</div>
+                </div>
+                <div class="stock-body">
+                    <p class="desc">从「开疆拓土的进攻者」到「守城增效的现金牛」。早年满纸转型突破，近年主旋律转向降本增效、风险防范，并首次公开承认市场份额损失风险。空调仍是唯一支柱。</p>
+                    <div class="meta">
+                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                        <span class="arrow">阅读分析 →</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="stock-card" href="/invest/海尔智家_管理层讨论十年分析_2016-2025.html" data-date="2026-06-15">
+                <div class="stock-head haier">
+                    <div class="name">海尔智家</div>
+                    <div class="code">600690.SH</div>
+                </div>
+                <div class="stock-body">
+                    <p class="desc">三家里最独特、也最「概念密集」的叙事：以「人单合一」为内核，全球创牌 + 卡萨帝高端 + 物联网生态三条腿。全球化最彻底，净利增速快于营收，但净利率仍低于同行。</p>
+                    <div class="meta">
+                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                        <span class="arrow">阅读分析 →</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <section class="section-block" id="panel-valuation" hidden>
+        <div class="section-head">
+            <p class="section-sub">指数与个股的估值追踪 · 基于历史分位、股息率、隐含 ROE 的系统化信号</p>
+        </div>
+        <div class="coming-soon">即将上线 · 把估值判断自动化，去除情绪干扰</div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 · <a href="/">返回主页</a></p>
+    </footer>
+
+</div>
+
+<script>
+    function activateTab(target) {
+        document.querySelectorAll('.tab').forEach(function (t) {
+            t.classList.toggle('active', t.dataset.target === target);
+        });
+        document.querySelectorAll('.section-block').forEach(function (p) {
+            p.hidden = p.id !== target;
+        });
+    }
+    document.querySelectorAll('.tab').forEach(function (tab) {
+        tab.addEventListener('click', function () { activateTab(tab.dataset.target); });
+    });
+</script>
+</body>
+</html>
