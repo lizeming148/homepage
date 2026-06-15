@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白宫风云 第一季 — 用电影学英语</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --text-tertiary: #8A8A88;
+            --accent: #2B5B4B;
+            --accent-soft: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E0;
+            --border-soft: #EFEFEA;
+            --quote-bg: #F5F2EC;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 64px 24px 100px; }
+
+        .breadcrumb {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 40px;
+        }
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .hero { margin-bottom: 56px; }
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .hero .english-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            margin-bottom: 28px;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 64px;
+        }
+
+        .episode-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .episode-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .episode-card.disabled {
+            pointer-events: none;
+            opacity: 0.45;
+        }
+
+        .ep-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .ep-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 2px 9px;
+            border-radius: 20px;
+        }
+        .status-active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .status-soon {
+            background: var(--border-soft);
+            color: var(--text-tertiary);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-tertiary); text-decoration: none; border-bottom: 1px dotted var(--text-tertiary); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 720px) {
+            .container { padding: 48px 20px 80px; }
+            .hero h1 { font-size: 1.8rem; }
+            .episodes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="breadcrumb">
+        <a href="/english/the-west-wing/">← 白宫风云</a>
+    </div>
+
+    <header class="hero">
+        <h1>第一季</h1>
+        <div class="english-subtitle">Season 1</div>
+    </header>
+
+    <p class="section-title">集数列表</p>
+
+    <div class="episodes-grid">
+
+        <a class="episode-card" href="/english/the-west-wing/s01/e01/">
+            <div class="ep-number">E01</div>
+            <div class="ep-title">Pilot</div>
+            <span class="status-badge status-active">已上线</span>
+        </a>
+
+        <a class="episode-card" href="/english/the-west-wing/s01/e02/">
+            <div class="ep-number">E02</div>
+            <div class="ep-title">Post Hoc, Ergo Propter Hoc</div>
+            <span class="status-badge status-active">已上线</span>
+        </a>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E03</div>
+            <div class="ep-title">A Proportional Response</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E04</div>
+            <div class="ep-title">Five Votes Down</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E05</div>
+            <div class="ep-title">The Crackpots and These Women</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E06</div>
+            <div class="ep-title">Mr. Willis of Ohio</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E07</div>
+            <div class="ep-title">The State Dinner</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E08</div>
+            <div class="ep-title">Enemies</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E09</div>
+            <div class="ep-title">The Short List</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E10</div>
+            <div class="ep-title">In Excelsis Deo</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E11</div>
+            <div class="ep-title">Lord John Marbury</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E12</div>
+            <div class="ep-title">He Shall, from Time to Time...</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E13</div>
+            <div class="ep-title">Take Out the Trash Day</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E14</div>
+            <div class="ep-title">Take This Sabbath Day</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E15</div>
+            <div class="ep-title">Celestial Navigation</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E16</div>
+            <div class="ep-title">20 Hours in America</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E17</div>
+            <div class="ep-title">The White House Pro-Am</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E18</div>
+            <div class="ep-title">Six Meetings Before Lunch</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E19</div>
+            <div class="ep-title">Let Bartlet Be Bartlet</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E20</div>
+            <div class="ep-title">Mandatory Minimums</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E21</div>
+            <div class="ep-title">Lies, Damn Lies and Statistics</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+        <div class="episode-card disabled">
+            <div class="ep-number">E22</div>
+            <div class="ep-title">What Kind of Day Has It Been</div>
+            <span class="status-badge status-soon">即将上线</span>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 · <a href="/">返回主页</a></p>
+    </footer>
+
+</div>
+</body>
+</html>

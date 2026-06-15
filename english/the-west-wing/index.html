@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白宫风云 / The West Wing — 用电影学英语</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --text-tertiary: #8A8A88;
+            --accent: #2B5B4B;
+            --accent-soft: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E0;
+            --border-soft: #EFEFEA;
+            --quote-bg: #F5F2EC;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 64px 24px 100px; }
+
+        .breadcrumb {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 40px;
+        }
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .hero { margin-bottom: 56px; }
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .hero .english-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 620px;
+            line-height: 1.8;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            letter-spacing: 0.05em;
+            margin-bottom: 28px;
+        }
+
+        .seasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 64px;
+        }
+
+        .season-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .season-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .season-card.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .season-poster {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3B4371 0%, #28304E 100%);
+        }
+        .season-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: -0.02em;
+        }
+
+        .season-body { padding: 16px 20px 20px; }
+        .season-body h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .season-body .en {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .status-active {
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+        .status-soon {
+            background: var(--border-soft);
+            color: var(--text-tertiary);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-tertiary); text-decoration: none; border-bottom: 1px dotted var(--text-tertiary); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 720px) {
+            .container { padding: 48px 20px 80px; }
+            .hero h1 { font-size: 1.8rem; }
+            .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="breadcrumb">
+        <a href="/english/">← 用电影学英语</a>
+    </div>
+
+    <header class="hero">
+        <h1>白宫风云</h1>
+        <div class="english-subtitle">The West Wing</div>
+        <p>讲述美国总统巴特莱特执政期间白宫内部的政治故事，台词密度高、政治词汇丰富，是学习正式英语表达的绝佳素材。</p>
+    </header>
+
+    <p class="section-title">选择季数</p>
+
+    <div class="seasons-grid">
+
+        <a class="season-card" href="/english/the-west-wing/s01/">
+            <div class="season-poster">
+                <div class="season-number">S1</div>
+            </div>
+            <div class="season-body">
+                <h3>第一季</h3>
+                <div class="en">Season 1</div>
+                <span class="status-badge status-active">更新中</span>
+            </div>
+        </a>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S2</div>
+            </div>
+            <div class="season-body">
+                <h3>第二季</h3>
+                <div class="en">Season 2</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S3</div>
+            </div>
+            <div class="season-body">
+                <h3>第三季</h3>
+                <div class="en">Season 3</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S4</div>
+            </div>
+            <div class="season-body">
+                <h3>第四季</h3>
+                <div class="en">Season 4</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S5</div>
+            </div>
+            <div class="season-body">
+                <h3>第五季</h3>
+                <div class="en">Season 5</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S6</div>
+            </div>
+            <div class="season-body">
+                <h3>第六季</h3>
+                <div class="en">Season 6</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+        <div class="season-card disabled">
+            <div class="season-poster">
+                <div class="season-number">S7</div>
+            </div>
+            <div class="season-body">
+                <h3>第七季</h3>
+                <div class="en">Season 7</div>
+                <span class="status-badge status-soon">即将更新</span>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 · <a href="/">返回主页</a></p>
+    </footer>
+
+</div>
+</body>
+</html>

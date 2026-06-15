@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Lesson: Anthropic's Statement on Fable 5 & Mythos 5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #fafaf8;
+    --surface: #ffffff;
+    --surface-alt: #f3f1ed;
+    --text: #1a1a18;
+    --text-secondary: #5c5c56;
+    --accent: #b44d2d;
+    --accent-light: #f4e8e2;
+    --blue: #2d6cb4;
+    --blue-light: #e2ecf4;
+    --green: #2d8b57;
+    --green-light: #e2f4ec;
+    --yellow: #b4962d;
+    --yellow-light: #f4f0e2;
+    --border: #e0ddd6;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0 16px 80px;
+  }
+
+  .header {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 0 32px;
+    border-bottom: 2px solid var(--text);
+  }
+
+  .header .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .header .meta {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Navigation Tabs */
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding: 16px 0 0;
+    margin-top: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Sections */
+  .section {
+    display: none;
+    padding: 32px 0;
+  }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Vocabulary Cards */
+  .vocab-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 28px 0 12px;
+  }
+  .vocab-group-label:first-of-type { margin-top: 0; }
+
+  .vocab-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .vocab-card:hover { border-color: var(--accent); }
+
+  .vocab-word {
+    font-family: 'Source Serif 4', serif;
+    font-size: 18px;
+    font-weight: 600;
+    display: inline;
+  }
+
+  .vocab-pos {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .vocab-phonetic {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .vocab-detail {
+    display: none;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .vocab-card.open .vocab-detail { display: block; }
+
+  .vocab-cn {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .vocab-example {
+    background: var(--surface-alt);
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 14px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .vocab-example .en {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .vocab-example .cn {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .vocab-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--yellow-light);
+    border-radius: 6px;
+  }
+
+  /* Reading Section */
+  .reading-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .reading-block .paragraph-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .reading-block .en-text {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 12px;
+  }
+
+  .reading-block .en-text .highlight {
+    background: var(--accent-light);
+    padding: 1px 4px;
+    border-radius: 3px;
+    cursor: help;
+  }
+
+  .reading-block .cn-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    display: none;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .toggle-cn {
+    font-size: 13px;
+    color: var(--blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .toggle-cn:hover { text-decoration: underline; }
+
+  /* Grammar Cards */
+  .grammar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .grammar-card .pattern {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+
+  .grammar-card .explain {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .grammar-card .original {
+    background: var(--blue-light);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .grammar-card .original em {
+    color: var(--blue);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .grammar-card .translation {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .grammar-card .practice {
+    background: var(--green-light);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .grammar-card .practice strong {
+    color: var(--green);
+  }
+
+  /* Quiz Section */
+  .quiz-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-item .q-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .quiz-item .question {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+  }
+  .quiz-option:hover { border-color: var(--blue); background: var(--blue-light); }
+  .quiz-option.correct { border-color: var(--green); background: var(--green-light); }
+  .quiz-option.wrong { border-color: var(--accent); background: var(--accent-light); }
+  .quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+
+  .quiz-feedback {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.right { background: var(--green-light); color: var(--green); }
+  .quiz-feedback.wrong-fb { background: var(--accent-light); color: var(--accent); }
+
+  /* Writing Section */
+  .writing-prompt {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .writing-prompt .prompt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .writing-prompt .prompt-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .writing-prompt .hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .writing-prompt .useful-phrases {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .phrase-chip {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 0;
+  }
+
+  /* Global toggle */
+  .global-controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .ctrl-btn {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ctrl-btn:hover { background: var(--surface-alt); }
+  .ctrl-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .header { padding: 32px 0 24px; }
+    .tab { padding: 8px 12px; font-size: 12px; }
+    .reading-block, .grammar-card, .quiz-item, .vocab-card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="label">English Reading Lesson · 英语阅读课</div>
+  <h1>US Government Suspends Access to Fable 5 & Mythos 5</h1>
+  <div class="meta">Source: Anthropic Official Statement · Jun 12, 2026 · Level: Upper-Intermediate (B2)</div>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('reading')">精读 Reading</button>
+    <button class="tab" onclick="switchTab('vocab')">词汇 Vocab</button>
+    <button class="tab" onclick="switchTab('grammar')">语法 Grammar</button>
+    <button class="tab" onclick="switchTab('quiz')">测试 Quiz</button>
+    <button class="tab" onclick="switchTab('writing')">写作 Writing</button>
+  </div>
+
+  <!-- ==================== VOCABULARY ==================== -->
+  <div id="vocab" class="section">
+    <h2 class="section-title">Core Vocabulary</h2>
+    <p class="section-desc">点击词卡展开详情。这些词汇在政策、科技和商业英语中高频出现。</p>
+
+    <div class="vocab-group-label">Government & Law 政府与法律</div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">directive</span>
+      <span class="vocab-pos">n.</span>
+      <div class="vocab-phonetic">/dəˈrɛktɪv/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">指令，命令（尤指政府或上级发出的正式命令）</div>
+        <div class="vocab-example">
+          <div class="en">"The US government has issued an export control <b>directive</b>."</div>
+          <div class="cn">美国政府发布了一项出口管制指令。</div>
+        </div>
+        <div class="vocab-note">💡 区分：directive（正式命令）vs. direction（方向/指导）vs. order（更口语化的命令）。在公文和政策文件中，directive 最常见。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">compliance</span>
+      <span class="vocab-pos">n.</span>
+      <div class="vocab-phonetic">/kəmˈplaɪəns/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">合规，遵从（遵守法律、规则或要求）</div>
+        <div class="vocab-example">
+          <div class="en">"We must abruptly disable Fable 5 to ensure <b>compliance</b>."</div>
+          <div class="cn">我们必须突然禁用 Fable 5 以确保合规。</div>
+        </div>
+        <div class="vocab-note">💡 动词形式：comply with（遵从……）。金融和科技行业常用词：compliance officer（合规官）、compliance requirements（合规要求）。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">statutory</span>
+      <span class="vocab-pos">adj.</span>
+      <div class="vocab-phonetic">/ˈstætʃʊtɔːri/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">法定的，依照法规的</div>
+        <div class="vocab-example">
+          <div class="en">"...as part of a <b>statutory</b> process that is transparent, fair, clear..."</div>
+          <div class="cn">……作为一个透明、公平、清晰的法定程序的一部分……</div>
+        </div>
+        <div class="vocab-note">💡 statute = 法令、法规。statutory 经常与 requirement, obligation, right 搭配。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">export control</span>
+      <span class="vocab-pos">n. phrase</span>
+      <div class="vocab-phonetic">/ˈɛkspɔːrt kənˈtroʊl/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">出口管制（政府对某些商品/技术出口的限制）</div>
+        <div class="vocab-example">
+          <div class="en">"...an <b>export control</b> directive to suspend all access..."</div>
+          <div class="cn">……一项出口管制指令以暂停所有访问……</div>
+        </div>
+        <div class="vocab-note">💡 这是近年中美科技竞争中的核心概念。相关词：sanctions（制裁）、embargo（禁运）、trade restrictions（贸易限制）。</div>
+      </div>
+    </div>
+
+    <div class="vocab-group-label">Cybersecurity 网络安全</div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">jailbreak</span>
+      <span class="vocab-pos">n. / v.</span>
+      <div class="vocab-phonetic">/ˈdʒeɪlbreɪk/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">越狱（在AI语境中指绕过安全限制的方法）</div>
+        <div class="vocab-example">
+          <div class="en">"...the government believes it has become aware of a method of bypassing, or '<b>jailbreaking</b>' Fable 5."</div>
+          <div class="cn">……政府相信其已知晓一种绕过或"越狱" Fable 5 的方法。</div>
+        </div>
+        <div class="vocab-note">💡 原义是从监狱逃脱。在科技领域先用于 iPhone 越狱，现已广泛用于 AI 安全领域，指绕过模型的安全限制。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">safeguard</span>
+      <span class="vocab-pos">n. / v.</span>
+      <div class="vocab-phonetic">/ˈseɪfɡɑːrd/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">安全措施，保障机制；（动词）保护</div>
+        <div class="vocab-example">
+          <div class="en">"We have instituted strong <b>safeguards</b> that greatly reduce the likelihood that Fable is misused."</div>
+          <div class="cn">我们已建立了强有力的安全措施，大大降低了 Fable 被滥用的可能性。</div>
+        </div>
+        <div class="vocab-note">💡 同义词：protection, security measure。常用搭配：put safeguards in place, implement safeguards。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">vulnerability</span>
+      <span class="vocab-pos">n.</span>
+      <div class="vocab-phonetic">/ˌvʌlnərəˈbɪləti/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">漏洞，脆弱性</div>
+        <div class="vocab-example">
+          <div class="en">"...used to identify a small number of previously known, minor <b>vulnerabilities</b>."</div>
+          <div class="cn">……被用来识别少量此前已知的、轻微的漏洞。</div>
+        </div>
+        <div class="vocab-note">💡 形容词：vulnerable（脆弱的、易受攻击的）。IT 行业必备词汇。常说 security vulnerability, zero-day vulnerability。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">red-team</span>
+      <span class="vocab-pos">v.</span>
+      <div class="vocab-phonetic">/ˈrɛd tiːm/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">红队测试（模拟攻击者来测试系统安全性）</div>
+        <div class="vocab-example">
+          <div class="en">"Anthropic worked with the US government... to <b>red-team</b> Fable's safeguards for thousands of hours."</div>
+          <div class="cn">Anthropic 与美国政府合作……对 Fable 的安全措施进行了数千小时的红队测试。</div>
+        </div>
+        <div class="vocab-note">💡 来自军事术语：red team（进攻方）vs. blue team（防守方）。现在在 AI 安全领域非常高频。</div>
+      </div>
+    </div>
+
+    <div class="vocab-group-label">Strategy & Business 策略与商业</div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">defense in depth</span>
+      <span class="vocab-pos">n. phrase</span>
+      <div class="vocab-phonetic">/dɪˈfɛns ɪn dɛpθ/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">纵深防御（多层安全策略）</div>
+        <div class="vocab-example">
+          <div class="en">"Anthropic adopted a <b>defense in depth</b> strategy with Fable 5."</div>
+          <div class="cn">Anthropic 对 Fable 5 采用了纵深防御策略。</div>
+        </div>
+        <div class="vocab-note">💡 军事术语引入网络安全。类似中文的"层层设防"。不依赖单一防线，而是多重防御体系。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">posture</span>
+      <span class="vocab-pos">n.</span>
+      <div class="vocab-phonetic">/ˈpɑːstʃər/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">立场，态度（在正式语境中；原义为"姿势"）</div>
+        <div class="vocab-example">
+          <div class="en">"Anthropic's <b>posture</b> with respect to Fable's safeguards..."</div>
+          <div class="cn">Anthropic 对 Fable 安全措施的立场……</div>
+        </div>
+        <div class="vocab-note">💡 在商业和政策语境中，posture = stance = position（立场）。security posture（安全态势）是常用搭配。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">deploy / deployment</span>
+      <span class="vocab-pos">v. / n.</span>
+      <div class="vocab-phonetic">/dɪˈplɔɪ/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">部署，上线（将产品/系统投入使用）</div>
+        <div class="vocab-example">
+          <div class="en">"...should be cause for recalling a commercial model <b>deployed</b> to hundreds of millions of people."</div>
+          <div class="cn">……是否应成为召回一个已部署给数亿用户的商业模型的理由。</div>
+        </div>
+        <div class="vocab-note">💡 IT 行业必备词。deploy a model / deploy to production / deployment pipeline 都是常见用法。</div>
+      </div>
+    </div>
+
+    <div class="vocab-card" onclick="this.classList.toggle('open')">
+      <span class="vocab-word">mitigate</span>
+      <span class="vocab-pos">v.</span>
+      <div class="vocab-phonetic">/ˈmɪtɪɡeɪt/</div>
+      <div class="vocab-detail">
+        <div class="vocab-cn">缓解，减轻（风险、损害）</div>
+        <div class="vocab-example">
+          <div class="en">"...allows us to research and <b>mitigate</b> jailbreaks."</div>
+          <div class="cn">……使我们能够研究和缓解越狱问题。</div>
+        </div>
+        <div class="vocab-note">💡 名词：mitigation。常用搭配：mitigate risk, risk mitigation strategy。比 reduce 更正式。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== READING ==================== -->
+  <div id="reading" class="section active">
+    <h2 class="section-title">Intensive Reading</h2>
+    <p class="section-desc">逐段精读，点击"显示译文"查看参考翻译。关键短语用橙色底色标注。</p>
+
+    <div class="global-controls">
+      <button class="ctrl-btn" onclick="toggleAllTranslations(this)">显示全部译文</button>
+    </div>
+
+    <div class="reading-block">
+      <div class="paragraph-label">PARAGRAPH 1 — The Core News 核心新闻</div>
+      <div class="en-text">
+        The US government, <span class="highlight" title="citing: 援引，以……为依据">citing national security authorities</span>, has issued an <span class="highlight" title="export control directive: 出口管制指令">export control directive</span> to suspend all access to Fable 5 and Mythos 5 by any <span class="highlight" title="foreign national: 外国公民">foreign national</span>, whether inside or outside the United States, including foreign national Anthropic employees. The <span class="highlight" title="net effect: 最终结果/实际影响">net effect</span> of this order is that we must <span class="highlight" title="abruptly: 突然地">abruptly</span> disable Fable 5 and Mythos 5 for <b>all</b> our customers to ensure compliance.
+      </div>
+      <div class="cn-text">
+        美国政府援引国家安全权限，发布了一项出口管制指令，要求暂停所有外国公民（无论在美国境内还是境外，包括Anthropic的外国籍员工）对 Fable 5 和 Mythos 5 的访问。该命令的实际影响是，我们必须突然为所有客户禁用 Fable 5 和 Mythos 5 以确保合规。
+      </div>
+      <button class="toggle-cn" onclick="toggleTranslation(this)">显示译文 ▼</button>
+    </div>
+
+    <div class="reading-block">
+      <div class="paragraph-label">PARAGRAPH 2 — What Happened 发生了什么</div>
+      <div class="en-text">
+        We received the directive from the government today at 5:21pm (ET). The letter <span class="highlight" title="did not provide: 未提供（正式否定用法）">did not provide</span> specific details of its national security concern. Our understanding is that the government believes it has <span class="highlight" title="become aware of: 得知/了解到">become aware of</span> a method of <span class="highlight" title="bypassing: 绕过">bypassing</span>, or "jailbreaking" Fable 5. We reviewed a demonstration of this specific technique being used to identify a small number of <span class="highlight" title="previously known: 此前已知的">previously known</span>, minor vulnerabilities. These vulnerabilities all appear <span class="highlight" title="relatively simple: 相对简单的">relatively simple</span>, and we have found that other publicly-available models are able to discover them as well without requiring a bypass.
+      </div>
+      <div class="cn-text">
+        我们今天下午5:21（东部时间）收到了政府的指令。该信函未提供其国家安全关切的具体细节。据我们理解，政府相信其已知晓一种绕过或"越狱" Fable 5 的方法。我们审查了该特定技术被用于识别少量此前已知的、轻微漏洞的演示。这些漏洞都显得相对简单，而且我们发现其他公开可用的模型也能在不需要绕过措施的情况下发现它们。
+      </div>
+      <button class="toggle-cn" onclick="toggleTranslation(this)">显示译文 ▼</button>
+    </div>
+
+    <div class="reading-block">
+      <div class="paragraph-label">PARAGRAPH 3 — Anthropic's Defense 公司的辩护</div>
+      <div class="en-text">
+        We <span class="highlight" title="stand by: 坚持，支持（自己的立场）">stand by</span> this defense in depth strategy. It reduces the risks posed by Fable, making them <span class="highlight" title="comparable to: 与……相当的">comparable to</span> the risks of existing models already deployed across the industry. We have not even received a <span class="highlight" title="disclosure: 披露，揭露">disclosure</span> of a concerning non-universal potential jailbreak that <span class="highlight" title="led to: 导致了">led to</span> a harmful result. The potential jailbreaks that have been disclosed to us are either entirely <span class="highlight" title="benign: 无害的">benign</span> responses or are minor findings that provide no <span class="highlight" title="Mythos-specific uplift: Mythos 特有的能力增强">Mythos-specific uplift</span>.
+      </div>
+      <div class="cn-text">
+        我们坚持纵深防御策略。它降低了 Fable 带来的风险，使其与行业中已部署的现有模型的风险相当。我们甚至没有收到任何导致有害结果的、令人担忧的非通用潜在越狱披露。已向我们披露的潜在越狱要么完全是无害的回应，要么是不提供 Mythos 特有能力增强的轻微发现。
+      </div>
+      <button class="toggle-cn" onclick="toggleTranslation(this)">显示译文 ▼</button>
+    </div>
+
+    <div class="reading-block">
+      <div class="paragraph-label">PARAGRAPH 4 — Closing Position 收尾立场</div>
+      <div class="en-text">
+        We are complying with the government's legal directive and are removing access to Fable 5 and Mythos 5 for all users. However, we <span class="highlight" title="disagree that: 不同意……（that引导宾语从句）">disagree that</span> the finding of a narrow potential jailbreak should be <span class="highlight" title="cause for: ……的理由">cause for</span> <span class="highlight" title="recalling: 召回（产品）">recalling</span> a commercial model deployed to hundreds of millions of people. If this standard was applied across the industry, we believe it would <span class="highlight" title="essentially halt: 基本上停止">essentially halt</span> all new model deployments for all frontier model providers.
+      </div>
+      <div class="cn-text">
+        我们正在遵从政府的法律指令，并为所有用户移除对 Fable 5 和 Mythos 5 的访问。然而，我们不同意发现一个狭隘的潜在越狱应当成为召回一个已部署给数亿用户的商业模型的理由。如果这一标准在全行业适用，我们认为它将基本上停止所有前沿模型提供商的新模型部署。
+      </div>
+      <button class="toggle-cn" onclick="toggleTranslation(this)">显示译文 ▼</button>
+    </div>
+  </div>
+
+  <!-- ==================== GRAMMAR ==================== -->
+  <div id="grammar" class="section">
+    <h2 class="section-title">Key Grammar Patterns</h2>
+    <p class="section-desc">这些句式在正式英语写作（邮件、报告、声明）中非常实用。</p>
+
+    <div class="grammar-card">
+      <div class="pattern">Pattern 1: "citing + noun" 分词短语作状语</div>
+      <div class="explain">
+        用 "citing"（援引）开头的分词短语来说明原因或依据。这是正式写作中非常高级的表达方式，比 "because of" 更精炼。
+      </div>
+      <div class="original">
+        <em>Citing national security authorities</em>, the US government has issued an export control directive.
+      </div>
+      <div class="translation">援引国家安全权限，美国政府发布了出口管制指令。</div>
+      <div class="practice">
+        <strong>仿写练习：</strong><br>
+        Citing poor quarterly earnings, the company _______ (宣布裁员).<br>
+        参考答案：Citing poor quarterly earnings, the company announced layoffs.
+      </div>
+    </div>
+
+    <div class="grammar-card">
+      <div class="pattern">Pattern 2: "whether... or..." 无论……还是……</div>
+      <div class="explain">
+        表示"无论哪种情况都适用"，在正式文件中常见。注意这里不用 "no matter"，"whether...or..." 更正式。
+      </div>
+      <div class="original">
+        ...by any foreign national, <em>whether inside or outside the United States</em>.
+      </div>
+      <div class="translation">……任何外国公民，无论在美国境内还是境外。</div>
+      <div class="practice">
+        <strong>仿写练习：</strong><br>
+        This policy applies to all employees, whether _______ (全职还是兼职).<br>
+        参考答案：...whether full-time or part-time.
+      </div>
+    </div>
+
+    <div class="grammar-card">
+      <div class="pattern">Pattern 3: "The net effect of X is that..." X的实际影响是……</div>
+      <div class="explain">
+        一种将复杂情况简化为一个结论的高级表达。"net effect" 是"最终/净影响"，常用于商业和政策讨论。
+      </div>
+      <div class="original">
+        <em>The net effect of</em> this order <em>is that</em> we must abruptly disable Fable 5 for all our customers.
+      </div>
+      <div class="translation">该命令的实际影响是我们必须突然为所有客户禁用 Fable 5。</div>
+      <div class="practice">
+        <strong>仿写练习：</strong><br>
+        The net effect of the new tariffs is that _______ (消费者将支付更高价格).<br>
+        参考答案：...is that consumers will pay higher prices.
+      </div>
+    </div>
+
+    <div class="grammar-card">
+      <div class="pattern">Pattern 4: "We disagree that X should be cause for Y" 我们不同意X应成为Y的理由</div>
+      <div class="explain">
+        一种礼貌但坚定的反对表达。在职场邮件中表达不同意见时非常实用。"cause for" 后接动名词（-ing形式）。
+      </div>
+      <div class="original">
+        We <em>disagree that</em> the finding of a narrow potential jailbreak <em>should be cause for</em> recalling a commercial model.
+      </div>
+      <div class="translation">我们不同意发现一个狭隘的潜在越狱应当成为召回商业模型的理由。</div>
+      <div class="practice">
+        <strong>仿写练习：</strong><br>
+        We disagree that a single incident should be cause for _______ (修改整个政策).<br>
+        参考答案：...should be cause for revising the entire policy.
+      </div>
+    </div>
+
+    <div class="grammar-card">
+      <div class="pattern">Pattern 5: "If this standard was applied..., it would..." 虚拟语气</div>
+      <div class="explain">
+        这是与现在事实相反的虚拟语气（Second Conditional），用来表达假设情况。结构：If + 过去式, ... would + 动词原形。
+      </div>
+      <div class="original">
+        <em>If</em> this standard <em>was applied</em> across the industry, we believe it <em>would</em> essentially halt all new model deployments.
+      </div>
+      <div class="translation">如果这一标准在全行业适用，我们认为它将基本上停止所有新模型部署。</div>
+      <div class="practice">
+        <strong>仿写练习：</strong><br>
+        If every minor bug was treated as critical, it would _______ (使开发流程瘫痪).<br>
+        参考答案：...it would paralyze the development process.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== QUIZ ==================== -->
+  <div id="quiz" class="section">
+    <h2 class="section-title">Comprehension Quiz</h2>
+    <p class="section-desc">检验你对文章的理解。选择最佳答案。</p>
+
+    <div class="quiz-item" id="q1">
+      <div class="q-number">Q1 · Factual Recall 事实回忆</div>
+      <div class="question">Why did the US government issue the directive to suspend Fable 5?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', false)">A. Because Fable 5 was found to have a universal jailbreak</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', true)">B. Because the government believed a jailbreak method had been discovered</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', false)">C. Because Anthropic refused to cooperate with security testing</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q1', false)">D. Because Fable 5 was being used for cyberattacks</button>
+      <div class="quiz-feedback" id="q1-fb"></div>
+    </div>
+
+    <div class="quiz-item" id="q2">
+      <div class="q-number">Q2 · Vocabulary in Context 语境词汇</div>
+      <div class="question">In the statement, what does "the net effect" mean?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', false)">A. The internet-related consequence</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', false)">B. The financial cost</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', true)">C. The overall practical result after everything is considered</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q2', false)">D. The network effect of the technology</button>
+      <div class="quiz-feedback" id="q2-fb"></div>
+    </div>
+
+    <div class="quiz-item" id="q3">
+      <div class="q-number">Q3 · Inference 推理判断</div>
+      <div class="question">Why did Anthropic disable Fable 5 for ALL customers, not just foreign nationals?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', false)">A. Because the government specifically requested this</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', true)">B. Because they cannot easily distinguish which users are foreign nationals among all customers</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', false)">C. Because the model was dangerous for everyone</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q3', false)">D. Because they wanted to protest the government's decision</button>
+      <div class="quiz-feedback" id="q3-fb"></div>
+    </div>
+
+    <div class="quiz-item" id="q4">
+      <div class="q-number">Q4 · Critical Thinking 批判性思考</div>
+      <div class="question">What is Anthropic's main argument against the government's action?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', false)">A. Fable 5 has no security vulnerabilities at all</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', false)">B. The government has no legal authority to do this</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', true)">C. A narrow, non-universal jailbreak doesn't justify recalling a model used by hundreds of millions, and applying this standard would halt the entire industry</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q4', false)">D. Other companies' models are more dangerous than Fable 5</button>
+      <div class="quiz-feedback" id="q4-fb"></div>
+    </div>
+
+    <div class="quiz-item" id="q5">
+      <div class="q-number">Q5 · Tone Analysis 语气分析</div>
+      <div class="question">How would you describe the overall tone of Anthropic's statement?</div>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', false)">A. Angry and confrontational</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', false)">B. Apologetic and submissive</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', true)">C. Cooperative but firmly disagreeing — complying while pushing back on the reasoning</button>
+      <button class="quiz-option" onclick="checkAnswer(this, 'q5', false)">D. Neutral and detached, like a news report</button>
+      <div class="quiz-feedback" id="q5-fb"></div>
+    </div>
+  </div>
+
+  <!-- ==================== WRITING ==================== -->
+  <div id="writing" class="section">
+    <h2 class="section-title">Writing Practice</h2>
+    <p class="section-desc">用你从本课学到的词汇和句式，完成以下写作练习。</p>
+
+    <div class="writing-prompt">
+      <div class="prompt-label">Exercise 1 · Email Response 邮件回复</div>
+      <div class="prompt-text">
+        Imagine you are a product manager at a tech company. Your team just received a government order to remove a feature from your product. Write a 100-word internal email to your team explaining the situation.
+      </div>
+      <div class="hint">假设你是一家科技公司的产品经理，团队刚收到政府命令要求移除产品的某个功能。写一封100词左右的内部邮件向团队说明情况。</div>
+      <div class="useful-phrases">
+        <span class="phrase-chip">We have received a directive...</span>
+        <span class="phrase-chip">to ensure compliance</span>
+        <span class="phrase-chip">the net effect is that...</span>
+        <span class="phrase-chip">effective immediately</span>
+        <span class="phrase-chip">we are working to resolve...</span>
+      </div>
+    </div>
+
+    <div class="writing-prompt">
+      <div class="prompt-label">Exercise 2 · Opinion Paragraph 观点段落</div>
+      <div class="prompt-text">
+        Do you think a government should have the power to order a company to shut down an AI product? Write a short paragraph (80–120 words) giving your opinion.
+      </div>
+      <div class="hint">你认为政府是否应该有权力命令一家公司关停AI产品？写一个80-120词的段落表达你的观点。</div>
+      <div class="useful-phrases">
+        <span class="phrase-chip">I believe that...</span>
+        <span class="phrase-chip">on one hand... on the other hand...</span>
+        <span class="phrase-chip">should be grounded in</span>
+        <span class="phrase-chip">If this standard was applied...</span>
+        <span class="phrase-chip">defense in depth</span>
+        <span class="phrase-chip">comparable to</span>
+      </div>
+    </div>
+
+    <div class="writing-prompt">
+      <div class="prompt-label">Exercise 3 · Vocabulary Application 词汇运用</div>
+      <div class="prompt-text">
+        Use at least 5 words from today's vocabulary list to write a short news summary (60–80 words) about a fictional AI company facing a similar situation.
+      </div>
+      <div class="hint">用今天学习的至少5个词汇，写一段60-80词的简短新闻摘要，关于一家虚构的AI公司面临类似情况。</div>
+      <div class="useful-phrases">
+        <span class="phrase-chip">directive</span>
+        <span class="phrase-chip">compliance</span>
+        <span class="phrase-chip">safeguard</span>
+        <span class="phrase-chip">deploy</span>
+        <span class="phrase-chip">vulnerability</span>
+        <span class="phrase-chip">mitigate</span>
+        <span class="phrase-chip">jailbreak</span>
+        <span class="phrase-chip">red-team</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleTranslation(btn) {
+  const cnText = btn.previousElementSibling;
+  if (cnText.style.display === 'block') {
+    cnText.style.display = 'none';
+    btn.textContent = '显示译文 ▼';
+  } else {
+    cnText.style.display = 'block';
+    btn.textContent = '隐藏译文 ▲';
+  }
+}
+
+function toggleAllTranslations(btn) {
+  const isShowing = btn.classList.toggle('active');
+  document.querySelectorAll('#reading .cn-text').forEach(cn => {
+    cn.style.display = isShowing ? 'block' : 'none';
+  });
+  document.querySelectorAll('#reading .toggle-cn').forEach(b => {
+    b.textContent = isShowing ? '隐藏译文 ▲' : '显示译文 ▼';
+  });
+  btn.textContent = isShowing ? '隐藏全部译文' : '显示全部译文';
+}
+
+const feedbackData = {
+  q1: {
+    right: '✅ Correct! The government believed a jailbreak method for Fable 5 had been discovered. Note: Anthropic clarifies it was a narrow, non-universal jailbreak — not a universal one.',
+    wrong: '❌ Re-read Paragraph 2: "Our understanding is that the government believes it has become aware of a method of bypassing, or \'jailbreaking\' Fable 5."'
+  },
+  q2: {
+    right: '✅ Correct! "Net effect" means the final, practical outcome after all factors are considered — like "净影响" in Chinese. It has nothing to do with "internet" or "network".',
+    wrong: '❌ "Net" here means "overall" or "final" (like net profit 净利润), not "internet." The net effect = 最终的实际影响。'
+  },
+  q3: {
+    right: '✅ Good inference! The directive targets foreign nationals, but since Anthropic serves users globally and can\'t easily verify citizenship for every user, disabling for ALL users was the only practical way to ensure compliance.',
+    wrong: '❌ Think about it practically: the directive says "any foreign national." How would Anthropic know which of its millions of users are foreign nationals? The safest way to comply is to disable for everyone.'
+  },
+  q4: {
+    right: '✅ Excellent! Anthropic\'s core argument is proportionality — a narrow jailbreak that doesn\'t produce harmful results shouldn\'t justify recalling a widely-used product, and this standard would be impossible for any company to meet.',
+    wrong: '❌ Re-read the final paragraph. Anthropic doesn\'t deny all vulnerabilities exist. Their argument is about proportionality: this narrow finding doesn\'t justify such a drastic action.'
+  },
+  q5: {
+    right: '✅ Well analyzed! The statement says "We are complying" (cooperative) but also "we disagree" and "This action does not adhere to those principles" (firm pushback). This is a textbook example of professional disagreement — 遵从但保留异议。',
+    wrong: '❌ Look at the balance: "We are complying with the government\'s legal directive" (they\'re cooperating) + "However, we disagree that..." (they\'re pushing back). This is neither angry nor submissive — it\'s a careful middle ground.'
+  }
+};
+
+function checkAnswer(btn, qId, isCorrect) {
+  const container = document.getElementById(qId);
+  const options = container.querySelectorAll('.quiz-option');
+  options.forEach(o => {
+    o.classList.add('disabled');
+    o.classList.remove('correct', 'wrong');
+  });
+
+  const fb = document.getElementById(qId + '-fb');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback show right';
+    fb.textContent = feedbackData[qId].right;
+  } else {
+    btn.classList.add('wrong');
+    // Find and highlight the correct answer
+    options.forEach(o => {
+      if (o.onclick.toString().includes('true')) o.classList.add('correct');
+    });
+    fb.className = 'quiz-feedback show wrong-fb';
+    fb.textContent = feedbackData[qId].wrong;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当幸福来敲门 The Pursuit of Happyness — 用电影学英语</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --text-tertiary: #8A8A88;
+            --accent: #2B5B4B;
+            --accent-soft: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E0;
+            --border-soft: #EFEFEA;
+            --quote-bg: #F5F2EC;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 64px 24px 100px; }
+        .breadcrumb { margin-bottom: 48px; }
+        .breadcrumb a {
+            color: var(--text-tertiary);
+            border-bottom: 1px dotted var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.88rem;
+        }
+        .breadcrumb a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+        .hero { margin-bottom: 48px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: 2.4rem; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
+        .hero .en-title { font-family: 'Inter', sans-serif; font-style: italic; color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 12px; }
+        .hero .meta { color: var(--text-tertiary); font-size: 0.88rem; margin-bottom: 24px; }
+        .hero .synopsis { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.9; }
+
+        .chapter-nav {
+            position: sticky; top: 0;
+            background: rgba(250, 250, 248, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            display: flex; gap: 4px;
+            overflow-x: auto;
+            z-index: 10;
+            margin: 0 -24px 32px;
+            padding-left: 24px; padding-right: 24px;
+        }
+        .chapter-tab {
+            background: none; border: none;
+            padding: 8px 14px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .chapter-tab:hover { color: var(--accent); }
+        .chapter-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+
+        .chapter-title { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .chapter-intro { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 32px; line-height: 1.8; }
+
+        .dialogue-section { margin-bottom: 40px; }
+        .dialogue-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; color: var(--text); }
+        .dialogue-grid { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+        .dialogue-row { display: grid; grid-template-columns: 1fr 1fr; }
+        .dialogue-row:not(:last-child) { border-bottom: 1px solid var(--border-soft); }
+        .dialogue-row .en, .dialogue-row .zh {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            line-height: 1.75;
+        }
+        .dialogue-row .en { font-family: 'Inter', sans-serif; background: var(--card-bg); }
+        .dialogue-row .zh { font-family: 'Noto Serif SC', serif; background: #FDFCFA; border-left: 1px solid var(--border-soft); color: var(--text-secondary); }
+
+        .vocab-section { margin-bottom: 40px; }
+        .vocab-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+        .vocab-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .vocab-word { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; }
+        .vocab-pos { font-weight: 400; font-style: italic; color: var(--text-tertiary); font-size: 0.78rem; margin-left: 4px; }
+        .vocab-def { font-family: 'Noto Serif SC', serif; color: var(--text); margin-bottom: 10px; font-size: 0.9rem; }
+        .vocab-example { font-size: 0.82rem; color: var(--text-secondary); font-style: italic; line-height: 1.6; }
+
+        .key-quote {
+            background: var(--quote-bg);
+            border-left: 3px solid var(--accent);
+            padding: 18px 22px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .quote-text { font-family: 'Noto Serif SC', serif; font-size: 1rem; margin-bottom: 8px; color: var(--text); }
+        .quote-comment { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+
+        .chapter-divider { margin: 64px 0; border: none; border-top: 1px solid var(--border); }
+
+        .full-vocab-section { margin-top: 32px; }
+        .full-vocab-section h2 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 24px; }
+        .full-vocab-group { margin-bottom: 32px; }
+        .full-vocab-group h4 { font-size: 0.95rem; font-weight: 600; color: var(--accent); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-soft); }
+        .full-vocab-list { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 0.88rem; color: var(--text-secondary); line-height: 2; }
+        .full-vocab-list span { white-space: nowrap; }
+
+        footer {
+            margin-top: 80px; padding-top: 24px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-tertiary); text-decoration: none; border-bottom: 1px dotted var(--text-tertiary); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 720px) {
+            .container { padding: 48px 20px 80px; }
+            .hero h1 { font-size: 1.8rem; }
+            .dialogue-row { grid-template-columns: 1fr; }
+            .dialogue-row .zh { border-left: none; border-top: 1px solid var(--border-soft); }
+            .chapter-nav { margin: 0 -20px 32px; padding-left: 20px; padding-right: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="breadcrumb"><a href="/english/">← 用电影学英语</a></nav>
+
+    <header class="hero">
+        <h1>当幸福来敲门</h1>
+        <p class="en-title">The Pursuit of Happyness</p>
+        <p class="meta">2006 · 加布里埃莱·穆奇诺 · 传记 / 剧情</p>
+        <p class="synopsis">根据克里斯·加德纳的真实经历改编。1981年的旧金山，落魄的医疗器材推销员 Chris 在事业崩溃、妻子离去、无家可归的绝境中，带着五岁的儿子一路挣扎，最终通过 Dean Witter 的股票经纪人实习项目改变了命运。电影标题中 "Happyness" 的拼写错误，源自儿子托儿所墙上的涂鸦——那正是幸福尚未抵达时的样子。</p>
+    </header>
+
+    <nav class="chapter-nav" id="chapterNav">
+        <button class="chapter-tab active" data-chapter="1">第一章</button>
+        <button class="chapter-tab" data-chapter="2">第二章</button>
+        <button class="chapter-tab" data-chapter="3">第三章</button>
+        <button class="chapter-tab" data-chapter="4">第四章</button>
+        <button class="chapter-tab" data-chapter="5">第五章</button>
+        <button class="chapter-tab" data-chapter="6">第六章</button>
+        <button class="chapter-tab" data-chapter="7">第七章</button>
+        <button class="chapter-tab" data-chapter="8">第八章</button>
+        <button class="chapter-tab" data-chapter="9">第九章</button>
+        <button class="chapter-tab" data-chapter="vocab">全片词汇</button>
+    </nav>
+
+    <!-- ===== 第一章 ===== -->
+    <section class="chapter active" data-chapter="1">
+        <h2 class="chapter-title">第一章：搭公车</h2>
+        <p class="chapter-intro">克里斯的一天从叫醒儿子起床开始。他在公车上怀抱着那台被人当作"时光机"的骨密度扫描仪四处推销，却处处碰壁。妻子琳达身兼两份班筋疲力尽，账单和罚单不断涌来。一次偶遇，一位从红色法拉利里走出的陌生人告诉他：做股票经纪人，只需要"精通数字，会做人处世"。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">Time to get up, man.</div><div class="zh">该起床了。</div></div>
+                <div class="dialogue-row"><div class="en">All right, Dad. Come on.</div><div class="zh">好的，老爸。快点。</div></div>
+                <div class="dialogue-row"><div class="en">I think I should make a list. — What do you mean? For your birthday gifts?</div><div class="zh">我想我该列个表。——干嘛？想要的生日礼物？</div></div>
+                <div class="dialogue-row"><div class="en">Yeah. I know. Just to look at and study so I can choose better.</div><div class="zh">对呀，我只想列出来看看研究一下，好好选选。</div></div>
+                <div class="dialogue-row"><div class="en">Okay, well, that's smart. Yeah, make a list.</div><div class="zh">哦，很聪明，那就列吧。</div></div>
+                <div class="dialogue-row"><div class="en">Can we go to the park today, after?</div><div class="zh">我们今天能去公园吗，上完幼儿园后？</div></div>
+                <div class="dialogue-row"><div class="en">No, I gotta go to Oakland. Well, maybe, we'll see.</div><div class="zh">呃，我还得去奥克兰。或许，再说吧。</div></div>
+                <div class="dialogue-row"><div class="en">Excuse me. When is somebody gonna clean this off? And the Y? It's an I in "happiness." There's no Y in "happiness." It's an I.</div><div class="zh">借过。什么时候找人清洗一下？还有这个Y？幸福的"幸"写错了。</div></div>
+                <div class="dialogue-row"><div class="en">I'm Chris Gardner. I met my father for the first time when I was 28 years old. And I made up my mind as a young kid that when I had children, my children were gonna know who their father was.</div><div class="zh">我是克里斯·加德纳。我第一次见到我父亲时，已经28岁了。我儿时就决定，将来我有了孩子，我的孩子一定得知道他们的父亲是谁。</div></div>
+                <div class="dialogue-row"><div class="en">This is part of my life story. This part is called "Riding the Bus."</div><div class="zh">这里讲述的是我人生故事的一部分。这部分叫做"搭公车"。</div></div>
+                <div class="dialogue-row"><div class="en">It's a time machine, isn't it? — Take me with you.</div><div class="zh">是架时光机，对吧？——能带上我吗？</div></div>
+                <div class="dialogue-row"><div class="en">It is not a time machine. It's a portable bone-density scanner. A medical device I sell for a living.</div><div class="zh">这不是时光机。这是手提式骨质密度扫描仪，是医疗器材，我就靠卖这个过活。</div></div>
+                <div class="dialogue-row"><div class="en">Thank you very much for the opportunity to discuss it with you. — We just don't need it, Chris. It's unnecessary and expensive.</div><div class="zh">谢谢您给我这个机会推介这仪器。——我们真的不需要，克里斯。没多大用处，而且还很贵。</div></div>
+                <div class="dialogue-row"><div class="en">It gave a slightly denser picture than an x-ray for twice the money.</div><div class="zh">它比X光机显像更精确一点点，但却贵了一倍。</div></div>
+                <div class="dialogue-row"><div class="en">Look, I can't get Christopher today. — Oh, no, you don't, Chris. I'm back on at 7.</div><div class="zh">我今天不能去接儿子。——你得去，我七点还要上班。</div></div>
+                <div class="dialogue-row"><div class="en">So I gotta get Christopher home, feed him, bathe him, get him in bed, and be back here by 7?</div><div class="zh">所以我得先接他回家，做饭，给他洗澡，哄他睡觉，然后七点前回到这儿？</div></div>
+                <div class="dialogue-row"><div class="en">You see that car? The one with the pretty yellow shoe on it? That's mine.</div><div class="zh">看到那车了吗？那辆穿着漂亮黄鞋子的车。那是我的车。</div></div>
+                <div class="dialogue-row"><div class="en">I needed to sell at least two scanners a month for rent and daycare. The problem is... I haven't sold any for a while.</div><div class="zh">我每个月至少得卖两台，才够付房租和幼儿园费。问题是……我很久没卖出一台了。</div></div>
+                <div class="dialogue-row"><div class="en">Since when do you not like macaroni and cheese? — Since... birth?</div><div class="zh">你什么时候开始不喜欢通心粉加奶酪的？——从……我出生开始？</div></div>
+                <div class="dialogue-row"><div class="en">What are you supposed to do with it? — Make every side the same color.</div><div class="zh">要怎么玩？——把每一面都弄成同一颜色。</div></div>
+                <div class="dialogue-row"><div class="en">Did you pay the taxes? — No, I'm gonna have to file an extension.</div><div class="zh">你付税了吗？——没，我要申请延后缴。</div></div>
+                <div class="dialogue-row"><div class="en">You already filed an extension. — Yeah, well, I gotta file another one.</div><div class="zh">你已经申请过延期了。——是，我还要再延期一次。</div></div>
+                <div class="dialogue-row"><div class="en">Man, I got two questions for you: What do you do? And how do you do it?</div><div class="zh">老兄，请教你两个问题：你是干什么的？你是怎么干的？</div></div>
+                <div class="dialogue-row"><div class="en">I'm a stockbroker.</div><div class="zh">我是股票经纪人。</div></div>
+                <div class="dialogue-row"><div class="en">Had to go to college to be a stockbroker, huh? — You don't have to. Have to be good with numbers and good with people. That's it.</div><div class="zh">得上大学才能做股票经纪人，对吧？——不用，只需要精通数字，会做人处世。就这么简单。</div></div>
+                <div class="dialogue-row"><div class="en">I still remember that moment. They all looked so damn happy to me. Why couldn't I look like that?</div><div class="zh">我还记得那一刻。他们全都看起来超幸福的样子。为什么我不能也满脸幸福？</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">make up one's mind <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">下定决心</div>
+                    <div class="vocab-example">"I made up my mind as a young kid that..."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">bone-density scanner <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">骨密度扫描仪</div>
+                    <div class="vocab-example">"It's a portable bone-density scanner."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">file an extension <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">申请延期（缴税）</div>
+                    <div class="vocab-example">"I'm gonna have to file an extension."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">runaway deficit <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">失控的赤字</div>
+                    <div class="vocab-example">"We face runaway deficits of almost $80 billion."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">stockbroker <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">股票经纪人</div>
+                    <div class="vocab-example">"I'm a stockbroker."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">feed the meter <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">给停车计时器投币</div>
+                    <div class="vocab-example">"I need it back for Monday. — Feed the meter."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"I made up my mind as a young kid that when I had children, my children were gonna know who their father was."</p>
+                <p class="quote-comment">影片开场的独白，奠定了全片的情感基调。Chris 从未见过自己的父亲，这段缺失成为他人生最深的动力——无论多穷多难，他绝不离开儿子。"make up my mind" 是地道的决心表达，比 "decide" 更有份量感。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"They all looked so damn happy to me. Why couldn't I look like that?"</p>
+                <p class="quote-comment">Chris 站在街头看着从证券公司走出的人群，第一次产生了转行的念头。"so damn happy" 里的 damn 是口语加强语气词，传递出一种羡慕到发酸的真实情绪。这个画面将贯穿全片——幸福是别人脸上的表情，而他只能追。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第二章 ===== -->
+    <section class="chapter" data-chapter="2" style="display:none">
+        <h2 class="chapter-title">第二章：冒傻气</h2>
+        <p class="chapter-intro">Chris 决定去证券行碰碰运气，却遭到 Linda 的冷嘲。他在 Dean Witter 分公司递了实习申请，又犯了一个致命的蠢——把价值连城的扫描仪托给一个素不相识的嬉皮女孩，结果眼睁睁看着她消失在地铁里。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">I'm gonna try to get home by 6. I'm gonna stop by a brokerage firm after work.</div><div class="zh">我尽量在六点前回来。下班后要去一下证券行。</div></div>
+                <div class="dialogue-row"><div class="en">For what? — I wanna see about a job there.</div><div class="zh">干嘛？——看看那里有没有工作。</div></div>
+                <div class="dialogue-row"><div class="en">When I was a kid, I could go through a math book in a week.</div><div class="zh">你知道，我小时候，一星期就能把算数课本念完。</div></div>
+                <div class="dialogue-row"><div class="en">Stockbroker? — Yeah. — Not an astronaut?</div><div class="zh">股票经纪人？——嗯。——不是宇航员？</div></div>
+                <div class="dialogue-row"><div class="en">Don't talk to me like that, Linda.</div><div class="zh">别用这种口气对我说话，琳达。</div></div>
+                <div class="dialogue-row"><div class="en">We're already two months behind. Next week we'll owe three months.</div><div class="zh">我们已经两个月没付。下星期就欠三个月了。</div></div>
+                <div class="dialogue-row"><div class="en">I've been pulling double shifts for four months now, Chris.</div><div class="zh">我已经上双份班四个月了，克里斯！</div></div>
+                <div class="dialogue-row"><div class="en">Just sell what's in your contract. Get us out of that business.</div><div class="zh">赶快把合约规定的数额卖完，咱们好脱身吧。</div></div>
+                <div class="dialogue-row"><div class="en">This part of my life is called "Being Stupid."</div><div class="zh">我人生的这部分叫做"冒傻气"。</div></div>
+                <div class="dialogue-row"><div class="en">Can I ask you a favor, miss? Do you mind if I leave this here with you just for five minutes?</div><div class="zh">能帮个忙吗，小姐？帮我看下这个行吗，就五分钟。</div></div>
+                <div class="dialogue-row"><div class="en">I have a meeting in there and I don't wanna carry that looking smalltime.</div><div class="zh">我在那儿有个会，带这个进去看上去很不正式。</div></div>
+                <div class="dialogue-row"><div class="en">It's not valuable. You can't sell it anywhere. I can't even sell it, and it's my job.</div><div class="zh">这玩意不值钱，你也卖不出去。我是干这个的都卖不掉。</div></div>
+                <div class="dialogue-row"><div class="en">Let me see if I can find you an application for our internship. I'm afraid that's all we can do for you.</div><div class="zh">我看看能不能帮你找份实习申请表。我能做的也只有这个了。</div></div>
+                <div class="dialogue-row"><div class="en">Jay Twistle in the main office, he oversees Witter Resources.</div><div class="zh">总部的杰·托斯特尔是全面负责人事工作的。</div></div>
+                <div class="dialogue-row"><div class="en">Trusting a hippie girl with my scanner. Why did I do that?</div><div class="zh">把扫描仪托付给一个嬉皮女孩？为什么我会这么做？</div></div>
+                <div class="dialogue-row"><div class="en">Like I said, this part of my life is called "Being Stupid."</div><div class="zh">就像我刚说的，我人生的这部分叫做"冒傻气"。</div></div>
+                <div class="dialogue-row"><div class="en">The program took just 20 people every six months. One got the job.</div><div class="zh">这个培训每半年才招二十人。最后只有一人受雇。</div></div>
+                <div class="dialogue-row"><div class="en">There were three blank lines after "high school" to list more education. I didn't need that many lines.</div><div class="zh">申请表上"高中"之后还有三行线，用来填写接受过的其他教育。对我来说，根本就是多余。</div></div>
+                <div class="dialogue-row"><div class="en">It's written as P-P-Y, but it's supposed to be an I in "happiness."</div><div class="zh">那里写的是"辛"，但是实际上应该是"幸"。</div></div>
+                <div class="dialogue-row"><div class="en">Is "fuck" spelled right? — Yeah, that's spelled right. — But that's not part of the motto, so you're not supposed to learn that.</div><div class="zh">"操"写对了吗？——对，那个写对了。——但是标语里没这词，所以别学。</div></div>
+                <div class="dialogue-row"><div class="en">Did you have a nickname? — "Ten-Gallon Head." I was smart back then, so they called me Ten-Gallon Head.</div><div class="zh">你有绰号吗？——"无敌大头"。我小时候很聪明，所以大家都叫我无敌大头。</div></div>
+                <div class="dialogue-row"><div class="en">I was waiting for Witter Resource head Jay Twistle, whose name sounded so delightful, like he'd give me a job and a hug.</div><div class="zh">我在等维特公司人事部主管杰·托斯特尔，他的名字听起来很可爱，就好像他会给我份工作，外加一个拥抱。</div></div>
+                <div class="dialogue-row"><div class="en">I just had to show him I was good with numbers and good with people.</div><div class="zh">而我所要做的，就是让他知道我精通数字，而且懂得待人之道。</div></div>
+                <div class="dialogue-row"><div class="en">This part of my life... this part here, it's called "Running."</div><div class="zh">我人生的这部分，眼前的这部分叫做"追赶"。</div></div>
+                <div class="dialogue-row"><div class="en">I spent our entire life savings on these things.</div><div class="zh">我把所有的积蓄都押在这上面了。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">pull double shifts <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">上双份班，连轴转</div>
+                    <div class="vocab-example">"I've been pulling double shifts for four months now."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">internship <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">实习（期）</div>
+                    <div class="vocab-example">"Let me find you an application for our internship."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">smalltime <span class="vocab-pos">adj.</span></div>
+                    <div class="vocab-def">不入流的，小打小闹的</div>
+                    <div class="vocab-example">"I don't wanna carry that looking smalltime."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">life savings <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">毕生积蓄</div>
+                    <div class="vocab-example">"I spent our entire life savings on these things."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">brokerage firm <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">证券经纪公司</div>
+                    <div class="vocab-example">"I'm gonna stop by a brokerage firm after work."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">good riddance <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">终于摆脱了（表示如释重负）</div>
+                    <div class="vocab-example">"Goodbye and good riddance."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"This part of my life is called 'Being Stupid.'"</p>
+                <p class="quote-comment">Chris 用章节标题的方式讲述自己的人生，这是全片叙事的标志手法。他把自己最窘迫的时刻命名为"冒傻气"——不是自嘲，而是事后回望时的坦然。这种以幽默消解苦涩的方式，贯穿整部影片。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"It's not valuable. You can't sell it anywhere. I can't even sell it, and it's my job."</p>
+                <p class="quote-comment">Chris 把扫描仪托付给陌生人时说的话，充满了黑色幽默。"I can't even sell it, and it's my job" 一句话道尽了他作为推销员的全部困境——连自己都卖不掉的东西，别人当然也不会偷。但命运偏偏跟他开了这个玩笑。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第三章 ===== -->
+    <section class="chapter" data-chapter="3" style="display:none">
+        <h2 class="chapter-title">第三章：出租车里的魔方</h2>
+        <p class="chapter-intro">Chris 在 Dean Witter 楼下堵到了 Jay Twistle，硬蹭上一辆出租车。车上他展示了惊人的魔方天赋，让 Twistle 刮目相看。然而回到家中，Linda 宣布她要离开。Chris 独自站在窗前，想起了《独立宣言》里关于"追求幸福"的那句话。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">Mr. Twistle. — Yeah, hi. — Chris Gardner. I submitted an application for the intern program about a month ago.</div><div class="zh">托斯特尔先生。——嗯，你好。——我是克里斯·加德纳。大约一个月前我递交了实习项目的申请。</div></div>
+                <div class="dialogue-row"><div class="en">Actually, I'm on my way to Noe Valley also. How about we share a ride?</div><div class="zh">其实，我也正好去诺埃谷。一起搭车怎么样？</div></div>
+                <div class="dialogue-row"><div class="en">I'm sorry. This thing's impossible. — I can do it.</div><div class="zh">对不起，这玩意不可能拼好的。——我能。</div></div>
+                <div class="dialogue-row"><div class="en">It looks like it works around a swivel, so the centerpieces never move.</div><div class="zh">看起来它是围绕一个轴心转的，所以中心块永远不动。</div></div>
+                <div class="dialogue-row"><div class="en">You can slow down. — Listen, we can drive around all day. I don't believe you can do this.</div><div class="zh">你可以慢点。——听着，我们可以绕一天。我不相信你能拼好。</div></div>
+                <div class="dialogue-row"><div class="en">See? That's all I ever do. — Holy cow. — You almost had that one.</div><div class="zh">看到了吗？我一直在做这个。——天哪。——你差点就拼好了。</div></div>
+                <div class="dialogue-row"><div class="en">Hey! Stop it! — No! — You asshole, give me my money!</div><div class="zh">嘿！站住！——不！——你这混蛋，把钱还我！</div></div>
+                <div class="dialogue-row"><div class="en">I'm leaving. Chris, I'm leaving.</div><div class="zh">我要走了。克里斯，我要走了。</div></div>
+                <div class="dialogue-row"><div class="en">I have my things together, and I'm taking our son and we're gonna leave now.</div><div class="zh">我东西收好了，我要带着儿子走。</div></div>
+                <div class="dialogue-row"><div class="en">It was right then that I started thinking about Thomas Jefferson, the Declaration of Independence, and the part about our right to life, liberty, and the pursuit of happiness.</div><div class="zh">就在那一刻，我开始想到托马斯·杰斐逊、《独立宣言》，以及其中关于我们拥有生存、自由和追求幸福之权利的那段话。</div></div>
+                <div class="dialogue-row"><div class="en">How did he know to put the "pursuit" part in there?</div><div class="zh">他怎么知道要把"追求"这个词放进去？</div></div>
+                <div class="dialogue-row"><div class="en">That maybe happiness is something that we can only pursue. And maybe we can actually never have it, no matter what.</div><div class="zh">也许幸福是我们只能去追求的东西。也许无论如何，我们永远也无法真正拥有它。</div></div>
+                <div class="dialogue-row"><div class="en">Jay Twistle. — Dean Witter. Do you still wanna come in and talk?</div><div class="zh">我是杰·托斯特尔。——Dean Witter 的。你还想来面谈吗？</div></div>
+                <div class="dialogue-row"><div class="en">Yes, sir. Absolutely.</div><div class="zh">当然想，先生。绝对想。</div></div>
+                <div class="dialogue-row"><div class="en">We're interviewing for the internships. You got a pen and paper?</div><div class="zh">我们正在面试实习生。你有纸和笔吗？</div></div>
+                <div class="dialogue-row"><div class="en">864-0256. Janice.</div><div class="zh">864-0256。找珍妮丝。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">share a ride <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">拼车，搭顺风车</div>
+                    <div class="vocab-example">"How about we share a ride?"</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">swivel <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">旋转轴，转轴</div>
+                    <div class="vocab-example">"It works around a swivel, so the centerpieces never move."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">the pursuit of happiness <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">追求幸福（美国《独立宣言》用语）</div>
+                    <div class="vocab-example">"...our right to life, liberty, and the pursuit of happiness."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">the Declaration of Independence <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">《独立宣言》</div>
+                    <div class="vocab-example">"I started thinking about Thomas Jefferson, the Declaration of Independence..."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">Holy cow <span class="vocab-pos">interj.</span></div>
+                    <div class="vocab-def">天哪（表惊讶的感叹词）</div>
+                    <div class="vocab-example">"Holy cow. You almost had that one."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">stand clear of <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">远离，离开（常见于地铁广播）</div>
+                    <div class="vocab-example">"Please stand clear of the doors."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"How did he know to put the 'pursuit' part in there?"</p>
+                <p class="quote-comment">全片的灵魂之问。杰斐逊在《独立宣言》中写的是 "the pursuit of happiness" 而非 "happiness" 本身——幸福只能追求，不保证拥有。Chris 在妻子离去的夜晚想到这句话，既是哲学思考，也是对自身处境的精确写照。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"That maybe happiness is something that we can only pursue. And maybe we can actually never have it, no matter what."</p>
+                <p class="quote-comment">这句独白是影片标题的注解。"pursue" 和 "have" 的对比极其精准——pursue 意味着过程、努力和不确定性；have 意味着结果和占有。整部电影要讲的，就是一个人在 pursue 和 have 之间那段漫长的距离。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第四章 ===== -->
+    <section class="chapter" data-chapter="4" style="display:none">
+        <h2 class="chapter-title">第四章：穿着油漆衣的面试</h2>
+        <p class="chapter-intro">Linda 离开了。Chris 带着儿子住进了廉价旅馆，却因为欠缴罚单被关进拘留所，在里面过了一夜。第二天早上，他穿着满身油漆的衣服，一路从警察局跑到 Dean Witter 参加面试——然后用一句幽默征服了全场。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">Don't you ever take my son away from me again. You hear me?</div><div class="zh">你再也不许把我儿子从我身边带走。听到了吗？</div></div>
+                <div class="dialogue-row"><div class="en">Get the hell out of here, then, Linda. Christopher's staying with me.</div><div class="zh">那你就走吧，琳达。克里斯托弗跟我。</div></div>
+                <div class="dialogue-row"><div class="en">No. I am not happy anymore. I'm just not happy!</div><div class="zh">不。我不开心了。我就是不开心！</div></div>
+                <div class="dialogue-row"><div class="en">Then go get happy, Linda! Just go get happy. But Christopher's living with me.</div><div class="zh">那你就去找你的幸福吧，琳达！去找你的幸福。但克里斯托弗跟我住。</div></div>
+                <div class="dialogue-row"><div class="en">Let me ask you something. Are you happy? — Yeah. — All right. Because I'm happy.</div><div class="zh">我问你件事。你幸福吗？——幸福。——那就好。因为我也幸福。</div></div>
+                <div class="dialogue-row"><div class="en">Chris Gardner? — Yeah. What happened? — Payable to the City of San Francisco.</div><div class="zh">克里斯·加德纳？——是我，怎么了？——旧金山市的欠款通知。</div></div>
+                <div class="dialogue-row"><div class="en">Sir, I have a job interview at Dean Witter at 10:15 tomorrow morning. I cannot stay...</div><div class="zh">先生，我明天早上10:15在Dean Witter有面试。我不能留下来……</div></div>
+                <div class="dialogue-row"><div class="en">I've been sitting there for the last half-hour trying to come up with a story that would explain my being here dressed like this.</div><div class="zh">我坐在那儿半个小时，一直在想一个故事，能解释我为什么穿成这样出现在这里。</div></div>
+                <div class="dialogue-row"><div class="en">And I wanted to come up with a story that would demonstrate qualities that I'm sure you all admire here, like earnestness or diligence, team-playing, something.</div><div class="zh">我想编一个故事，来展现你们一定欣赏的品质，比如诚恳、勤勉、团队合作之类的。</div></div>
+                <div class="dialogue-row"><div class="en">And I couldn't think of anything. So the truth is, I was arrested for failure to pay parking tickets.</div><div class="zh">但是我什么也想不出来。事实是，我因为没交停车罚单被拘留了。</div></div>
+                <div class="dialogue-row"><div class="en">Jay says you're pretty determined. He said you're smart.</div><div class="zh">杰说你很有毅力。他还说你很聪明。</div></div>
+                <div class="dialogue-row"><div class="en">I'm the type of person, if you ask me a question and I don't know the answer, I'm gonna tell you that I don't know. But I bet you what, I know how to find the answer, and I will find the answer.</div><div class="zh">我这个人，你问我问题如果我不知道答案，我会直说我不知道。但我跟你打赌，我知道怎么去找到答案，而且我一定会找到。</div></div>
+                <div class="dialogue-row"><div class="en">What would you say if a guy walked in for an interview without a shirt on? — He must've had on some really nice pants.</div><div class="zh">如果一个人面试时没穿衬衫，你会怎么说？——那他的裤子一定很不错。</div></div>
+                <div class="dialogue-row"><div class="en">Chris, I don't know how you did it dressed as a garbage man, but you pulled it off.</div><div class="zh">克里斯，我不知道你穿成垃圾工的样子是怎么做到的，但你成功了。</div></div>
+                <div class="dialogue-row"><div class="en">Listen, there's no salary. — I was not aware of that.</div><div class="zh">听着，没有薪水。——我不知道。</div></div>
+                <div class="dialogue-row"><div class="en">One intern was hired at the end of the program from a pool of 20.</div><div class="zh">二十个实习生里，最后只录用一个。</div></div>
+                <div class="dialogue-row"><div class="en">The only resource I would have for six months would be my six scanners, which I could still try to sell.</div><div class="zh">六个月里我唯一的收入来源就是那六台扫描仪，我还可以尝试去卖掉它们。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">come up with <span class="vocab-pos">phr.v.</span></div>
+                    <div class="vocab-def">想出，提出（主意、故事）</div>
+                    <div class="vocab-example">"...trying to come up with a story."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">earnestness <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">诚恳，认真</div>
+                    <div class="vocab-example">"...qualities like earnestness or diligence."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">pull it off <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">成功做到（不被看好的事）</div>
+                    <div class="vocab-example">"I don't know how you did it, but you pulled it off."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">determined <span class="vocab-pos">adj.</span></div>
+                    <div class="vocab-def">有决心的，坚定的</div>
+                    <div class="vocab-example">"Jay says you're pretty determined."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">a pool of <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">一批，一群（候选人）</div>
+                    <div class="vocab-example">"...hired from a pool of 20."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">failure to pay <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">未能缴纳（法律用语）</div>
+                    <div class="vocab-example">"I was arrested for failure to pay parking tickets."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"He must've had on some really nice pants."</p>
+                <p class="quote-comment">面试官问"一个人没穿上衣来面试你怎么看"，Chris 脱口而出"那他裤子一定很不错"。这个回答在极度紧张的面试场景中精准地展现了他的机智和幽默感。"must've had on" 是 "must have had on"（一定穿着）的口语缩略。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"I know how to find the answer, and I will find the answer. Is that fair enough?"</p>
+                <p class="quote-comment">Chris 最打动面试官的一句话。他没有掩饰自己学历的短板，反而把"承认不知道"转化成了一种能力声明。"fair enough" 是日常高频表达，意思是"这样说行吗"，既谦逊又不卑不亢。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第五章 ===== -->
+    <section class="chapter" data-chapter="5" style="display:none">
+        <h2 class="chapter-title">第五章：别让任何人说你不行</h2>
+        <p class="chapter-intro">Linda 去了纽约。Chris 正式接受 Dean Witter 的实习邀请，带着儿子搬进廉价汽车旅馆。在篮球场上，他先是打击了儿子的篮球梦，随即懊悔，说出了全片最经典的台词。实习第一天，Chris 走进了一个残酷而精确的数字游戏。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">I'm going to New York. My sister's boyfriend opened a restaurant, and they may have a job for me there.</div><div class="zh">我要去纽约。我姐姐的男朋友开了家餐厅，那边可能有个工作机会。</div></div>
+                <div class="dialogue-row"><div class="en">Christopher's staying with me. — I'm his mom, you know? He should be with his mom.</div><div class="zh">克里斯托弗跟我。——我是他妈妈啊，他应该和妈妈在一起。</div></div>
+                <div class="dialogue-row"><div class="en">Tell him I love him, okay? And... I know you'll take care of him, Chris.</div><div class="zh">告诉他我爱他，好吗？还有……我知道你会照顾好他的，克里斯。</div></div>
+                <div class="dialogue-row"><div class="en">Hey, Dad. I'm going pro.</div><div class="zh">嘿，老爸。我要打职业的。</div></div>
+                <div class="dialogue-row"><div class="en">You'll probably be about as good as I was. That's kind of the way it works. I was below average.</div><div class="zh">你大概会跟我一样好。事情就是这样的。我是低于平均水平的。</div></div>
+                <div class="dialogue-row"><div class="en">Don't ever let somebody tell you you can't do something. Not even me.</div><div class="zh">别让任何人告诉你，你做不到。包括我。</div></div>
+                <div class="dialogue-row"><div class="en">You got a dream, you gotta protect it.</div><div class="zh">你有梦想，就得捍卫它。</div></div>
+                <div class="dialogue-row"><div class="en">People can't do something themselves, they wanna tell you you can't do it.</div><div class="zh">那些自己做不到的人，才会告诉你你也做不到。</div></div>
+                <div class="dialogue-row"><div class="en">If you want something, go get it. Period.</div><div class="zh">你想要什么，就去争取。就这样。</div></div>
+                <div class="dialogue-row"><div class="en">Dad, why did we move to a motel? — I told you. Because I'm getting a better job.</div><div class="zh">爸爸，我们为什么搬到汽车旅馆？——跟你说过了，因为我要找一份更好的工作。</div></div>
+                <div class="dialogue-row"><div class="en">One day, a man was drowning in the water. And a boat came by and said, "Do you need any help?" He said, "No, thank you. God will save me."</div><div class="zh">有一天，一个人快淹死了。一艘船过来说："你需要帮忙吗？"他说："不用了，谢谢。上帝会救我的。"</div></div>
+                <div class="dialogue-row"><div class="en">Then he drowned and went to heaven. And he said, "God, why didn't you save me?" And God said, "I sent you two big boats, you dummy."</div><div class="zh">然后他淹死了，上了天堂。他说："上帝，你为什么不救我？"上帝说："我给你派了两艘大船，你这个笨蛋。"</div></div>
+                <div class="dialogue-row"><div class="en">You will mainly be cold-calling potential clients.</div><div class="zh">你们主要是给潜在客户打陌生电话。</div></div>
+                <div class="dialogue-row"><div class="en">In essence, you reel them in, we'll cook the fish.</div><div class="zh">简单说，你们把鱼钓上来，我们来烹饪。</div></div>
+                <div class="dialogue-row"><div class="en">Be safe, score a hundred.</div><div class="zh">保险起见，考一百分。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">go pro <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">打职业，成为职业选手</div>
+                    <div class="vocab-example">"Hey, Dad. I'm going pro."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">protect one's dream <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">捍卫梦想</div>
+                    <div class="vocab-example">"You got a dream, you gotta protect it."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">cold-calling <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">陌生电话推销</div>
+                    <div class="vocab-example">"You will mainly be cold-calling potential clients."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">reel someone in <span class="vocab-pos">phr.v.</span></div>
+                    <div class="vocab-def">把人拉进来，吸引（客户）</div>
+                    <div class="vocab-example">"You reel them in, we'll cook the fish."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">board exam <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">资格考试，执照考试</div>
+                    <div class="vocab-example">"Your board exam... Be safe, score a hundred."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">Period. <span class="vocab-pos">interj.</span></div>
+                    <div class="vocab-def">句号。就这样。（表示不容商量）</div>
+                    <div class="vocab-example">"If you want something, go get it. Period."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"Don't ever let somebody tell you you can't do something. Not even me."</p>
+                <p class="quote-comment">Chris 刚刚打击了儿子的篮球梦，立刻意识到自己犯了错。"Not even me" 三个字把这句话从普通的励志鸡汤升华为一个父亲的自我修正——他要求儿子连父亲的否定也不要接受。这是全片被引用最多的台词。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"You got a dream, you gotta protect it. People can't do something themselves, they wanna tell you you can't do it."</p>
+                <p class="quote-comment">"gotta" 是 "got to" 的口语缩略，整句用了最朴素的词汇讲出最有力的道理。注意 "protect" 而非 "chase" 或 "follow"——梦想不是用来追的，是用来守的。后半句揭示了一个残酷的人性真相：否定你的人往往自己也做不到。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第六章 ===== -->
+    <section class="chapter" data-chapter="6" style="display:none">
+        <h2 class="chapter-title">第六章：六小时干完九小时的活</h2>
+        <p class="chapter-intro">实习正式开始。别的实习生可以待到七点，但 Chris 必须赶去接儿子——他只有六小时做别人九小时的事。他不挂电话、不喝水、不上厕所，一切只为多省出八分钟。他终于约到了大客户 Walter Ribbon，却因帮同事挪车而错过了会面。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">I'm in a competitive internship at Dean Witter.</div><div class="zh">我正在 Dean Witter 参加竞争性实习。</div></div>
+                <div class="dialogue-row"><div class="en">Hey, man, you're missing a shoe. — Oh, yeah, thanks.</div><div class="zh">嘿，哥们，你少了一只鞋。——噢，是的，谢谢。</div></div>
+                <div class="dialogue-row"><div class="en">Would you get me some coffee, please?</div><div class="zh">能帮我倒杯咖啡吗？</div></div>
+                <div class="dialogue-row"><div class="en">In order not to waste any time, I wasn't hanging up the phone in between calls.</div><div class="zh">为了不浪费任何时间，打完一个电话我不挂，直接拨下一个。</div></div>
+                <div class="dialogue-row"><div class="en">I realized that by not hanging up the phone, I gained another eight minutes a day.</div><div class="zh">我发现不挂电话的话，每天能多省出八分钟。</div></div>
+                <div class="dialogue-row"><div class="en">I also wasn't drinking water so I didn't waste any time in the bathroom.</div><div class="zh">我也不喝水，这样就不用浪费时间上厕所。</div></div>
+                <div class="dialogue-row"><div class="en">Can you be here in 20 minutes? — Twenty minutes. Absolutely.</div><div class="zh">你能二十分钟内到吗？——二十分钟。当然可以。</div></div>
+                <div class="dialogue-row"><div class="en">Monday Night Football, buddy. — Yes, sir. Thank you very much.</div><div class="zh">周一晚橄榄球赛，老兄。——好的，先生。非常感谢。</div></div>
+                <div class="dialogue-row"><div class="en">Could you move my car? It's on Samson, half block, silver Caprice. Just move it to the other side. They're street sweeping.</div><div class="zh">你能帮我挪下车吗？在山姆森街，半个街区，银色凯普里斯。挪到对面就行，他们在扫街。</div></div>
+                <div class="dialogue-row"><div class="en">Oh, you just missed him.</div><div class="zh">噢，你刚好错过他了。</div></div>
+                <div class="dialogue-row"><div class="en">You know what "possibly" means? — Like "probably." — No, "probably" means there's a good chance that we're going. "Possibly" means we might, we might not.</div><div class="zh">你知道"possibly"是什么意思吗？——像"probably"。——不，"probably"是说很有可能去。"Possibly"的意思是我们可能去，也可能不去。</div></div>
+                <div class="dialogue-row"><div class="en">What does "possibly" mean? — It means that we're not going to the game.</div><div class="zh">"Possibly"到底什么意思？——意思是我们不会去看比赛了。</div></div>
+                <div class="dialogue-row"><div class="en">How did you get so smart? — Because you're smart.</div><div class="zh">你怎么这么聪明？——因为你聪明啊。</div></div>
+                <div class="dialogue-row"><div class="en">Point blank, Dean Witter needs to be managing your retirement portfolio.</div><div class="zh">直说吧，Dean Witter 应该管理您的退休投资组合。</div></div>
+                <div class="dialogue-row"><div class="en">I like you, but there's not a chance I'm gonna let you direct our fund. That's just not gonna happen anytime soon, buddy.</div><div class="zh">我喜欢你这个人，但我不可能让你管我们的基金。这不会发生的，老兄。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">competitive internship <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">竞争性实习（需淘汰选拔）</div>
+                    <div class="vocab-example">"I'm in a competitive internship at Dean Witter."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">call sheet <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">电话名单（销售用的客户清单）</div>
+                    <div class="vocab-example">"We were all working our way up call sheets to sign clients."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">jimmy <span class="vocab-pos">v.</span></div>
+                    <div class="vocab-def">撬，用力拧开</div>
+                    <div class="vocab-example">"You have to jimmy the key."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">point blank <span class="vocab-pos">adv.</span></div>
+                    <div class="vocab-def">直截了当地</div>
+                    <div class="vocab-example">"Point blank, Dean Witter needs to be managing your retirement portfolio."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">retirement portfolio <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">退休投资组合</div>
+                    <div class="vocab-example">"...managing your retirement portfolio."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">possibly vs. probably <span class="vocab-pos">adv.</span></div>
+                    <div class="vocab-def">可能（不太确定） vs. 很可能（较确定）</div>
+                    <div class="vocab-example">"'Probably' means there's a good chance. 'Possibly' means we might, we might not."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"I realized that by not hanging up the phone, I gained another eight minutes a day."</p>
+                <p class="quote-comment">八分钟，听起来微不足道，却是 Chris 在绝境中找到的生存缝隙。这个细节完美体现了他的核心品质：不是天赋异禀，而是在别人觉得"差不多就行了"的地方多挤出一点点。"gain" 在这里用作"赢得、争取到"，比 "save" 更有主动进取的意味。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"What does 'possibly' mean? — It means that we're not going to the game."</p>
+                <p class="quote-comment">五岁的 Christopher 精准地拆穿了大人的语言游戏。这段父子对话既是英语课——"possibly" 和 "probably" 的区别——也是生活课：孩子比大人更懂得什么是真话。Chris 问"你怎么这么聪明"，儿子答"因为你聪明"，让人心里一暖。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第七章 ===== -->
+    <section class="chapter" data-chapter="7" style="display:none">
+        <h2 class="chapter-title">第七章：二十一美元三十三美分</h2>
+        <p class="chapter-intro">扫描仪全部卖完，生活刚有起色，国税局却冻结了 Chris 的银行账户。他的全部身家只剩 21.33 美元。房东把他们赶了出去，Chris 抱着扫描仪、牵着儿子，在旧金山的街头走投无路。在地铁站里，他告诉儿子那台扫描仪是"时光机"，带他回到了恐龙时代。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">This part of my life is called "Paying Taxes."</div><div class="zh">我人生的这部分叫做"缴税"。</div></div>
+                <div class="dialogue-row"><div class="en">If you didn't pay them, the government could stick their hands into your bank account and take your money.</div><div class="zh">如果你不缴税，政府就会把手伸进你的银行账户，把你的钱拿走。</div></div>
+                <div class="dialogue-row"><div class="en">That's my money. How is somebody just gonna take my money?</div><div class="zh">那是我的钱。凭什么有人说拿就拿？</div></div>
+                <div class="dialogue-row"><div class="en">That's the day that I found out there was only 21 dollars and 33 cents left in my bank account. I was broke.</div><div class="zh">那天我发现银行账户里只剩下 21 美元 33 美分。我破产了。</div></div>
+                <div class="dialogue-row"><div class="en">Wayne, I need to get that $14 from you. — I thought I didn't owe you that now. — You drove me two blocks, Wayne. That's 200 yards.</div><div class="zh">韦恩，我需要你还我那 14 块。——我以为不用还了。——你才开了两个街区，韦恩。200 码而已。</div></div>
+                <div class="dialogue-row"><div class="en">It's my $14! Go get my money!</div><div class="zh">那是我的 14 块！去把我的钱拿来！</div></div>
+                <div class="dialogue-row"><div class="en">I gotta get back to the '60s, man. I wanna see Jimi Hendrix do that guitar on fire. Bring back my time machine!</div><div class="zh">我要回到 60 年代，老兄。我要看吉米·亨德里克斯把吉他点着。把我的时光机还来！</div></div>
+                <div class="dialogue-row"><div class="en">Chris, just come back when it's working. — No, I have to fix it now.</div><div class="zh">克里斯，等修好了再来吧。——不行，我现在就得修。</div></div>
+                <div class="dialogue-row"><div class="en">Where are we going? — I don't know.</div><div class="zh">我们要去哪儿？——我不知道。</div></div>
+                <div class="dialogue-row"><div class="en">It's not a time machine. — The guy said it was a time machine. — He was wrong.</div><div class="zh">这不是时光机。——那个人说这是时光机。——他说错了。</div></div>
+                <div class="dialogue-row"><div class="en">All we gotta do is push this black button right here. You wanna push it?</div><div class="zh">我们只要按下这个黑色按钮就行。你想按吗？</div></div>
+                <div class="dialogue-row"><div class="en">Oh, my goodness. Open, open, open! — What is it? — Dinosaurs.</div><div class="zh">天哪。快看快看！——什么？——恐龙。</div></div>
+                <div class="dialogue-row"><div class="en">We're cavemen. We need this fire, because there's no electricity and it's cold out here.</div><div class="zh">我们是穴居人。我们需要这堆火，因为这里没有电，外面很冷。</div></div>
+                <div class="dialogue-row"><div class="en">We gotta find a cave. Come on.</div><div class="zh">我们得找个山洞。快走。</div></div>
+                <div class="dialogue-row"><div class="en">Are we safe? — Yeah, I think so.</div><div class="zh">我们安全了吗？——安全了，我想是的。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">broke <span class="vocab-pos">adj.</span></div>
+                    <div class="vocab-def">身无分文的，破产的</div>
+                    <div class="vocab-example">"I was broke."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">stick one's hands into <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">伸手拿（别人的东西）</div>
+                    <div class="vocab-example">"The government could stick their hands into your bank account."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">caveman <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">穴居人，原始人</div>
+                    <div class="vocab-example">"We're cavemen. We need this fire."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">jerk someone around <span class="vocab-pos">phr.v.</span></div>
+                    <div class="vocab-def">耍弄某人，敷衍</div>
+                    <div class="vocab-example">"Don't jerk me around, Chris."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">time machine <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">时光机（片中反复出现的象征意象）</div>
+                    <div class="vocab-example">"Bring back my time machine!"</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">bank account <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">银行账户</div>
+                    <div class="vocab-example">"...only 21 dollars and 33 cents left in my bank account."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"There was only 21 dollars and 33 cents left in my bank account. I was broke."</p>
+                <p class="quote-comment">全片情绪最低点的标记。"broke" 是口语中"身无分文"的常用说法，比 "bankrupt" 更生活化、更有切肤之痛。21.33 美元这个精确到分的数字，比任何形容词都更有力量。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"We gotta find a cave."</p>
+                <p class="quote-comment">Chris 在最绝望的夜晚，把地铁站的厕所变成了"山洞"，把无家可归变成了一场时光旅行冒险。这个场景是全片最催泪的段落之一。"cave" 这个词从此在父子之间有了特殊的含义——不是落魄的栖身处，而是安全的庇护所。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第八章 ===== -->
+    <section class="chapter" data-chapter="8" style="display:none">
+        <h2 class="chapter-title">第八章：山洞与庇护所</h2>
+        <p class="chapter-intro">Chris 带着儿子住进了 Glide Memorial 教堂的收容所，每天五点前必须排队抢床位。白天在 Dean Witter 做实习生，晚上修扫描仪、哄儿子入睡。他学会了用最快的速度完成工作——因为每一分钟都关乎那天晚上能不能有地方住。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">We don't take men here. It's women and children only.</div><div class="zh">我们这里不收男人。只收妇女和儿童。</div></div>
+                <div class="dialogue-row"><div class="en">We gotta stay together.</div><div class="zh">我们必须在一起。</div></div>
+                <div class="dialogue-row"><div class="en">Try Glide Memorial. The building books up at 5. So you hurry up. There's a line.</div><div class="zh">你去试试 Glide Memorial。五点就满了，赶紧去，要排队的。</div></div>
+                <div class="dialogue-row"><div class="en">I was here first. I got here on time. I was in line. I came from work, I got my son. I was here on time!</div><div class="zh">我先到的。我按时到的。我排了队。我从公司赶过来，接了儿子。我是按时到的！</div></div>
+                <div class="dialogue-row"><div class="en">What's your favorite color? — Green. — What do you like that's green? — Trees.</div><div class="zh">你最喜欢什么颜色？——绿色。——你喜欢什么绿色的东西？——树。</div></div>
+                <div class="dialogue-row"><div class="en">Don't go. — I'm gonna be right outside the door.</div><div class="zh">别走。——我就在门外面。</div></div>
+                <div class="dialogue-row"><div class="en">You gotta trust me, okay? — I trust you. I trust you. I trust you.</div><div class="zh">你得相信我，好吗？——我相信你。我相信你。我相信你。</div></div>
+                <div class="dialogue-row"><div class="en">I wanna go home.</div><div class="zh">我想回家。</div></div>
+                <div class="dialogue-row"><div class="en">So basically, you want nobody's hands in your pockets but your own?</div><div class="zh">所以基本上，你们希望除了自己以外，没有任何人能从你们口袋里掏钱？</div></div>
+                <div class="dialogue-row"><div class="en">Are you familiar with tax-free municipal...</div><div class="zh">你了解免税市政债券吗……</div></div>
+                <div class="dialogue-row"><div class="en">I learned to finish my work quickly. I had to finish quickly. To get in line at Glide by 5.</div><div class="zh">我学会了快速完成工作。我必须快。为了五点前赶到 Glide 排队。</div></div>
+                <div class="dialogue-row"><div class="en">Lord, don't move that mountain. Give me strength to climb it.</div><div class="zh">主啊，别挪开那座山。给我力量翻越它。</div></div>
+                <div class="dialogue-row"><div class="en">Please don't move that stumbling block. But lead me, Lord, around it.</div><div class="zh">请别搬走那绊脚石。但求你带领我，主啊，绕过它。</div></div>
+                <div class="dialogue-row"><div class="en">When's your test? — Tomorrow. — Are you ready? — Of course.</div><div class="zh">你什么时候考试？——明天。——准备好了吗？——当然。</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">shelter <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">收容所，庇护所</div>
+                    <div class="vocab-example">"Try Glide Memorial. The building books up at 5."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">book up <span class="vocab-pos">phr.v.</span></div>
+                    <div class="vocab-def">订满，住满</div>
+                    <div class="vocab-example">"The building books up at 5."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">tax-free municipal bond <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">免税市政债券</div>
+                    <div class="vocab-example">"Are you familiar with tax-free municipal..."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">stumbling block <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">绊脚石，障碍</div>
+                    <div class="vocab-example">"Don't move that stumbling block. But lead me around it."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">room quota <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">房间配额</div>
+                    <div class="vocab-example">"That's the room quota. There's no more space."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">ferrite core inductor <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">铁氧体芯电感器</div>
+                    <div class="vocab-example">"Here's your bulb, and there's your ferrite core inductor."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"You gotta trust me, okay? — I trust you. I trust you. I trust you."</p>
+                <p class="quote-comment">收容所里，Chris 要去门外修扫描仪，五岁的儿子害怕地连说三遍"我相信你"。这不是简单的重复，而是一个孩子在恐惧中给自己打气。"trust" 在这部电影里不是抽象概念，而是父子之间唯一的货币——在什么都没有的时候，信任是他们仅存的资产。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"Lord, don't move that mountain. Give me strength to climb it."</p>
+                <p class="quote-comment">Glide Memorial 教堂里的赞美诗。Chris 并不是在祈求命运变得容易，而是请求获得面对困难的力量。这段歌词精准地传递了全片的精神——不求捷径，只求不倒下。"stumbling block"（绊脚石）是常见的英语比喻。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 第九章 ===== -->
+    <section class="chapter" data-chapter="9" style="display:none">
+        <h2 class="chapter-title">第九章：幸福</h2>
+        <p class="chapter-intro">考试结束，最后一天到来。Chris 穿上了一件衬衫。合伙人叫他进了办公室，说了一句"明天也穿一件吧"——因为明天将是他作为正式经纪人的第一天。Chris 走出大楼，泪流满面，走进了人群。他人生的这一小段，叫做"幸福"。</p>
+
+        <div class="dialogue-section">
+            <h3>双语对照</h3>
+            <div class="dialogue-grid">
+                <div class="dialogue-row"><div class="en">So you did finish the whole thing? — I have to go somewhere. But I finished the whole thing too.</div><div class="zh">你全做完了？——我还有别的地方要去。但是我也全做完了。</div></div>
+                <div class="dialogue-row"><div class="en">How'd you feel about the graphs? — Easy.</div><div class="zh">你觉得图表部分怎么样？——简单。</div></div>
+                <div class="dialogue-row"><div class="en">I struggled with the essay question on the back. What did you write? — Essay question?</div><div class="zh">我被后面的论述题难住了。你写了什么？——论述题？</div></div>
+                <div class="dialogue-row"><div class="en">Chris, you got five bucks? I left my wallet upstairs. — I'll pay you back, honest.</div><div class="zh">克里斯，你有五块钱吗？我钱包忘在楼上了。——我一定还你，真的。</div></div>
+                <div class="dialogue-row"><div class="en">Did Mom leave because of me? — Don't even think something like that. Mom left because of Mom.</div><div class="zh">妈妈走是因为我吗？——想都别那么想。妈妈走是因为妈妈自己的原因。</div></div>
+                <div class="dialogue-row"><div class="en">You're a good papa.</div><div class="zh">你是个好爸爸。</div></div>
+                <div class="dialogue-row"><div class="en">Sometimes when we're moving at night, we pass houses with lights and people. Sometimes, you can hear them laugh.</div><div class="zh">有时候晚上赶路，我们经过亮着灯的房子和里面的人们。有时候，你能听到他们笑。</div></div>
+                <div class="dialogue-row"><div class="en">Rumor has it you signed 31 accounts for us from Pacific Bell.</div><div class="zh">听说你帮我们从太平洋贝尔签了 31 个账户。</div></div>
+                <div class="dialogue-row"><div class="en">So one more day. Getting nervous? — No, I'm okay.</div><div class="zh">还有最后一天。紧张吗？——不，我还好。</div></div>
+                <div class="dialogue-row"><div class="en">Listen, whatever happens, you've done a fantastic job, Chris. I mean that.</div><div class="zh">听着，不管结果如何，你干得太棒了，克里斯。我是认真的。</div></div>
+                <div class="dialogue-row"><div class="en">I thought I'd wear a shirt today. You know, being the last day and all.</div><div class="zh">我想今天穿件衬衫。毕竟是最后一天嘛。</div></div>
+                <div class="dialogue-row"><div class="en">Thank you. But wear one tomorrow though, okay? Because tomorrow's going to be your first day, if you'd like to work here as a broker.</div><div class="zh">谢谢。不过明天也穿一件，好吗？因为如果你愿意留下来做经纪人的话，明天就是你的第一天。</div></div>
+                <div class="dialogue-row"><div class="en">Would you like that, Chris? — Yes, sir.</div><div class="zh">你愿意吗，克里斯？——愿意，先生。</div></div>
+                <div class="dialogue-row"><div class="en">Was it as easy as it looked? — No, sir. No, sir, it wasn't.</div><div class="zh">事情像看起来那么简单吗？——不，先生。不，先生，一点也不。</div></div>
+                <div class="dialogue-row"><div class="en">This part of my life, this little part, is called "Happiness."</div><div class="zh">我人生的这部分，这小小的一部分，叫做"幸福"。</div></div>
+                <div class="dialogue-row"><div class="en">Knock, knock. — Who's there? — Nobody. — Nobody who?</div><div class="zh">咚咚咚。——谁啊？——没有人。——没有人是谁？</div></div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>重点词汇</h3>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-word">rumor has it <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">据说，听说</div>
+                    <div class="vocab-example">"Rumor has it you signed 31 accounts for us."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">fantastic job <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">出色的工作，干得漂亮</div>
+                    <div class="vocab-example">"You've done a fantastic job, Chris."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">broker <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">经纪人（正式职称）</div>
+                    <div class="vocab-example">"...if you'd like to work here as a broker."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">sign an account <span class="vocab-pos">phr.</span></div>
+                    <div class="vocab-def">签下客户/账户</div>
+                    <div class="vocab-example">"You signed 31 accounts for us from Pacific Bell."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">essay question <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">论述题</div>
+                    <div class="vocab-example">"I struggled with the essay question on the back."</div>
+                </div>
+                <div class="vocab-card">
+                    <div class="vocab-word">five bucks <span class="vocab-pos">n.</span></div>
+                    <div class="vocab-def">五块钱（buck = 美元的口语说法）</div>
+                    <div class="vocab-example">"Chris, you got five bucks?"</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quotes-section">
+            <h3>关键句赏析</h3>
+            <div class="key-quote">
+                <p class="quote-text">"This part of my life, this little part, is called 'Happiness.'"</p>
+                <p class="quote-comment">全片最后一句独白。"this little part"——Chris 用 "little" 来形容这一刻，既是谦逊，也暗示幸福在漫长的苦难面前显得那么短暂。但正因为"小"，才弥足珍贵。片名中故意拼错的 "Happyness" 在这一刻终于还原成了正确的 "Happiness"。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"Did Mom leave because of me? — Don't even think something like that. Mom left because of Mom."</p>
+                <p class="quote-comment">孩子最怕的问题，父亲最难回答的问题。Chris 没有回避，也没有编故事。"Mom left because of Mom" 这个回答简洁到极致，既保护了孩子不背负愧疚，也没有诋毁 Linda。"Don't even think something like that" 中的 "even" 加重了否定的语气——连想都不许想。</p>
+            </div>
+            <div class="key-quote">
+                <p class="quote-text">"Was it as easy as it looked? — No, sir. No, sir, it wasn't."</p>
+                <p class="quote-comment">面试官的最后一问，Chris 重复了两遍 "No, sir"，声音里满是六个月的辛酸。这句话是说给自己听的——所有的不挂电话、不喝水、抢床位、睡厕所，都浓缩在这句简单的否定里。</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== 全片词汇总览 ===== -->
+    <section class="chapter" data-chapter="vocab" style="display:none">
+        <div class="full-vocab-section">
+            <h2>全片词汇总览</h2>
+
+            <div class="full-vocab-group">
+                <h4>金融与商业</h4>
+                <div class="full-vocab-list">
+                    <span>stockbroker 股票经纪人</span>
+                    <span>broker 经纪人</span>
+                    <span>brokerage firm 证券公司</span>
+                    <span>internship 实习</span>
+                    <span>cold-calling 陌生电话推销</span>
+                    <span>call sheet 电话名单</span>
+                    <span>sign an account 签下客户</span>
+                    <span>commission 佣金</span>
+                    <span>portfolio 投资组合</span>
+                    <span>retirement portfolio 退休投资组合</span>
+                    <span>tax-free municipal bond 免税市政债券</span>
+                    <span>board exam 资格考试</span>
+                    <span>commodities 大宗商品</span>
+                    <span>runaway deficit 失控的赤字</span>
+                </div>
+            </div>
+
+            <div class="full-vocab-group">
+                <h4>家庭与情感</h4>
+                <div class="full-vocab-list">
+                    <span>pursuit 追求</span>
+                    <span>happiness 幸福</span>
+                    <span>make up one's mind 下定决心</span>
+                    <span>protect one's dream 捍卫梦想</span>
+                    <span>trust 信任</span>
+                    <span>broke 身无分文的</span>
+                    <span>struggle 挣扎</span>
+                    <span>shelter 收容所</span>
+                    <span>stumbling block 绊脚石</span>
+                    <span>caveman 穴居人</span>
+                </div>
+            </div>
+
+            <div class="full-vocab-group">
+                <h4>日常口语与习语</h4>
+                <div class="full-vocab-list">
+                    <span>gotta (= got to) 必须</span>
+                    <span>gonna (= going to) 将要</span>
+                    <span>wanna (= want to) 想要</span>
+                    <span>bucks 美元（口语）</span>
+                    <span>Holy cow 天哪</span>
+                    <span>good riddance 终于摆脱了</span>
+                    <span>pull it off 成功做到</span>
+                    <span>come up with 想出</span>
+                    <span>reel someone in 吸引某人</span>
+                    <span>jerk someone around 耍弄某人</span>
+                    <span>Period. 就这样，不容商量</span>
+                    <span>fair enough 行，可以接受</span>
+                    <span>rumor has it 听说</span>
+                    <span>point blank 直截了当地</span>
+                </div>
+            </div>
+
+            <div class="full-vocab-group">
+                <h4>生活场景</h4>
+                <div class="full-vocab-list">
+                    <span>bone-density scanner 骨密度扫描仪</span>
+                    <span>file an extension 申请延期</span>
+                    <span>feed the meter 投币停车</span>
+                    <span>parking ticket 停车罚单</span>
+                    <span>pull double shifts 上双份班</span>
+                    <span>daycare 幼儿园/托儿所</span>
+                    <span>bank account 银行账户</span>
+                    <span>life savings 毕生积蓄</span>
+                    <span>share a ride 拼车</span>
+                    <span>jimmy 撬开</span>
+                    <span>street sweeping 扫街</span>
+                    <span>room quota 房间配额</span>
+                </div>
+            </div>
+
+            <div class="full-vocab-group">
+                <h4>文化与历史</h4>
+                <div class="full-vocab-list">
+                    <span>the Declaration of Independence 《独立宣言》</span>
+                    <span>the pursuit of happiness 追求幸福</span>
+                    <span>Thomas Jefferson 托马斯·杰斐逊</span>
+                    <span>Rubik's Cube 魔方</span>
+                    <span>Jimi Hendrix 吉米·亨德里克斯</span>
+                    <span>Glide Memorial 格莱德纪念教堂</span>
+                    <span>Dean Witter 添惠公司</span>
+                    <span>Candlestick Park 烛台公园球场</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 · <a href="/english/">用电影学英语</a> · <a href="/">返回主页</a></p>
+    </footer>
+</div>
+
+<script>
+document.querySelectorAll('.chapter-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = btn.dataset.chapter;
+        document.querySelectorAll('.chapter-tab').forEach(b => b.classList.toggle('active', b === btn));
+        document.querySelectorAll('.chapter').forEach(s => {
+            s.style.display = s.dataset.chapter === target ? '' : 'none';
+        });
+        window.scrollTo({ top: document.querySelector('.chapter-nav').offsetTop, behavior: 'smooth' });
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学英语 — english.lizeming.net</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF8;
+            --text: #1C1C1C;
+            --text-secondary: #5A5A58;
+            --text-tertiary: #8A8A88;
+            --accent: #2B5B4B;
+            --accent-soft: #E8F0EC;
+            --card-bg: #FFFFFF;
+            --border: #E5E5E0;
+            --border-soft: #EFEFEA;
+            --quote-bg: #F5F2EC;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 64px 24px 100px; }
+
+        .hero { text-align: center; margin-bottom: 64px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 12px; }
+        .hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 520px; margin: 0 auto; line-height: 1.8; }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 44px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 9px 26px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .tab:hover { border-color: var(--accent); color: var(--accent); }
+        .tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .section-block { margin-bottom: 56px; }
+        .section-block[hidden] { display: none; }
+        .section-head { margin-bottom: 28px; }
+        .section-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+        .section-sub {
+            font-size: 0.88rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.02em;
+        }
+        .coming-soon {
+            border: 1px dashed var(--border);
+            border-radius: 14px;
+            padding: 44px 24px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.92rem;
+            background: var(--card-bg);
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 28px;
+        }
+
+        .movie-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .movie-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .movie-poster {
+            height: 180px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #2B5B4B 0%, #1a3a2e 100%);
+            position: relative;
+        }
+        .movie-poster.variant-warm {
+            background: linear-gradient(135deg, #8B5E3C 0%, #5C3D2E 100%);
+        }
+        .movie-poster.variant-deep {
+            background: linear-gradient(135deg, #3B4371 0%, #28304E 100%);
+        }
+        .movie-poster.variant-news {
+            background: linear-gradient(135deg, #B44D2D 0%, #7A2E18 100%);
+        }
+        .poster-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+        .poster-year {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+
+        .movie-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            padding: 20px 24px 0;
+        }
+        .movie-card .english-title {
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            padding: 2px 24px 0;
+        }
+        .movie-card .desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 10px 24px 0;
+            line-height: 1.75;
+        }
+        .movie-card .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px 20px;
+        }
+        .movie-card .meta-info {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+        }
+        .movie-card .arrow {
+            font-size: 0.82rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-tertiary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-tertiary); text-decoration: none; border-bottom: 1px dotted var(--text-tertiary); }
+        footer a:hover { color: var(--accent); }
+
+        @media (max-width: 720px) {
+            .container { padding: 48px 20px 80px; }
+            .hero h1 { font-size: 1.8rem; }
+            .movies-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header class="hero">
+        <h1>学英语</h1>
+        <p>从经典电影到当下热点，挑选鲜活的语料，逐句拆解地道表达。让语言在真实语境里生长。</p>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab active" type="button" data-target="panel-film">光影叙事</button>
+        <button class="tab" type="button" data-target="panel-topic">时代脉络</button>
+    </nav>
+
+    <section class="section-block" id="panel-film">
+        <div class="section-head">
+            <p class="section-sub">用电影学英语 · 逐章拆解对白，积累地道词汇与表达</p>
+        </div>
+
+        <div class="movies-grid">
+
+        <a class="movie-card" href="/english/12-angry-men/" data-date="2026-06-11">
+            <div class="movie-poster">
+                <div>
+                    <div class="poster-title">十二怒汉</div>
+                    <div class="poster-year">1957</div>
+                </div>
+            </div>
+            <h3>十二怒汉</h3>
+            <p class="english-title">12 Angry Men</p>
+            <p class="desc">十二名陪审员在一间闷热的房间里，就一桩看似铁证如山的谋杀案展开辩论。一个人的坚持，撼动了所有人的偏见。</p>
+            <div class="meta">
+                <span class="meta-info">法庭 · 剧情 · 1957</span>
+                <span class="arrow">开始学习 →</span>
+            </div>
+        </a>
+
+        <a class="movie-card" href="/english/pursuit-of-happyness/" data-date="2026-06-11">
+            <div class="movie-poster variant-warm">
+                <div>
+                    <div class="poster-title">当幸福来敲门</div>
+                    <div class="poster-year">2006</div>
+                </div>
+            </div>
+            <h3>当幸福来敲门</h3>
+            <p class="english-title">The Pursuit of Happyness</p>
+            <p class="desc">落魄推销员克里斯·加德纳带着五岁的儿子，在旧金山的街头一路挣扎，从无家可归到通过 Dean Witter 的股票经纪人实习。真实故事改编。</p>
+            <div class="meta">
+                <span class="meta-info">传记 · 励志 · 2006</span>
+                <span class="arrow">开始学习 →</span>
+            </div>
+        </a>
+
+        <a class="movie-card" href="/english/the-west-wing/" data-date="2026-06-11">
+            <div class="movie-poster variant-deep">
+                <div>
+                    <div class="poster-title">白宫风云</div>
+                    <div class="poster-year">1999</div>
+                </div>
+            </div>
+            <h3>白宫风云</h3>
+            <p class="english-title">The West Wing</p>
+            <p class="desc">美国总统与幕僚的白宫日常，政治、外交、人性交织。台词密集、词汇正式，学术英语的最佳语料。</p>
+            <div class="meta">
+                <span class="meta-info">政治 · 剧情 · 1999 · 更新中</span>
+                <span class="arrow">开始学习 →</span>
+            </div>
+        </a>
+
+        </div>
+    </section>
+
+    <section class="section-block" id="panel-topic" hidden>
+        <div class="section-head">
+            <p class="section-sub">用当下热门话题学英语 · 在真实时事语境中理解地道表达</p>
+        </div>
+
+        <div class="movies-grid">
+
+        <a class="movie-card" href="/english/fable-mythos-suspension/" data-date="2026-06-13">
+            <div class="movie-poster variant-news">
+                <div>
+                    <div class="poster-title">Fable 5 风波</div>
+                    <div class="poster-year">2026.06</div>
+                </div>
+            </div>
+            <h3>美国政府暂停 Fable 5 与 Mythos 5</h3>
+            <p class="english-title">US Government Suspends Access to Fable 5 &amp; Mythos 5</p>
+            <p class="desc">以 Anthropic 官方声明为素材，拆解政策、科技与商业英语的高频词汇与句式：出口管制、合规、越狱、纵深防御……一篇读懂正式声明的措辞之道。</p>
+            <div class="meta">
+                <span class="meta-info">官方声明 · 时事 · B2 · 2026</span>
+                <span class="arrow">开始学习 →</span>
+            </div>
+        </a>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 · <a href="/">返回主页</a></p>
+    </footer>
+
+</div>
+
+<script>
+    function activateTab(target) {
+        document.querySelectorAll('.tab').forEach(function (t) {
+            t.classList.toggle('active', t.dataset.target === target);
+        });
+        document.querySelectorAll('.section-block').forEach(function (p) {
+            p.hidden = p.id !== target;
+        });
+    }
+
+    document.querySelectorAll('.tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            activateTab(tab.dataset.target);
+        });
+    });
+
+    // 默认显示「最新更新」所在的标签：扫描所有卡片的 data-date，取最新的那条。
+    // 以后给新卡片填上更晚的 data-date（YYYY-MM-DD），进主页就会自动切到它所在的标签。
+    (function () {
+        var latestDate = null, latestPanel = null;
+        document.querySelectorAll('.movie-card[data-date]').forEach(function (card) {
+            var d = card.getAttribute('data-date');
+            if (latestDate === null || d > latestDate) {
+                latestDate = d;
+                var panel = card.closest('.section-block');
+                if (panel) { latestPanel = panel.id; }
+            }
+        });
+        if (latestPanel) { activateTab(latestPanel); }
+    })();
+</script>
+</body>
+</html>
