@@ -134,6 +134,56 @@
             background: var(--card-bg);
         }
 
+        /* 指数估值策略卡 */
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
+        }
+        .index-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 24px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .index-card .ic-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .index-card .ic-name { font-family: 'Noto Serif SC', serif; font-size: 1.2rem; font-weight: 700; }
+        .index-card .ic-code { font-family: 'Inter', sans-serif; font-size: 0.74rem; color: var(--text-tertiary); margin-top: 1px; }
+        .index-card .ic-pill {
+            font-family: 'Inter', 'Noto Serif SC', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 999px;
+            padding: 4px 13px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .index-card .ic-metric { display: flex; align-items: baseline; gap: 8px; margin: 18px 0 4px; }
+        .index-card .ic-value { font-family: 'Inter', sans-serif; font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; }
+        .index-card .ic-mlabel { font-size: 0.78rem; color: var(--text-tertiary); }
+        .index-card .ic-extra { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 14px; }
+        .index-card .ic-action {
+            font-size: 0.92rem; font-weight: 700; color: var(--accent);
+            background: var(--accent-soft); border-radius: 8px;
+            padding: 9px 14px; margin-bottom: 8px;
+        }
+        .index-card .ic-hint { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 16px; }
+        .index-card .ic-ladder {
+            font-family: 'Inter', sans-serif; font-size: 0.72rem; line-height: 1.7;
+            color: var(--text-tertiary); border-top: 1px solid var(--border-soft);
+            padding-top: 12px; margin-top: auto;
+        }
+        .index-card .ic-foot { font-size: 0.72rem; color: var(--text-tertiary); margin-top: 10px; }
+        .index-loading, .index-error { color: var(--text-tertiary); font-size: 0.9rem; padding: 24px 4px; }
+
         footer {
             text-align: center;
             padding-top: 24px;
@@ -226,9 +276,12 @@
 
     <section class="section-block" id="panel-valuation" hidden>
         <div class="section-head">
-            <p class="section-sub">指数与个股的估值追踪 · 基于历史分位、股息率、隐含 ROE 的系统化信号</p>
+            <span class="topic-tag">指数 · 估值定投系统</span>
+            <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前两个跟踪指数的最新信号。</p>
         </div>
-        <div class="coming-soon">即将上线 · 把估值判断自动化，去除情绪干扰</div>
+        <div class="index-grid" id="index-cards">
+            <div class="index-loading">正在加载最新信号…</div>
+        </div>
     </section>
 
     <footer>
@@ -249,6 +302,48 @@
     document.querySelectorAll('.tab').forEach(function (tab) {
         tab.addEventListener('click', function () { activateTab(tab.dataset.target); });
     });
+
+    // ── 估值策略：加载指数信号卡 ──
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+    }
+    function renderIndexCard(d) {
+        var extra = d.extra ? '<div class="ic-extra">' + esc(d.extra) + '</div>' : '';
+        var hint = d.hint ? '<div class="ic-hint">📍 ' + esc(d.hint) + '</div>' : '';
+        return '' +
+            '<div class="index-card">' +
+              '<div class="ic-head">' +
+                '<div><div class="ic-name">' + esc(d.name) + '</div>' +
+                     '<div class="ic-code">' + esc(d.code) + '</div></div>' +
+                '<span class="ic-pill" style="background:' + esc(d.color) + '">' + esc(d.status) + '</span>' +
+              '</div>' +
+              '<div class="ic-metric"><span class="ic-value">' + esc(d.metric_value) + '</span>' +
+                '<span class="ic-mlabel">' + esc(d.metric_label) + '</span></div>' +
+              extra +
+              '<div class="ic-action">📌 ' + esc(d.action) + '</div>' +
+              hint +
+              '<div class="ic-ladder">' + esc(d.ladder) + '</div>' +
+              '<div class="ic-foot">更新于 ' + esc(d.date) + '</div>' +
+            '</div>';
+    }
+    (function loadIndexCards() {
+        var wrap = document.getElementById('index-cards');
+        var files = ['/invest/strategy/data/csi300.json', '/invest/strategy/data/hongli.json'];
+        Promise.all(files.map(function (u) {
+            return fetch(u, { cache: 'no-store' })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .catch(function () { return null; });
+        })).then(function (results) {
+            var cards = results.filter(Boolean);
+            if (!cards.length) {
+                wrap.innerHTML = '<div class="index-error">信号数据暂时无法加载，请稍后再试。</div>';
+                return;
+            }
+            wrap.innerHTML = cards.map(renderIndexCard).join('');
+        });
+    })();
 </script>
 </body>
 </html>
