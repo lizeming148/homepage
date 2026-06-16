@@ -274,7 +274,7 @@
         </div>
     </section>
 
-    <section class="section-block" id="panel-valuation" hidden>
+    <section class="section-block" id="panel-valuation" hidden data-date="2026-06-16">
         <div class="section-head">
             <span class="topic-tag">指数 · 估值定投系统</span>
             <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前两个跟踪指数的最新信号。</p>
@@ -302,6 +302,21 @@
     document.querySelectorAll('.tab').forEach(function (tab) {
         tab.addEventListener('click', function () { activateTab(tab.dataset.target); });
     });
+
+    // 默认显示「最新更新」所在的标签：扫描所有带 data-date 的元素（卡片或整块面板），取最新的那条。
+    // 以后给新内容填上更晚的 data-date（YYYY-MM-DD），进页面就会自动切到它所在的标签。
+    (function () {
+        var latestDate = null, latestPanel = null;
+        document.querySelectorAll('[data-date]').forEach(function (el) {
+            var d = el.getAttribute('data-date');
+            if (latestDate === null || d > latestDate) {
+                latestDate = d;
+                var panel = el.closest('.section-block');
+                if (panel) { latestPanel = panel.id; }
+            }
+        });
+        if (latestPanel) { activateTab(latestPanel); }
+    })();
 
     // ── 估值策略：加载指数信号卡 ──
     function esc(s) {
