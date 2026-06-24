@@ -274,7 +274,7 @@
         </div>
     </section>
 
-    <section class="section-block" id="panel-valuation" hidden data-date="2026-06-16">
+    <section class="section-block" id="panel-valuation" hidden data-date="2026-06-22">
         <div class="section-head">
             <span class="topic-tag">指数 · 估值定投系统</span>
             <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前两个跟踪指数的最新信号。</p>
@@ -345,7 +345,7 @@
     }
     (function loadIndexCards() {
         var wrap = document.getElementById('index-cards');
-        var files = ['/invest/strategy/data/csi300.json', '/invest/strategy/data/hongli.json'];
+        var files = ['/invest/strategy/data/csi300.json', '/invest/strategy/data/hongli.json', '/invest/strategy/data/hsi.json'];
         Promise.all(files.map(function (u) {
             return fetch(u, { cache: 'no-store' })
                 .then(function (r) { return r.ok ? r.json() : null; })

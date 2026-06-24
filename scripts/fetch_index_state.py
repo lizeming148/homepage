@@ -35,6 +35,7 @@ COLOR_HEX = {
     "green":  "#2B7A4B",
     "blue":   "#2F5FAE",
     "purple": "#7D3C98",
+    "turquoise": "#0E9E8E",
 }
 
 
@@ -89,6 +90,15 @@ def safe_float(v):
         return float(v)
     except (TypeError, ValueError):
         return None
+
+
+def _plain_text(field_value):
+    """飞书文本字段可能是字符串，也可能是 [{type:'text', text:'...'}] 结构。"""
+    if isinstance(field_value, list) and field_value:
+        first = field_value[0]
+        if isinstance(first, dict):
+            return first.get("text", "") or ""
+    return field_value or ""
 
 
 # ─────────────────────────────────────────────
@@ -234,6 +244,87 @@ def build_hongli(token):
 
 
 # ─────────────────────────────────────────────
+# 恒生指数（与 hsi-monitor / strategy.py 一致）
+#   数据源：飞书 hsi_history 表（tier 已由引擎算好，这里直接读最新一行）
+#   复用同一组 FEISHU_APP_ID/SECRET，base / 表 ID 为公开常量（见 hsi-monitor/config.py）
+# ─────────────────────────────────────────────
+HSI_APP_TOKEN = os.environ.get("FEISHU_APP_TOKEN_HSI", "Wp3XbNSkMaPwBbs17pbcMFjhnEf")
+HSI_HISTORY_TABLE = os.environ.get("FEISHU_HISTORY_TABLE_HSI", "tblLddXoap38WKC0")
+HSI_LADDER = ("≥4.03% 加大买入 ｜ 3.57~4.03% 分批买入 ｜ 3.38~3.57% 关注准备 ｜ "
+              "3.06~3.38% 持有不加 ｜ <3.06% 减仓")
+# 档位标签 → (操作建议, 飞书色)，与 config.py TIER_THRESHOLDS / TIER_COLOR 对齐
+HSI_TIERS = {
+    "⑤深度低估": ("加大力度买入", "turquoise"),
+    "④买入区":   ("分批买入",     "green"),
+    "③中性":     ("关注准备",     "yellow"),
+    "②偏贵":     ("持有不加",     "orange"),
+    "①危险":     ("满仓者考虑减仓", "red"),
+}
+# 各档向更便宜（股息率更高）方向需突破的阈值及其档名
+HSI_UPWARD = {
+    "①危险":   (3.06, "偏贵"),
+    "②偏贵":   (3.38, "中性"),
+    "③中性":   (3.57, "买入区"),
+    "④买入区": (4.03, "深度低估"),
+}
+
+
+def hsi_hint(tier, div_pct):
+    nxt = HSI_UPWARD.get(tier)
+    if nxt is None:
+        return "已达最高档，等待市场回暖"
+    target, name = nxt
+    return f"距{name}({target}%) ↑{round(target - div_pct, 2)}%"
+
+
+def build_hsi(token):
+    items = fetch_all(token, HSI_APP_TOKEN, HSI_HISTORY_TABLE,
+                      ["date", "close", "pe", "div_yield", "cn10y", "us10y",
+                       "spread_dy_cn", "erp_cn", "tier"])
+    latest = latest_by_date(items, date_field="date")
+    if not latest:
+        print("⚠️ 恒生指数 hsi_history 为空")
+        return None
+    ms, f = latest
+    div_pct = safe_float(f.get("div_yield"))
+    tier = _plain_text(f.get("tier"))
+    if div_pct is None or not tier:
+        print("⚠️ 恒生指数 股息率或档位缺失")
+        return None
+    pe = safe_float(f.get("pe"))
+    spread = safe_float(f.get("spread_dy_cn"))
+    erp = safe_float(f.get("erp_cn"))
+    cn10y = safe_float(f.get("cn10y"))
+    action, color = HSI_TIERS.get(tier, ("", "blue"))
+    print(f"📊 恒生指数 最新：{ms_to_date(ms)}  股息率={div_pct}%  {tier}")
+
+    extra_parts = []
+    if pe is not None:
+        extra_parts.append(f"PE {pe:.2f}")
+    if spread is not None:
+        extra_parts.append(f"股债差 {spread:+.2f}%")
+    if erp is not None:
+        extra_parts.append(f"ERP {erp:+.2f}%")
+    extra = " · ".join(extra_parts)
+    if cn10y is not None and cn10y < 1.80:
+        extra += " · ⚠中债异常低"
+
+    return {
+        "name": "恒生指数",
+        "code": "HSI.HK",
+        "date": ms_to_date(ms),
+        "status": tier,
+        "color": COLOR_HEX.get(color, "#2F5FAE"),
+        "metric_label": "股息率",
+        "metric_value": f"{div_pct:.2f}%",
+        "action": action,
+        "hint": hsi_hint(tier, div_pct),
+        "extra": extra,
+        "ladder": HSI_LADDER,
+    }
+
+
+# ─────────────────────────────────────────────
 # 主流程
 # ─────────────────────────────────────────────
 def write_json(name, payload):
@@ -257,7 +348,7 @@ def main():
         sys.exit(1)
 
     ok = False
-    for name, builder in (("csi300", build_csi300), ("hongli", build_hongli)):
+    for name, builder in (("csi300", build_csi300), ("hongli", build_hongli), ("hsi", build_hsi)):
         try:
             payload = builder(token)
             if payload:
