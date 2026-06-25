@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恒生指数 · 股息率五档策略 — lizeming.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#FAFAF8;--text:#1C1C1C;--text-secondary:#5A5A58;--text-tertiary:#8A8A88;
+        --accent:#2B5B4B;--accent-soft:#E8F0EC;--card-bg:#FFFFFF;--border:#E5E5E0;--border-soft:#EFEFEA;
+        --hero:#CB6B1E;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Serif SC','Inter',serif;background:var(--bg);color:var(--text);line-height:1.85;-webkit-font-smoothing:antialiased}
+    .container{max-width:820px;margin:0 auto;padding:40px 24px 100px}
+    .crumb{font-size:0.84rem;margin-bottom:28px;color:var(--text-tertiary)}
+    .crumb a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    .crumb a:hover{color:var(--accent)}
+    .phead{border-bottom:1px solid var(--border);padding-bottom:26px;margin-bottom:6px}
+    .kicker{display:inline-block;font-family:'Inter',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--hero);border-radius:999px;padding:4px 13px;margin-bottom:14px}
+    .phead h1{font-size:1.95rem;font-weight:700;margin-bottom:6px}
+    .phead .code{font-family:'Inter',sans-serif;font-size:0.82rem;color:var(--text-tertiary)}
+    .phead .lead{color:var(--text-secondary);font-size:0.98rem;margin-top:12px;max-width:640px}
+
+    .signal{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:30px 0 8px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
+    .signal .sig-loading{color:var(--text-tertiary);font-size:0.9rem}
+    .sig-metric{display:flex;align-items:baseline;gap:8px}
+    .sig-value{font-family:'Inter',sans-serif;font-size:2rem;font-weight:600}
+    .sig-label{font-size:0.78rem;color:var(--text-tertiary)}
+    .sig-pill{font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.8rem;font-weight:600;color:#fff;border-radius:999px;padding:4px 14px}
+    .sig-action{font-size:0.92rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:7px 14px}
+    .sig-meta{font-size:0.8rem;color:var(--text-tertiary);width:100%}
+    .sig-foot{font-size:0.74rem;color:var(--text-tertiary);width:100%;margin-top:-4px}
+
+    h2{font-size:1.28rem;font-weight:700;margin:46px 0 14px;display:flex;align-items:center;gap:12px}
+    h2 .num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:600;display:flex;align-items:center;justify-content:center}
+    p{margin:12px 0;color:var(--text)}
+    .block p strong{color:var(--accent)}
+    ul{margin:12px 0 12px 4px;padding-left:22px}
+    li{margin:9px 0;color:var(--text)}
+
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.88rem;background:var(--card-bg)}
+    th,td{border:1px solid var(--border);padding:9px 12px;text-align:left}
+    th{background:var(--accent-soft);color:var(--accent);font-weight:600}
+    td.zone{font-weight:600;white-space:nowrap}
+    .callout{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:0.92rem;color:var(--text-secondary)}
+    .warn{background:#fdf3e7;border-left:4px solid var(--hero);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:0.92rem;color:#6b5630}
+    .disc{background:#fff8f0;border:1px solid #f0d9b5;border-radius:10px;padding:14px 18px;font-size:0.84rem;color:#6b5630;margin-top:44px}
+    footer{text-align:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--border);color:var(--text-tertiary);font-size:0.8rem}
+    footer a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    footer a:hover{color:var(--accent)}
+    @media(max-width:620px){.phead h1{font-size:1.6rem}.sig-value{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+    <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
+
+    <header class="phead">
+        <span class="kicker">指数估值策略</span>
+        <h1>恒生指数 · 股息率五档策略</h1>
+        <div class="code">HSI.HK</div>
+        <p class="lead">为一个「不靠盈利成长、靠分红支撑」的市场量身定做：用股息率五档判断买卖力度，再用股债性价比和利率尾部预警做侧翼，盯住港股特有的宏观风险。</p>
+    </header>
+
+    <section class="signal" id="signal"><div class="sig-loading">正在加载当前信号…</div></section>
+
+    <section class="block">
+        <h2><span class="num">1</span>这个策略是什么</h2>
+        <p>主信号是<strong>恒生指数的股息率</strong>，划成五档对应不同的买卖力度；同时用<strong>股债差</strong>（股息率 − 中债10Y）和 <strong>ERP</strong>（100/PE − 中债10Y）衡量它相对债券的性价比，再叠加一套独立的利率尾部预警。</p>
+        <table>
+            <thead><tr><th>股息率</th><th>档位</th><th>动作</th></tr></thead>
+            <tbody>
+                <tr><td class="zone">≥ 4.03%</td><td>⑤ 深度低估</td><td>加大力度买入</td></tr>
+                <tr><td class="zone">3.57% ~ 4.03%</td><td>④ 买入区</td><td>分批买入</td></tr>
+                <tr><td class="zone">3.38% ~ 3.57%</td><td>③ 中性</td><td>关注准备</td></tr>
+                <tr><td class="zone">3.06% ~ 3.38%</td><td>② 偏贵</td><td>持有不加</td></tr>
+                <tr><td class="zone">&lt; 3.06%</td><td>① 危险</td><td>满仓者考虑减仓</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">2</span>背后的逻辑，以及它是怎么来的</h2>
+        <p><strong>恒指为什么用股息率而不用 PE。</strong>恒生指数长期盈利近乎停滞，更接近一个「股息驱动」而非「盈利成长驱动」的市场；加上成分里地产、金融、科技此消彼长，PE 的波动很大程度来自结构变化而非真实贵贱。相比之下，股息率作为估值锚更稳定、更能反映长期回报来源。</p>
+        <p><strong>为什么还要看股债性价比。</strong>港股的资金成本看的是利率。用股债差和 ERP 把恒指的收益率和无风险利率（中债10Y）摆在一起，就能判断它相对债券到底值不值——这是对单一股息率信号的补充。</p>
+        <div class="callout"><strong>五档阈值是怎么标定的。</strong>基于 <strong>245 个月（2006-01 ~ 2026-05）的 iFinD 历史数据</strong>。原本在 touzid 口径下的阈值（3.0 / 3.5 / 3.7 / 4.4%）因数据源口径不同，按<strong>百分位等价</strong>重映射到 iFinD 口径：3.0%→3.06%（P25）、3.5%→3.38%（P38）、3.7%→3.57%（P50）、4.4%→4.03%（P76）。档位划分依据设计文档的 20 年回测结论，调整需附数据回测理由，不随手改。</div>
+        <div class="warn"><strong>独立的利率尾部预警（不影响档位，只提示）。</strong>美债 10Y 单月飙升 &gt;50bp 或 6 个月累计 &gt;150bp 时触发预警；中债 10Y &lt;1.8% 时提示「中债异常低，股债差可能被机械推高、失真」——2024 年后中债长期处在 1.6~1.7%，这条提示经常亮。</div>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">3</span>这个策略可能面临的风险</h2>
+        <ul>
+            <li><strong>样本局限。</strong>20 年只覆盖约 4 个估值周期，每档大约 60 个月样本，部分档位的单调性靠少数极端样本撑着，统计置信度有限。</li>
+            <li><strong>PE 口径偏差。</strong>touzid 的 PE 口径约系统性偏低 16%，因此 PE 与 ERP 的绝对值<strong>不能跨数据源比较</strong>，只能在同一口径内看趋势。</li>
+            <li><strong>利率失真。</strong>2024 年后中债异常低，会机械地把股债差推高，这个辅助信号需要打折看。</li>
+            <li><strong>外部冲击。</strong>港股深受美元流动性、美债利率、地缘政治和南向资金影响，股息率锚可能被宏观冲击短期带偏。</li>
+        </ul>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">4</span>限制条件 / 什么情况下它不再成立</h2>
+        <ul>
+            <li><strong>市场逻辑切换。</strong>整个框架的前提是恒指「股息驱动」。一旦恒指重新变成盈利驱动（EPS 连续 4 个季度同比 &gt;0），就需要重审框架、甚至改回盈利 / EPS 引擎。</li>
+            <li><strong>口径绑定。</strong>阈值绑定 iFinD 口径与那套百分位重映射；更换数据源或口径必须重新映射，绝对股息率不可跨源直接套用。</li>
+            <li><strong>数据与登录依赖。</strong>数据依赖 touzid / iFinD 及登录 Cookie，源失效或 Cookie 过期就会信号停更（系统会推送失效告警）。</li>
+            <li><strong>辅助信号降级。</strong>中债异常低期间，股债差这一辅助判断的可信度下降，应更多回到股息率主信号本身。</li>
+        </ul>
+    </section>
+
+    <div class="disc"><strong>免责声明</strong>：本页为个人投资方法论的记录与复盘，所有阈值、口径、重映射与回测结论均为作者自用设定，<strong>不构成任何投资建议</strong>。股息率分档是历史统计规律，不保证未来有效，据此操作风险自负。</div>
+
+    <footer><p>数据每日自动更新 · <a href="/invest/">返回做投资</a> · <a href="/">主页</a></p></footer>
+
+</div>
+
+<script>
+    function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+    fetch('/invest/strategy/data/hsi.json',{cache:'no-store'})
+        .then(function(r){return r.ok?r.json():null})
+        .then(function(d){
+            var el=document.getElementById('signal');
+            if(!d){el.innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>';return}
+            var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
+            var hint=d.hint?'<div class="sig-meta">📍 '+esc(d.hint)+'</div>':'';
+            el.innerHTML=
+                '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
+                '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
+                '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
+                extra+hint+
+                '<div class="sig-foot">当前信号 · 更新于 '+esc(d.date)+'</div>';
+        })
+        .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
+</script>
+</body>
+</html>

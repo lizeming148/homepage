@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沪深300 · PE 估值定投策略 — lizeming.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#FAFAF8;--text:#1C1C1C;--text-secondary:#5A5A58;--text-tertiary:#8A8A88;
+        --accent:#2B5B4B;--accent-soft:#E8F0EC;--card-bg:#FFFFFF;--border:#E5E5E0;--border-soft:#EFEFEA;
+        --hero:#7D3C98;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Serif SC','Inter',serif;background:var(--bg);color:var(--text);line-height:1.85;-webkit-font-smoothing:antialiased}
+    .container{max-width:820px;margin:0 auto;padding:40px 24px 100px}
+    .crumb{font-size:0.84rem;margin-bottom:28px;color:var(--text-tertiary)}
+    .crumb a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    .crumb a:hover{color:var(--accent)}
+    .phead{border-bottom:1px solid var(--border);padding-bottom:26px;margin-bottom:6px}
+    .kicker{display:inline-block;font-family:'Inter',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--hero);border-radius:999px;padding:4px 13px;margin-bottom:14px}
+    .phead h1{font-size:1.95rem;font-weight:700;margin-bottom:6px}
+    .phead .code{font-family:'Inter',sans-serif;font-size:0.82rem;color:var(--text-tertiary)}
+    .phead .lead{color:var(--text-secondary);font-size:0.98rem;margin-top:12px;max-width:640px}
+
+    /* 实时信号条 */
+    .signal{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:30px 0 8px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 26px}
+    .signal .sig-loading{color:var(--text-tertiary);font-size:0.9rem}
+    .sig-metric{display:flex;align-items:baseline;gap:8px}
+    .sig-value{font-family:'Inter',sans-serif;font-size:2rem;font-weight:600}
+    .sig-label{font-size:0.78rem;color:var(--text-tertiary)}
+    .sig-pill{font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.8rem;font-weight:600;color:#fff;border-radius:999px;padding:4px 14px}
+    .sig-action{font-size:0.92rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:7px 14px}
+    .sig-meta{font-size:0.8rem;color:var(--text-tertiary);width:100%}
+    .sig-foot{font-size:0.74rem;color:var(--text-tertiary);width:100%;margin-top:-4px}
+
+    h2{font-size:1.28rem;font-weight:700;margin:46px 0 14px;display:flex;align-items:center;gap:12px}
+    h2 .num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:600;display:flex;align-items:center;justify-content:center}
+    p{margin:12px 0;color:var(--text)}
+    .block p strong{color:var(--accent)}
+    ul{margin:12px 0 12px 4px;padding-left:22px}
+    li{margin:9px 0;color:var(--text)}
+    li strong{color:var(--text)}
+
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.88rem;background:var(--card-bg)}
+    th,td{border:1px solid var(--border);padding:9px 12px;text-align:left}
+    th{background:var(--accent-soft);color:var(--accent);font-weight:600}
+    td.zone{font-weight:600;white-space:nowrap}
+    .callout{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:0.92rem;color:var(--text-secondary)}
+    .disc{background:#fff8f0;border:1px solid #f0d9b5;border-radius:10px;padding:14px 18px;font-size:0.84rem;color:#6b5630;margin-top:44px}
+    footer{text-align:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--border);color:var(--text-tertiary);font-size:0.8rem}
+    footer a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    footer a:hover{color:var(--accent)}
+    @media(max-width:620px){.phead h1{font-size:1.6rem}.sig-value{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+    <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
+
+    <header class="phead">
+        <span class="kicker">指数估值策略</span>
+        <h1>沪深300 · PE 估值定投策略</h1>
+        <div class="code">000300.SH</div>
+        <p class="lead">把择时交给规则：用沪深300的市盈率（PE-TTM）分档，便宜时加倍定投、贵时分批减仓清仓，去掉情绪、只按估值高低执行的纯规则定投系统。</p>
+    </header>
+
+    <section class="signal" id="signal"><div class="sig-loading">正在加载当前信号…</div></section>
+
+    <section class="block">
+        <h2><span class="num">1</span>这个策略是什么</h2>
+        <p>跟踪的唯一信号是<strong>沪深300 PE-TTM（投资网口径）</strong>，每日自动抓取。把 PE 划成六个档位，每个档位对应一个固定动作——越便宜买得越多，越贵越往外撤。所谓「基数」即每月计划定投金额（默认 1 万元），倍数就是当月实际投入相对基数的比例。</p>
+        <table>
+            <thead><tr><th>PE 区间</th><th>动作</th><th>含义</th></tr></thead>
+            <tbody>
+                <tr><td class="zone">≤ 11.0</td><td>定投 ×3.0 基数</td><td>极度低估，最高档买入</td></tr>
+                <tr><td class="zone">11.0 ~ 11.5</td><td>定投 ×1.5 基数</td><td>显著低估</td></tr>
+                <tr><td class="zone">11.5 ~ 12.0</td><td>定投 ×0.2 基数</td><td>试探性建仓</td></tr>
+                <tr><td class="zone">12.0 ~ 14.0</td><td>持仓不动</td><td>正常估值区间，观察</td></tr>
+                <tr><td class="zone">≥ 14.0</td><td>月度卖出 ×1 基数</td><td>偏高，开始减仓</td></tr>
+                <tr><td class="zone">≥ 14.5</td><td>全部清仓</td><td>高位完全退出</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">2</span>背后的逻辑，以及它是怎么来的</h2>
+        <p><strong>为什么选沪深300。</strong>它是 A 股的核心宽基，覆盖沪深两市最大市值的 300 只股票，代表中国的核心资产。宽基的整体盈利比单一行业稳定，不容易因为某家公司出问题而失真，天然适合长期、被动地定投。</p>
+        <p><strong>为什么用 PE 均值回归。</strong>宽基指数的市盈率长期围绕一个中枢上下波动，极端的低估与高估最终都会向中枢回归。在便宜时多买、在贵时退出，本质上是用估值分位代替主观择时，把「低买高卖」变成一条可执行、可复盘的纪律，从而抬高长期回报、压低情绪化操作的成本。</p>
+        <p><strong>档位阈值怎么定的。</strong>依据沪深300的历史 PE 分布划线：11 以下属于历史偏低区，加大定投；12~14 是常态区间，只持有；14 以上进入历史偏高区，分批撤出，14.5 触发全清。</p>
+        <div class="callout"><strong>口径是怎么对齐的（这一步最容易被忽略）。</strong>中证官网每天只提供 PE1（总股本口径）的 XLS，而策略判断用的是投资网口径。两者之间存在一个非常稳定的线性比率 ratio ≈ <strong>0.9765</strong>（用 20 个交易日样本测得，标准差 &lt;0.002，变异系数仅 0.12%）。于是 <code>PE_converted = PE1 × ratio</code>，转换后与投资网口径完全吻合；当校准表里积累 ≥5 条新样本，程序会自动重算 ratio。<br>—— 为什么不用 PE2（计算用股本口径）？它的比率变异系数高达 0.66%，是 PE1 的五倍以上，还随时间漂移，不可靠，直接排除。</div>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">3</span>这个策略可能面临的风险</h2>
+        <ul>
+            <li><strong>均值回归本身失效。</strong>如果成分股的盈利结构长期恶化，PE 中枢会整体下移，此时的「低估」可能是价值陷阱——便宜了还能更便宜。</li>
+            <li><strong>强趋势单边市。</strong>单边上涨中可能过早清仓而踏空后续涨幅；单边下跌中可能过早把仓位买满、后续无弹药可用。</li>
+            <li><strong>口径与数据风险。</strong>ratio 若发生漂移而未及时校准，或中证官网数据延迟、缺失，都会让信号失真。</li>
+            <li><strong>行业集中度。</strong>沪深300权重偏向金融、白酒等少数板块，这些行业的景气切换会显著带动整体估值，并非完全分散。</li>
+        </ul>
+    </section>
+
+    <section class="block">
+        <h2><span class="num">4</span>限制条件 / 什么情况下它不再成立</h2>
+        <ul>
+            <li><strong>ratio 不再稳定。</strong>当口径转换比率的变异系数明显抬升，说明两个口径关系断裂，转换结果不可信，必须重新校准甚至更换口径。</li>
+            <li><strong>指数基本面逻辑改变。</strong>成分大幅调整、或指数盈利长期负增长，历史 PE 阈值就失去参照意义，需要重新制定档位。</li>
+            <li><strong>数据源中断。</strong>中证官网 XLS 不可用时信号停更，策略无法运行。</li>
+            <li><strong>纪律前提被打破。</strong>整套统计优势建立在「长期、纪律化、资金可持续投入」之上。若中途主观干预、或现金流断了无法持续定投，策略的统计期望就不再成立。</li>
+        </ul>
+    </section>
+
+    <div class="disc"><strong>免责声明</strong>：本页为个人投资方法论的记录与复盘，所有阈值、口径、回测结论均为作者自用设定，<strong>不构成任何投资建议</strong>。市盈率分档是历史统计规律，不保证未来有效，据此操作风险自负。</div>
+
+    <footer><p>数据每日自动更新 · <a href="/invest/">返回做投资</a> · <a href="/">主页</a></p></footer>
+
+</div>
+
+<script>
+    function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+    fetch('/invest/strategy/data/csi300.json',{cache:'no-store'})
+        .then(function(r){return r.ok?r.json():null})
+        .then(function(d){
+            var el=document.getElementById('signal');
+            if(!d){el.innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>';return}
+            var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
+            var hint=d.hint?'<div class="sig-meta">📍 '+esc(d.hint)+'</div>':'';
+            el.innerHTML=
+                '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
+                '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
+                '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
+                extra+hint+
+                '<div class="sig-foot">当前信号 · 更新于 '+esc(d.date)+'</div>';
+        })
+        .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
+</script>
+</body>
+</html>

@@ -147,7 +147,12 @@
             padding: 22px 24px 20px;
             display: flex;
             flex-direction: column;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+        a.index-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .index-card .ic-more { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-top: 12px; }
         .index-card .ic-head {
             display: flex;
             justify-content: space-between;
@@ -277,7 +282,7 @@
     <section class="section-block" id="panel-valuation" hidden data-date="2026-06-22">
         <div class="section-head">
             <span class="topic-tag">指数 · 估值定投系统</span>
-            <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前两个跟踪指数的最新信号。</p>
+            <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前三个跟踪指数的最新信号——点击任意一张卡片，可查看该指数的策略、逻辑推导、风险与不成立条件。</p>
         </div>
         <div class="index-grid" id="index-cards">
             <div class="index-loading">正在加载最新信号…</div>
@@ -324,11 +329,11 @@
             return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
         });
     }
-    function renderIndexCard(d) {
+    function renderIndexCard(d, slug) {
         var extra = d.extra ? '<div class="ic-extra">' + esc(d.extra) + '</div>' : '';
         var hint = d.hint ? '<div class="ic-hint">📍 ' + esc(d.hint) + '</div>' : '';
         return '' +
-            '<div class="index-card">' +
+            '<a class="index-card" href="/invest/strategy/' + esc(slug) + '/">' +
               '<div class="ic-head">' +
                 '<div><div class="ic-name">' + esc(d.name) + '</div>' +
                      '<div class="ic-code">' + esc(d.code) + '</div></div>' +
@@ -341,14 +346,20 @@
               hint +
               '<div class="ic-ladder">' + esc(d.ladder) + '</div>' +
               '<div class="ic-foot">更新于 ' + esc(d.date) + '</div>' +
-            '</div>';
+              '<div class="ic-more">查看策略详解 →</div>' +
+            '</a>';
     }
     (function loadIndexCards() {
         var wrap = document.getElementById('index-cards');
-        var files = ['/invest/strategy/data/csi300.json', '/invest/strategy/data/hongli.json', '/invest/strategy/data/hsi.json'];
-        Promise.all(files.map(function (u) {
-            return fetch(u, { cache: 'no-store' })
+        var files = [
+            { slug: 'csi300', url: '/invest/strategy/data/csi300.json' },
+            { slug: 'hongli', url: '/invest/strategy/data/hongli.json' },
+            { slug: 'hsi',    url: '/invest/strategy/data/hsi.json' }
+        ];
+        Promise.all(files.map(function (f) {
+            return fetch(f.url, { cache: 'no-store' })
                 .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) { return data ? { data: data, slug: f.slug } : null; })
                 .catch(function () { return null; });
         })).then(function (results) {
             var cards = results.filter(Boolean);
@@ -356,7 +367,7 @@
                 wrap.innerHTML = '<div class="index-error">信号数据暂时无法加载，请稍后再试。</div>';
                 return;
             }
-            wrap.innerHTML = cards.map(renderIndexCard).join('');
+            wrap.innerHTML = cards.map(function (c) { return renderIndexCard(c.data, c.slug); }).join('');
         });
     })();
 </script>
