@@ -332,6 +332,11 @@
     function renderIndexCard(d, slug) {
         var extra = d.extra ? '<div class="ic-extra">' + esc(d.extra) + '</div>' : '';
         var hint = d.hint ? '<div class="ic-hint">📍 ' + esc(d.hint) + '</div>' : '';
+        // 分红质量过滤层：仅恒生有该字段，其余指数自动跳过
+        var dq = d.dq_grade
+            ? '<div class="ic-hint">🧪 分红质量 <span style="color:' + esc(d.dq_color) + ';font-weight:600">' + esc(d.dq_label) + '</span>'
+                + (d.dq_discount != null && Number(d.dq_discount) < 1 ? ' · 买入 ×' + esc(d.dq_discount) : ' · 不打折') + '</div>'
+            : '';
         return '' +
             '<a class="index-card" href="/invest/strategy/' + esc(slug) + '/">' +
               '<div class="ic-head">' +
@@ -343,7 +348,7 @@
                 '<span class="ic-mlabel">' + esc(d.metric_label) + '</span></div>' +
               extra +
               '<div class="ic-action">📌 ' + esc(d.action) + '</div>' +
-              hint +
+              hint + dq +
               '<div class="ic-ladder">' + esc(d.ladder) + '</div>' +
               '<div class="ic-foot">更新于 ' + esc(d.date) + '</div>' +
               '<div class="ic-more">查看策略详解 →</div>' +
