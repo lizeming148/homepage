@@ -144,7 +144,7 @@
                 <tr><td class="zone">🔴 RED</td><td>分红显著恶化</td><td>买入 ×0.5</td></tr>
             </tbody>
         </table>
-        <div class="callout"><strong>当前状态（2026年7月）：YELLOW。</strong>腾讯回购同比下降约 29% 触发关注，但不打折。加权派息率 32.9%，9/10 派息股分红持续增长，整体健康。每季度更新一次。</div>
+        <div class="callout" id="dq-callout"><strong>当前状态（2026年7月）：🟡 关注。</strong>腾讯回购同比下降约 29% 触发关注，但不打折。加权派息率 32.9%，9/10 派息股分红持续增长，整体健康。每季度更新一次。</div>
     </section>
 
     <div class="disc"><strong>免责声明</strong>：本页为个人投资方法论的记录与复盘，所有阈值、口径、重映射与回测结论均为作者自用设定，<strong>不构成任何投资建议</strong>。股息率分档是历史统计规律，不保证未来有效，据此操作风险自负。</div>
@@ -155,6 +155,23 @@
 
 <script>
     function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+    function dqDiscount(d){
+        return (d.dq_discount==null||Number(d.dq_discount)>=1)?'不打折':('买入 ×'+esc(d.dq_discount));
+    }
+    // 顶部信号卡里的分红质量行（独立于五档主信号）
+    function dqSignalLine(d){
+        if(!d.dq_grade) return '';
+        var payout=(d.dq_payout!=null)?' · 加权派息率 '+esc(d.dq_payout)+'%':'';
+        return '<div class="sig-meta">🧪 分红质量过滤层：<span style="color:'+esc(d.dq_color)+';font-weight:600">'+esc(d.dq_label)+'</span>'+payout+' · '+dqDiscount(d)+'</div>';
+    }
+    // 第5节 callout 的当前状态（数据驱动，缺失时保留页面内的静态兜底文案）
+    function fillDqCallout(d){
+        var box=document.getElementById('dq-callout');
+        if(!box||!d.dq_grade) return;
+        var payout=(d.dq_payout!=null)?'加权派息率 '+esc(d.dq_payout)+'%，':'';
+        var alerts=(d.dq_alerts&&d.dq_alerts!=='无'&&d.dq_alerts!=='-')?esc(d.dq_alerts)+'。':'';
+        box.innerHTML='<strong>当前状态（'+esc(d.dq_date||d.date)+'）：'+esc(d.dq_label)+'。</strong>'+alerts+payout+'买入力度'+dqDiscount(d)+'。每季度更新一次。';
+    }
     fetch('/invest/strategy/data/hsi.json',{cache:'no-store'})
         .then(function(r){return r.ok?r.json():null})
         .then(function(d){
@@ -166,8 +183,9 @@
                 '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
                 '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
-                extra+hint+
+                extra+hint+dqSignalLine(d)+
                 '<div class="sig-foot">当前信号 · 更新于 '+esc(d.date)+'</div>';
+            fillDqCallout(d);
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
 </script>

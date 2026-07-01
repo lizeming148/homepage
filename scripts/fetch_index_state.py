@@ -250,6 +250,15 @@ def build_hongli(token):
 # ─────────────────────────────────────────────
 HSI_APP_TOKEN = os.environ.get("FEISHU_APP_TOKEN_HSI", "Wp3XbNSkMaPwBbs17pbcMFjhnEf")
 HSI_HISTORY_TABLE = os.environ.get("FEISHU_HISTORY_TABLE_HSI", "tblLddXoap38WKC0")
+# 分红质量评级历史（低频，每季度一条）——见 hsi-monitor/config.py TABLE_HSI_DIVIDEND
+HSI_DIVIDEND_TABLE = os.environ.get("FEISHU_DIVIDEND_TABLE_HSI", "tbl7rO4ph0sQIdYU")
+# grade → (中文标签, 飞书色)，与 hsi/index.html 第5节评级表对齐
+HSI_DQ_GRADE = {
+    "GREEN":  ("🟢 健康", "green"),
+    "YELLOW": ("🟡 关注", "yellow"),
+    "ORANGE": ("🟠 承压", "orange"),
+    "RED":    ("🔴 恶化", "red"),
+}
 HSI_LADDER = ("≥4.03% 加大买入 ｜ 3.57~4.03% 分批买入 ｜ 3.38~3.57% 关注准备 ｜ "
               "3.06~3.38% 持有不加 ｜ <3.06% 减仓")
 # 档位标签 → (操作建议, 飞书色)，与 config.py TIER_THRESHOLDS / TIER_COLOR 对齐
@@ -275,6 +284,34 @@ def hsi_hint(tier, div_pct):
         return "已达最高档，等待市场回暖"
     target, name = nxt
     return f"距{name}({target}%) ↑{round(target - div_pct, 2)}%"
+
+
+def fetch_hsi_dividend(token):
+    """读飞书分红质量表最新一条，返回给网页展示的 dq_* 字段；缺失/异常返回 None。"""
+    items = fetch_all(token, HSI_APP_TOKEN, HSI_DIVIDEND_TABLE,
+                      ["date", "grade", "weighted_payout", "discount_factor", "alerts"])
+    latest = latest_by_date(items, date_field="date")
+    if not latest:
+        print("💡 恒生分红质量表为空，跳过分红质量字段")
+        return None
+    ms, f = latest
+    grade = _plain_text(f.get("grade")).strip().upper()
+    if not grade:
+        return None
+    label, color = HSI_DQ_GRADE.get(grade, (grade, "blue"))
+    payout = safe_float(f.get("weighted_payout"))
+    discount = safe_float(f.get("discount_factor"))
+    alerts = _plain_text(f.get("alerts")).strip()
+    print(f"🧪 恒生分红质量 最新：{ms_to_date(ms)}  {grade}  加权派息率={payout}")
+    return {
+        "dq_grade": grade,
+        "dq_label": label,
+        "dq_color": COLOR_HEX.get(color, "#B8902A"),
+        "dq_payout": round(payout, 1) if payout is not None else None,
+        "dq_discount": discount,
+        "dq_alerts": alerts,
+        "dq_date": ms_to_date(ms),
+    }
 
 
 def build_hsi(token):
@@ -309,7 +346,7 @@ def build_hsi(token):
     if cn10y is not None and cn10y < 1.80:
         extra += " · ⚠中债异常低"
 
-    return {
+    payload = {
         "name": "恒生指数",
         "code": "HSI.HK",
         "date": ms_to_date(ms),
@@ -322,6 +359,14 @@ def build_hsi(token):
         "extra": extra,
         "ladder": HSI_LADDER,
     }
+    # 叠加分红质量过滤层当前状态（独立于五档主信号，缺失不影响主信号）
+    try:
+        dq = fetch_hsi_dividend(token)
+        if dq:
+            payload.update(dq)
+    except Exception as e:
+        print(f"⚠️ 恒生分红质量读取失败（跳过该字段）：{e}")
+    return payload
 
 
 # ─────────────────────────────────────────────
