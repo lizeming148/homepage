@@ -1,7 +1,7 @@
 {
   "name": "恒生指数",
   "code": "HSI.HK",
-  "date": "2026-07-31",
+  "date": "2026-08-01",
   "status": "②偏贵",
   "color": "#CB6B1E",
   "metric_label": "股息率",
@@ -17,5 +17,5 @@
   "dq_discount": 1.0,
   "dq_alerts": "腾讯控股 回购同比 -28.6% (下降)",
   "dq_date": "2026-07-01",
-  "updated_at": "2026-07-31 15:26"
+  "updated_at": "2026-08-01 14:39"
 }
