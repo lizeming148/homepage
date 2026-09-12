@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>海尔智家 (sh600690) 十年纵向财务分析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+  
+  :root {
+    --bg: #f8f7f4;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #6b6b6b;
+    --accent: #1e40af;
+    --accent-light: #dbeafe;
+    --green: #15803d;
+    --green-bg: #dcfce7;
+    --red: #b91c1c;
+    --red-bg: #fee2e2;
+    --yellow: #a16207;
+    --yellow-bg: #fef3c7;
+    --border: #e5e5e5;
+    --shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  
+  * { margin:0; padding:0; box-sizing:border-box; }
+  
+  body {
+    font-family: 'Inter', 'Noto Serif SC', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    padding: 2.5rem 1rem 2rem;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 2rem;
+  }
+  .header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: .5rem;
+  }
+  .header .sub {
+    color: var(--text-muted);
+    font-size: .95rem;
+  }
+  
+  .verdict-box {
+    background: var(--accent);
+    color: #fff;
+    padding: 1.8rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 2.5rem;
+  }
+  .verdict-box h2 { font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600; }
+  .verdict-box p { font-size: .95rem; line-height: 1.8; opacity: .95; }
+  .verdict-box .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.2);
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: .85rem;
+    margin-right: 8px;
+    margin-top: 8px;
+  }
+  
+  .section { margin-bottom: 2.5rem; }
+  .section h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 1.2rem 0 .6rem;
+    color: var(--text);
+  }
+  
+  .insight {
+    background: var(--card-bg);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: .93rem;
+    box-shadow: var(--shadow);
+  }
+  .insight.positive { border-left-color: var(--green); background: var(--green-bg); }
+  .insight.negative { border-left-color: var(--red); background: var(--red-bg); }
+  .insight.neutral { border-left-color: var(--yellow); background: var(--yellow-bg); }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+  thead th {
+    background: #f1f5f9;
+    font-weight: 600;
+    text-align: right;
+    padding: 8px 10px;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+  }
+  thead th:first-child { text-align: left; }
+  tbody td {
+    padding: 7px 10px;
+    text-align: right;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+  }
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  tbody tr:hover { background: #f8fafc; }
+  tbody tr:last-child td { border-bottom: none; }
+  
+  .highlight-row { background: var(--accent-light) !important; font-weight: 600; }
+  
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .metric-card {
+    background: var(--card-bg);
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .metric-card .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .metric-card .label {
+    font-size: .8rem;
+    color: var(--text-muted);
+    margin-top: .3rem;
+  }
+  .metric-card .pctile {
+    font-size: .75rem;
+    margin-top: .3rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+  .pctile.low { background: var(--green-bg); color: var(--green); }
+  .pctile.mid { background: var(--yellow-bg); color: var(--yellow); }
+  .pctile.high { background: var(--red-bg); color: var(--red); }
+  
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+  
+  .chart-container {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin: 1rem 0;
+  }
+  .chart-container h4 {
+    font-size: .9rem;
+    color: var(--text-muted);
+    margin-bottom: .8rem;
+    text-align: center;
+  }
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 160px; padding: 0 4px; }
+  .bar-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .bar {
+    width: 100%;
+    min-width: 20px;
+    max-width: 50px;
+    background: var(--accent);
+    border-radius: 3px 3px 0 0;
+    transition: .2s;
+    position: relative;
+  }
+  .bar:hover { opacity: .8; }
+  .bar-label {
+    font-size: .65rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    writing-mode: horizontal-tb;
+  }
+  .bar-value {
+    font-size: .6rem;
+    color: var(--text);
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  
+  .footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: .8rem;
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  
+  .overflow-x { overflow-x: auto; }
+</style>
+<link rel="stylesheet" href="/invest/baidian/2026h1/topbar.css">
+</head>
+<body>
+<div class="bd-topbar" style="max-width:1200px">
+  <div class="bd-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">2026 中期分析 · 海尔智家 · 十年纵向财务分析</span></div>
+  <nav class="bd-nav"><span class="bd-kind">本专题 6 篇</span><a href="/invest/baidian/2026h1/">综合总纲</a><a href="/invest/baidian/2026h1/compare/">2026H1 对比</a><a href="/invest/baidian/2026h1/global/">全球图谱</a><a href="/invest/baidian/2026h1/gree/">格力</a><a href="/invest/baidian/2026h1/midea/">美的</a><a href="/invest/baidian/2026h1/haier/" class="on">海尔</a></nav>
+</div>
+
+
+<div class="header">
+  <h1>海尔智家 (sh600690)</h1>
+  <div class="sub">十年纵向财务分析 · 2016—2026H1 · 数据来源: 投资数据网 open.touzid.com</div>
+  <div class="sub" style="margin-top:.3rem">报告日期: 2026年9月11日 · 当前股价: ¥21.01</div>
+</div>
+
+<!-- ============ 核心判断 ============ -->
+<div class="verdict-box">
+  <h2>📌 核心判断：公司在"变好"，但边际增速放缓；估值处于十年底部区域</h2>
+  <p>
+    海尔智家过去10年实现了营收从1191亿到3024亿的2.5倍增长，归母净利从50亿跃升至196亿的近4倍扩张，期间ROE稳定在15-17%，经营现金流持续覆盖净利润，分红率从30%提升到55%——这是一家治理改善、效率提升、股东回报意识觉醒的公司。但2026H1出现营收-2.8%、归母净利-14.3%的首次同时下滑，标志着高增长阶段可能结束。当前PE-TTM 11倍处于5年8.7%分位、10年5.7%分位，股息率5.5%，估值对"成长放缓"已有过度定价之嫌。
+  </p>
+  <div>
+    <span class="tag">营收CAGR(10年) ≈ 9.8%</span>
+    <span class="tag">净利CAGR(10年) ≈ 14.6%</span>
+    <span class="tag">ROE ≈ 16-17%</span>
+    <span class="tag">PE 11x · 10年5.7%分位</span>
+    <span class="tag">股息率 5.5%</span>
+  </div>
+</div>
+
+<!-- ============ 一、增长曲线 ============ -->
+<div class="section">
+  <h2>一、增长曲线：从高速到中速再到拐点</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>年份</th><th>营收(亿)</th><th>增速</th><th>毛利率</th><th>营业利润率</th><th>归母净利(亿)</th><th>增速</th><th>扣非净利(亿)</th><th>EPS</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2016</td><td>1,191</td><td>+32.7%</td><td>31.0%</td><td>6.0%</td><td>50</td><td>+17.1%</td><td>43</td><td>0.83</td></tr>
+      <tr><td>2017</td><td>1,593</td><td>+33.8%</td><td>31.0%</td><td>6.3%</td><td>69</td><td>+37.5%</td><td>56</td><td>1.14</td></tr>
+      <tr><td>2018</td><td>1,833</td><td>+15.1%</td><td>29.0%</td><td>6.2%</td><td>74</td><td>+7.4%</td><td>66</td><td>1.21</td></tr>
+      <tr><td>2019</td><td>2,008</td><td>+9.5%</td><td>29.8%</td><td>7.2%</td><td>82</td><td>+10.3%</td><td>58</td><td>1.29</td></tr>
+      <tr><td>2020</td><td>2,097</td><td>+4.5%</td><td>29.7%</td><td>6.5%</td><td>89</td><td>+8.2%</td><td>65</td><td>1.34</td></tr>
+      <tr><td>2021</td><td>2,276</td><td>+8.5%</td><td>31.2%</td><td>7.0%</td><td>131</td><td>+47.2%</td><td>118</td><td>1.41</td></tr>
+      <tr><td>2022</td><td>2,435</td><td>+7.0%</td><td>31.3%</td><td>7.3%</td><td>147</td><td>+12.6%</td><td>140</td><td>1.58</td></tr>
+      <tr><td>2023</td><td>2,614</td><td>+7.4%</td><td>31.5%</td><td>7.6%</td><td>166</td><td>+12.8%</td><td>158</td><td>1.79</td></tr>
+      <tr><td>2024</td><td>2,860</td><td>+9.4%</td><td>27.8%</td><td>8.0%</td><td>187</td><td>+12.9%</td><td>178</td><td>2.02</td></tr>
+      <tr><td>2025</td><td>3,024</td><td>+5.7%</td><td>26.7%</td><td>7.8%</td><td>196</td><td>+4.3%</td><td>186</td><td>2.12</td></tr>
+      <tr class="highlight-row"><td>2026H1</td><td>1,521</td><td>-2.8%</td><td>27.2%</td><td>8.6%</td><td>103</td><td>-14.3%</td><td>93</td><td>1.12</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="insight positive">
+    <strong>正面信号——利润增速持续快于营收：</strong>2016—2025年，营收CAGR约9.8%，但归母净利CAGR约14.6%。利润增速更快源于：(1) 销售费用率从17.8%压至11.2%，累计释放了约6个百分点的利润空间；(2) 营业利润率从6%稳步攀升至8%。这说明收购GEA后的整合和渠道数字化改革确实在产生效率红利。
+  </div>
+  
+  <div class="insight negative">
+    <strong>警示信号——2026H1是十年来首次营收利润双降：</strong>营收-2.8%、归母净利-14.3%。虽然只是半年数据，但结合2025年全年增速已放缓至+5.7%/+4.3%的事实，"中速增长"到"低速/停滞"的风险需要重视。2024年毛利率从31.5%骤降至27.8%并延续至今，可能反映海外市场价格竞争加剧和原材料成本变化。
+  </div>
+</div>
+
+<!-- ============ 二、费用管控 ============ -->
+<div class="section">
+  <h2>二、费用管控：销售费用率压降是最大亮点</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>年份</th><th>销售费用率</th><th>管理费用率</th><th>研发费用率</th><th>财务费用率</th><th>三费合计</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2016</td><td>17.8%</td><td>7.0%</td><td>—</td><td>0.6%</td><td>25.5%</td></tr>
+      <tr><td>2017</td><td>17.8%</td><td>4.5%</td><td>2.8%</td><td>0.9%</td><td>23.1%</td></tr>
+      <tr><td>2018</td><td>15.6%</td><td>4.5%</td><td>2.8%</td><td>0.5%</td><td>20.7%</td></tr>
+      <tr><td>2019</td><td>16.8%</td><td>5.0%</td><td>3.1%</td><td>0.4%</td><td>22.3%</td></tr>
+      <tr><td>2020</td><td>16.0%</td><td>4.8%</td><td>3.3%</td><td>0.6%</td><td>21.4%</td></tr>
+      <tr><td>2021</td><td>16.1%</td><td>4.6%</td><td>3.7%</td><td>0.3%</td><td>20.9%</td></tr>
+      <tr><td>2022</td><td>15.8%</td><td>4.5%</td><td>3.9%</td><td>-0.1%</td><td>20.2%</td></tr>
+      <tr><td>2023</td><td>15.7%</td><td>4.4%</td><td>3.9%</td><td>0.2%</td><td>20.3%</td></tr>
+      <tr><td>2024</td><td>11.7%</td><td>4.2%</td><td>3.8%</td><td>0.3%</td><td>16.3%</td></tr>
+      <tr><td>2025</td><td>11.2%</td><td>4.5%</td><td>3.3%</td><td>0.0%</td><td>15.7%</td></tr>
+      <tr class="highlight-row"><td>2026H1</td><td>10.8%</td><td>4.0%</td><td>3.3%</td><td>0.7%</td><td>15.5%</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="insight positive">
+    <strong>销售费用率降了7个百分点：</strong>从2016年的17.8%降到2026H1的10.8%。2024年发生了一次台阶式下降（从15.7%→11.7%），大概率与渠道模式转型有关（直销占比提升、零售数字化）。三费合计从25.5%降至15.5%，释放了10个百分点的利润空间——这正是营业利润率从6%升至8.6%的核心驱动力。
+  </div>
+  
+  <div class="insight neutral">
+    <strong>研发费用率3.3-3.9%：</strong>研发投入占比在2022—2023年触及3.9%的高点后小幅回落至3.3%。对家电企业而言已属中上水平，但相对美的（约3.5%）无明显优势。
+  </div>
+</div>
+
+<!-- ============ 三、资产负债表 ============ -->
+<div class="section">
+  <h2>三、资产负债表：稳健但商誉是悬顶之剑</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>年份</th><th>总资产(亿)</th><th>负债率</th><th>归母权益(亿)</th><th>货币资金(亿)</th><th>商誉(亿)</th><th>有息负债(亿)</th><th>合同负债(亿)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2016</td><td>1,313</td><td>71.4%</td><td>264</td><td>235</td><td>210</td><td>367</td><td>—</td></tr>
+      <tr><td>2017</td><td>1,515</td><td>69.1%</td><td>322</td><td>352</td><td>198</td><td>360</td><td>—</td></tr>
+      <tr><td>2018</td><td>1,667</td><td>66.9%</td><td>394</td><td>375</td><td>212</td><td>343</td><td>55</td></tr>
+      <tr><td>2019</td><td>1,875</td><td>65.3%</td><td>479</td><td>362</td><td>234</td><td>363</td><td>56</td></tr>
+      <tr><td>2020</td><td>2,035</td><td>66.5%</td><td>668</td><td>465</td><td>225</td><td>340</td><td>71</td></tr>
+      <tr><td>2021</td><td>2,175</td><td>62.7%</td><td>798</td><td>459</td><td>218</td><td>243</td><td>100</td></tr>
+      <tr><td>2022</td><td>2,358</td><td>59.8%</td><td>934</td><td>541</td><td>236</td><td>296</td><td>93</td></tr>
+      <tr><td>2023</td><td>2,534</td><td>58.2%</td><td>1,035</td><td>545</td><td>243</td><td>322</td><td>77</td></tr>
+      <tr><td>2024</td><td>2,901</td><td>59.2%</td><td>1,114</td><td>556</td><td>274</td><td>401</td><td>109</td></tr>
+      <tr><td>2025</td><td>2,958</td><td>57.4%</td><td>1,187</td><td>476</td><td>273</td><td>410</td><td>85</td></tr>
+      <tr class="highlight-row"><td>2026H1</td><td>3,119</td><td>58.5%</td><td>1,197</td><td>509</td><td>263</td><td>426</td><td>67</td></tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="insight positive">
+    <strong>负债率持续改善：</strong>从2016年71.4%降至2025年57.4%，降了14个百分点。归母权益从264亿增长到1,197亿，4.5倍扩张。货币资金/有息负债 ≈ 1.2x，净现金状态良好。
+  </div>
+  
+  <div class="insight negative">
+    <strong>商誉263亿，占归母权益22%：</strong>主要来自2016年收购GEA（约55亿美元），商誉规模十年来在200-270亿间波动（含汇率影响）。一旦GEA业务恶化，减值风险不可忽视。好在GEA近年持续盈利，暂无触发迹象。
+  </div>
+
+  <div class="insight neutral">
+    <strong>2026H1合同负债67亿，同比下降明显：</strong>对比2024年底109亿、2025年底85亿，呈持续下降趋势，预示下半年内销排产可能承压。
+  </div>
+</div>
+
+<!-- ============ 四、现金流 ============ -->
+<div class="section">
+  <h2>四、现金流与回报质量：经营现金流始终强劲</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>年份</th><th>经营CF(亿)</th><th>投资CF(亿)</th><th>筹资CF(亿)</th><th>CapEx(亿)</th><th>收现/营收</th><th>ROE</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2016</td><td>81</td><td>-396</td><td>298</td><td>26</td><td>115%</td><td>19.1%</td></tr>
+      <tr><td>2017</td><td>161</td><td>-56</td><td>9</td><td>40</td><td>102%</td><td>21.5%</td></tr>
+      <tr><td>2018</td><td>189</td><td>-77</td><td>-105</td><td>68</td><td>103%</td><td>18.9%</td></tr>
+      <tr><td>2019</td><td>151</td><td>-110</td><td>-60</td><td>62</td><td>102%</td><td>17.1%</td></tr>
+      <tr><td>2020</td><td>176</td><td>-53</td><td>-10</td><td>78</td><td>99%</td><td>13.3%</td></tr>
+      <tr><td>2021</td><td>231</td><td>-81</td><td>-156</td><td>74</td><td>114%</td><td>16.4%</td></tr>
+      <tr><td>2022</td><td>202</td><td>-89</td><td>-38</td><td>82</td><td>106%</td><td>15.7%</td></tr>
+      <tr><td>2023</td><td>253</td><td>-171</td><td>-78</td><td>99</td><td>105%</td><td>16.0%</td></tr>
+      <tr><td>2024</td><td>265</td><td>-201</td><td>-79</td><td>101</td><td>107%</td><td>16.8%</td></tr>
+      <tr><td>2025</td><td>260</td><td>-171</td><td>-177</td><td>89</td><td>107%</td><td>16.5%</td></tr>
+      <tr class="highlight-row"><td>2026H1</td><td>98</td><td>-103</td><td>48</td><td>44</td><td>106%</td><td>8.6%*</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:.78rem;color:var(--text-muted);">* 2026H1 ROE为半年值（年化约17%）</p>
+
+  <div class="insight positive">
+    <strong>经营现金流/净利润长期 > 1：</strong>销售收现/营收比率常年保持在100-115%，说明海尔的利润质量极高——应收账款管理良好，客户回款快。经营CF从2016年81亿稳步增长至2025年260亿，CapEx占营收仅3%左右，是典型的"轻资本支出、重现金产出"模式。
+  </div>
+  
+  <div class="insight positive">
+    <strong>ROE稳定在15-17%区间：</strong>2020年因私有化H股增加权益基数导致ROE短暂下探至13.3%，之后回升并稳定在16-17%。杜邦拆解看：净利率逐年提升（6%→7.8%），资产周转率略有下降（全球化导致），杠杆倍数持续降低——这是"以利润率提升驱动ROE"的健康模式。
+  </div>
+</div>
+
+<!-- ============ 五、分红 ============ -->
+<div class="section">
+  <h2>五、分红历史：从"小气鬼"到"慷慨派"</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>财报年度</th><th>每股分红(元)</th><th>分红总额(亿)</th><th>累计分红/净利</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2016</td><td>0.25</td><td>15</td><td>30%</td></tr>
+      <tr><td>2017</td><td>0.34</td><td>21</td><td>30%</td></tr>
+      <tr><td>2018</td><td>0.35</td><td>22</td><td>29%</td></tr>
+      <tr><td>2019</td><td>0.38</td><td>25</td><td>29%</td></tr>
+      <tr><td>2020</td><td>0.37</td><td>34</td><td>27%</td></tr>
+      <tr><td>2021</td><td>0.46</td><td>44</td><td>33%</td></tr>
+      <tr><td>2022</td><td>0.57</td><td>54</td><td>36%</td></tr>
+      <tr><td>2023</td><td>0.80</td><td>76</td><td>45%</td></tr>
+      <tr><td>2024</td><td>0.97</td><td>91</td><td>48%</td></tr>
+      <tr><td>2025年报</td><td>0.89</td><td>84</td><td>55%</td></tr>
+      <tr><td>2025中期</td><td>0.27</td><td>25</td><td>（中期特别分红）</td></tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="insight positive">
+    <strong>分红率从30%跃升至55%，且启动中期分红：</strong>2025年全年每股分红0.89元（年报）+0.27元（中期），合计1.16元/股，按当前股价计算股息率约5.5%。分红政策的系统性提升说明管理层正在向股东让利，这在A股白电三巨头中已成趋势，是"成熟期公司"的正面特征。
+  </div>
+</div>
+
+<!-- ============ 六、营收构成 ============ -->
+<div class="section">
+  <h2>六、营收构成：多品类均衡 + 海外半壁江山</h2>
+  
+  <h3>按产品（2025年报）</h3>
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>产品线</th><th>收入(亿)</th><th>占比</th><th>毛利率</th><th>vs 2021年变化</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>电冰箱</td><td>842</td><td>27.8%</td><td>30.1%</td><td>收入+18%，占比↓3.6pp</td></tr>
+      <tr><td>洗衣机</td><td>650</td><td>21.5%</td><td>30.9%</td><td>收入+19%，占比↓2.6pp</td></tr>
+      <tr><td>空调</td><td>537</td><td>17.8%</td><td>22.4%</td><td>收入+43%，占比↑1.3pp</td></tr>
+      <tr><td>厨电</td><td>413</td><td>13.7%</td><td>28.6%</td><td>收入+17%，占比↓1.8pp</td></tr>
+      <tr><td>装备/渠道服务</td><td>389</td><td>12.9%</td><td>9.3%</td><td>收入+159%，占比↑6.3pp</td></tr>
+      <tr><td>水家电</td><td>175</td><td>5.8%</td><td>40.7%</td><td>收入+40%，占比↑0.3pp</td></tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="insight neutral">
+    <strong>空调是增速最快的品类但毛利率最低：</strong>空调从375亿增长到537亿（4年+43%），但毛利率从27.9%降至22.4%，说明在格力/美的的主场打价格战。"装备部品及渠道综合服务"暴增159%、毛利率仅9%，稀释了整体毛利率——这是2024年毛利率骤降的主因之一。
+  </div>
+  
+  <h3>按区域</h3>
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>区域</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>海外收入(亿)</td><td>1,147</td><td>1,261</td><td>1,357</td><td>1,429</td><td>1,546</td></tr>
+      <tr><td>海外占比</td><td>50.4%</td><td>51.8%</td><td>51.9%</td><td>50.0%</td><td>51.1%</td></tr>
+      <tr><td>海外毛利率</td><td>28.2%</td><td>26.9%</td><td>26.8%</td><td>25.4%</td><td>24.6%</td></tr>
+      <tr><td>国内收入(亿)</td><td>1,119</td><td>1,163</td><td>1,246</td><td>1,417</td><td>1,460</td></tr>
+      <tr><td>国内占比</td><td>49.1%</td><td>47.8%</td><td>47.7%</td><td>49.5%</td><td>48.3%</td></tr>
+      <tr><td>国内毛利率</td><td>34.0%</td><td>35.9%</td><td>36.4%</td><td>29.8%</td><td>28.8%</td></tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="insight negative">
+    <strong>海外毛利率连续4年下滑：</strong>从28.2%→24.6%，累计降了3.6pp。原因可能包括GEA在美国面临竞争加剧、欧洲Candy品牌定位偏低、汇率波动。海外占营收一半是海尔区别于格力/美的的最大特色，但目前海外利润率拖累整体表现。
+  </div>
+  <div class="insight negative">
+    <strong>国内毛利率同样跳水：</strong>2024年从36.4%骤降至29.8%，大概率是会计口径调整（装备渠道服务并入）和价格战共同作用。
+  </div>
+</div>
+
+<!-- ============ 七、估值分析 ============ -->
+<div class="section">
+  <h2>七、估值水位：十年底部区域</h2>
+  
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="value">11.0x</div>
+      <div class="label">PE-TTM</div>
+      <div class="pctile low">5年 8.7% · 10年 5.7%</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">1.64x</div>
+      <div class="label">PB</div>
+      <div class="pctile low">5年 6.7% · 10年 3.3%</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">0.66x</div>
+      <div class="label">PS-TTM</div>
+      <div class="pctile low">5年 4.2%</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">5.53%</div>
+      <div class="label">股息率</div>
+      <div class="pctile low">历史高位</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">12.1x</div>
+      <div class="label">扣非PE</div>
+      <div class="pctile low">5年 11.3% · 10年 5.7%</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">2.11x</div>
+      <div class="label">PB(不含商誉)</div>
+      <div class="pctile low">5年 6.5%</div>
+    </div>
+  </div>
+  
+  <h3>PE-Band 位置</h3>
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th></th><th>下轨</th><th>中下轨</th><th>中轨</th><th>中上轨</th><th>上轨</th><th>当前价格</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>5年PE-Band</td><td>¥19.77</td><td>¥22.88</td><td>¥25.99</td><td>¥30.45</td><td>¥34.91</td><td style="color:var(--green);font-weight:700">¥21.01</td></tr>
+      <tr><td>10年PE-Band</td><td>¥21.54</td><td>¥25.10</td><td>¥28.67</td><td>¥34.99</td><td>¥41.32</td><td style="color:var(--green);font-weight:700">¥21.01</td></tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="insight positive">
+    <strong>当前价格低于5年PE-Band中下轨、接近10年PE-Band下轨：</strong>这意味着市场对海尔的定价已经反映了相当悲观的预期。5年PE区间为9.7—23.1倍，均值14.1倍，当前11倍处于均值以下约22%。即使假设2026全年利润零增长（约195亿），11倍PE对应的市值约2145亿，隐含股价约23元——当前已低于这个水平。
+  </div>
+  
+  <h3>5年估值走势关键节点</h3>
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>时间</th><th>PE</th><th>PB</th><th>PS</th><th>股息率</th><th>股价</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2022-01(PE峰值)</td><td style="color:var(--red)">23.1</td><td>3.61</td><td>1.25</td><td>1.22%</td><td>¥30.80</td></tr>
+      <tr><td>2022-12</td><td>15.6</td><td>2.52</td><td>0.95</td><td>1.89%</td><td>¥24.46</td></tr>
+      <tr><td>2023-12</td><td>12.2</td><td>1.98</td><td>0.77</td><td>2.70%</td><td>¥21.00</td></tr>
+      <tr><td>2024-12</td><td>14.3</td><td>2.44</td><td>1.00</td><td>2.83%</td><td>¥28.43</td></tr>
+      <tr><td>2025-12</td><td>12.0</td><td>2.10</td><td>0.79</td><td>3.61%</td><td>¥26.74</td></tr>
+      <tr><td>2026-04(PE谷值)</td><td style="color:var(--green)">9.8</td><td>1.46</td><td>0.60</td><td>5.57%</td><td>¥20.48</td></tr>
+      <tr class="highlight-row"><td>2026-09-11(今天)</td><td>11.0</td><td>1.64</td><td>0.66</td><td>5.53%</td><td>¥21.01</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ============ 八、综合评估 ============ -->
+<div class="section">
+  <h2>八、综合评估：十个维度打分</h2>
+  
+  <div class="overflow-x">
+  <table>
+    <thead>
+      <tr><th>维度</th><th>评分</th><th>10年趋势</th><th>核心证据</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>收入增长</td><td style="color:var(--yellow)">B</td><td>高速→中速→拐点</td><td>CAGR 9.8%，但2026H1首次负增长</td></tr>
+      <tr><td>利润增长</td><td style="color:var(--green)">A-</td><td>持续跑赢营收</td><td>归母净利CAGR 14.6%，连续多年双位数增长至2025</td></tr>
+      <tr><td>毛利率</td><td style="color:var(--yellow)">B-</td><td>稳定→下台阶</td><td>2023年31.5%→2025年26.7%，降了近5pp</td></tr>
+      <tr><td>费用管控</td><td style="color:var(--green)">A</td><td>持续优化</td><td>三费率从25.5%降至15.5%，销售费用率降7pp</td></tr>
+      <tr><td>资产质量</td><td style="color:var(--yellow)">B+</td><td>改善但商誉悬顶</td><td>负债率降14pp，但商誉263亿占权益22%</td></tr>
+      <tr><td>现金流</td><td style="color:var(--green)">A</td><td>始终强劲</td><td>收现/营收 > 100%，CapEx/营收仅3%</td></tr>
+      <tr><td>ROE质量</td><td style="color:var(--green)">A-</td><td>稳定 16-17%</td><td>利润率驱动型ROE，非杠杆型</td></tr>
+      <tr><td>股东回报</td><td style="color:var(--green)">A</td><td>大幅改善</td><td>分红率30%→55%，开启中期分红</td></tr>
+      <tr><td>业务结构</td><td style="color:var(--yellow)">B+</td><td>多元均衡</td><td>六大品类+海外50%，但海外利润率持续走低</td></tr>
+      <tr><td>估值水位</td><td style="color:var(--green)">A</td><td>十年底部</td><td>PE 11x 处于10年5.7%分位，股息率5.5%</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ============ 九、结论 ============ -->
+<div class="verdict-box" style="background:linear-gradient(135deg, #1e3a5f, #1e40af)">
+  <h2>九、投资视角的总结</h2>
+  <p><strong>公司在"变好"还是"变差"？</strong></p>
+  <p>
+    从10年尺度看，海尔智家毫无疑问在"变好"——收入翻了2.5倍、净利翻了近4倍、ROE从波动走向稳定、费用率大幅压降、分红率翻了近一倍、负债率降了14个百分点。这是一家通过全球化并购（GEA/Candy/Fisher & Paykel）+国内渠道改革，完成了从"规模导向"到"利润导向"转型的公司。
+  </p>
+  <p style="margin-top:.8rem">
+    <strong>但边际上，2024—2026H1出现了值得关注的变化：</strong>毛利率跳水（31.5%→27%）、海外利润率连年下滑、合同负债萎缩、2026H1首次营收利润双降。这些信号提示高增长阶段可能已经结束，未来可能进入利润"平台期"（年增0-5%）。
+  </p>
+  <p style="margin-top:.8rem">
+    <strong>当前估值是否合理？</strong>PE 11倍/PB 1.6倍/股息率5.5%的组合，对一家ROE 16%、现金流健康、分红率55%的公司而言，已经包含了相当悲观的增长预期。即使假设利润完全零增长，11倍PE对"类债券型"现金牛也不算贵——5.5%的股息率已经超过了10年期国债收益率的2倍。风险在于：如果2026下半年利润继续恶化、或GEA出现商誉减值，市场情绪可能推动PE进一步压缩至9-10倍。
+  </p>
+</div>
+
+<div class="footer">
+  数据来源: 投资数据网 (open.touzid.com) · 分析工具: Claude · 免责声明: 本报告仅供投资研究参考，不构成买卖建议
+</div>
+
+
+<footer class="bd-footer" style="max-width:1200px">
+  <div class="bd-disc"><b>免责声明</b>：本页为个人研究笔记，基于公开财报与第三方数据整理，不构成任何投资建议。数据截至 2026 年半年度报告，口径与第三方数据源可能存在差异。</div>
+  <div><a href="/invest/#baidian">← 返回 白电投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/invest/">做投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/">主页</a><span style="float:right">白电投资 · 2026 中期分析 ｜ 2026-09-12</span></div>
+</footer>
+</body>
+</html>

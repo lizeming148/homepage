@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>白色家电全球投资图谱 · 中国三巨头的世界坐标</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0F1419;
+    --surface: #1B2129;
+    --surface-2: #232D37;
+    --text: #E7E9EA;
+    --text-2: #8B98A5;
+    --text-3: #536471;
+    --cn: #EF4444;
+    --jp: #3B82F6;
+    --us: #10B981;
+    --se: #F59E0B;
+    --border: #2F3945;
+    --glow-cn: rgba(239,68,68,0.15);
+    --glow-jp: rgba(59,130,246,0.15);
+    --accent: #1D9BF0;
+    --pos: #00BA7C;
+    --neg: #F4212E;
+    --warn: #FFD400;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Space Grotesk', 'Noto Serif SC', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem; }
+  @media (max-width: 700px) { .page { padding: 1.5rem 0.8rem; } }
+
+  .header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 900; font-size: 2.2rem;
+    line-height: 1.3; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .header .sub { font-size: 0.88rem; color: var(--text-2); }
+
+  .flag-row {
+    display: flex; justify-content: center; gap: 0.8rem;
+    margin-top: 1rem; flex-wrap: wrap;
+  }
+  .flag-tag {
+    font-size: 0.78rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
+    border: 1px solid var(--border); color: var(--text-2);
+  }
+
+  section { margin-bottom: 3rem; }
+
+  h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--text); margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 1.2rem 0 0.5rem; }
+  p { font-size: 0.88rem; color: var(--text-2); margin-bottom: 0.6rem; }
+
+  .tw { overflow-x: auto; margin: 0.8rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  thead th {
+    background: var(--surface-2); color: var(--text);
+    padding: 0.55rem 0.6rem; text-align: right; font-weight: 600; white-space: nowrap;
+    border-bottom: 2px solid var(--border);
+  }
+  thead th:first-child { text-align: left; }
+  tbody td {
+    padding: 0.5rem 0.6rem; text-align: right;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+    color: var(--text-2);
+  }
+  tbody td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+  tbody tr:hover { background: var(--surface); }
+  .cn-row td:first-child { color: var(--cn); }
+  .jp-row td:first-child { color: var(--jp); }
+  .us-row td:first-child { color: var(--us); }
+  .se-row td:first-child { color: var(--se); }
+  .best { color: var(--pos); font-weight: 700; }
+  .worst { color: var(--neg); font-weight: 700; }
+
+  .box {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 0.9rem 1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .box p { margin: 0; font-size: 0.84rem; }
+  .box strong { color: var(--text); }
+  .box.fire { border-left-color: var(--cn); background: var(--glow-cn); }
+  .box.ice { border-left-color: var(--jp); background: var(--glow-jp); }
+  .box.warn { border-left-color: var(--warn); }
+  .box.good { border-left-color: var(--pos); }
+
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem; margin: 1rem 0;
+  }
+  @media (max-width: 700px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+  .kpi {
+    background: var(--surface); border-radius: 8px;
+    padding: 1rem; text-align: center;
+    border: 1px solid var(--border);
+  }
+  .kpi .label { font-size: 0.72rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+  .kpi .val { font-size: 1.8rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin: 0.2rem 0; }
+  .kpi .note { font-size: 0.72rem; color: var(--text-2); }
+
+  .bar-group { margin: 0.6rem 0; }
+  .bar-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; font-size: 0.78rem; }
+  .bar-label { width: 70px; text-align: right; font-weight: 600; flex-shrink: 0; color: var(--text-2); }
+  .bar-track { flex: 1; height: 20px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; display: flex; align-items: center; padding-left: 6px; color: #fff; font-size: 0.7rem; font-weight: 600; }
+  .bar-val { width: 55px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-2); }
+
+  .verdict-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; margin: 1rem 0;
+  }
+  @media (max-width: 700px) { .verdict-grid { grid-template-columns: 1fr; } }
+  .verdict-card {
+    background: var(--surface); border-radius: 10px;
+    padding: 1.2rem; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .verdict-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .vc-cn::before { background: var(--cn); }
+  .vc-jp::before { background: var(--jp); }
+  .verdict-card .name { font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .verdict-card .metric { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-3); margin-bottom: 0.5rem; }
+  .verdict-card .desc { font-size: 0.82rem; color: var(--text-2); line-height: 1.6; }
+
+  .footer {
+    font-size: 0.73rem; color: var(--text-3);
+    text-align: center; margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .highlight { color: var(--warn); font-weight: 700; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+</style>
+<link rel="stylesheet" href="/invest/baidian/2026h1/topbar.css">
+</head>
+<body>
+<div class="bd-topbar dark" style="max-width:1080px">
+  <div class="bd-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">2026 中期分析 · 白电全球投资图谱</span></div>
+  <nav class="bd-nav"><span class="bd-kind">本专题 6 篇</span><a href="/invest/baidian/2026h1/">综合总纲</a><a href="/invest/baidian/2026h1/compare/">2026H1 对比</a><a href="/invest/baidian/2026h1/global/" class="on">全球图谱</a><a href="/invest/baidian/2026h1/gree/">格力</a><a href="/invest/baidian/2026h1/midea/">美的</a><a href="/invest/baidian/2026h1/haier/">海尔</a></nav>
+</div>
+
+<div class="page">
+
+<div class="header">
+  <h1>白色家电 · 全球投资图谱</h1>
+  <p class="sub">中国三巨头在全球同行中的坐标定位 · 数据截至 2026年9月</p>
+  <div class="flag-row">
+    <span class="flag-tag" style="color:var(--cn);border-color:var(--cn)">🇨🇳 美的 · 格力 · 海尔</span>
+    <span class="flag-tag" style="color:var(--jp);border-color:var(--jp)">🇯🇵 大金工业</span>
+    <span class="flag-tag" style="color:var(--us);border-color:var(--us)">🇺🇸 惠而浦</span>
+    <span class="flag-tag" style="color:var(--se);border-color:var(--se)">🇸🇪 伊莱克斯</span>
+  </div>
+</div>
+
+<!-- ===== 核心发现 ===== -->
+<section>
+  <h2>核心发现：中国白电已不是"追赶者"，而是全球行业的利润引擎</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">全球最大白电公司</div>
+      <div class="val" style="color:var(--cn)">美的</div>
+      <div class="note">营收$646亿 · 超过大金+惠而浦之和</div>
+    </div>
+    <div class="kpi">
+      <div class="label">全球最赚钱白电公司</div>
+      <div class="val" style="color:var(--cn)">美的</div>
+      <div class="note">净利$62亿 · 超过其余5家之和</div>
+    </div>
+    <div class="kpi">
+      <div class="label">全球最高净利率</div>
+      <div class="val" style="color:var(--cn)">格力</div>
+      <div class="note">16.9% · 是大金的3倍、惠而浦的15倍</div>
+    </div>
+    <div class="kpi">
+      <div class="label">全球最高估值</div>
+      <div class="val" style="color:var(--jp)">大金</div>
+      <div class="note">PE 25.4x · 是格力(7.8x)的3.3倍</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 全景对比 ===== -->
+<section>
+  <h2>一、六大公司全景对比</h2>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>公司</th><th>国家</th><th>营收($B)</th><th>净利($B)</th><th>净利率</th>
+          <th>毛利率</th><th>ROE</th><th>ROIC</th><th>PE</th><th>PB</th>
+          <th>股息率</th><th>市值($B)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cn-row">
+          <td>美的集团</td><td>🇨🇳</td><td class="best">64.6</td><td class="best">6.18</td>
+          <td>9.7%</td><td>26.4%</td><td class="best">19.2%</td><td class="best">12.8%</td>
+          <td>14.9x</td><td>3.1x</td><td>5.0%</td><td class="best">92.7</td>
+        </tr>
+        <tr class="cn-row">
+          <td>海尔智家</td><td>🇨🇳</td><td>42.6</td><td>2.76</td>
+          <td>6.5%</td><td>26.7%</td><td>16.5%</td><td>14.0%</td>
+          <td>11.0x</td><td>1.6x</td><td>5.5%</td><td>27.3</td>
+        </tr>
+        <tr class="jp-row">
+          <td>大金工业</td><td>🇯🇵</td><td>33.5</td><td>1.83</td>
+          <td>5.5%</td><td class="best">33.0%</td><td>14.0%</td><td>10.5%</td>
+          <td>25.4x</td><td>3.5x</td><td>1.4%</td><td>46.7</td>
+        </tr>
+        <tr class="cn-row">
+          <td>格力电器</td><td>🇨🇳</td><td>24.1</td><td>4.08</td>
+          <td class="best">16.9%</td><td>29.8%</td><td>19.8%</td><td>11.3%</td>
+          <td>7.8x</td><td>1.5x</td><td class="best">7.7%</td><td>30.6</td>
+        </tr>
+        <tr class="us-row">
+          <td>惠而浦</td><td>🇺🇸</td><td>15.5</td><td class="worst">0.16</td>
+          <td class="worst">1.1%</td><td class="worst">15.4%</td><td class="worst">5.5%</td><td class="worst">3.5%</td>
+          <td>13.2x</td><td>1.0x</td><td>6.9%</td><td>2.5</td>
+        </tr>
+        <tr class="se-row">
+          <td>伊莱克斯</td><td>🇸🇪</td><td>12.8</td><td>0.09</td>
+          <td>0.7%</td><td>14.1%</td><td>9.5%</td><td>3.8%</td>
+          <td>21.3x</td><td>1.2x</td><td>0.0%</td><td class="worst">0.75</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:0.75rem;color:var(--text-3)">* 营收/净利为最新财年数据；美的/格力/海尔为2025年报，大金为FY2025（截至2026年3月），惠而浦/伊莱克斯为2025年报。汇率：CNY/USD≈7.1，JPY/USD≈150，SEK/USD≈10.3</p>
+</section>
+
+<!-- ===== 盈利能力 ===== -->
+<section>
+  <h2>二、盈利能力：中国白电 vs 全球同行</h2>
+
+  <h3>净利率对比</h3>
+  <div class="bar-group">
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">格力</span><div class="bar-track"><div class="bar-fill" style="width:84.5%;background:var(--cn)">16.9%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">美的</span><div class="bar-track"><div class="bar-fill" style="width:48.5%;background:var(--cn)">9.7%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">海尔</span><div class="bar-track"><div class="bar-fill" style="width:32.5%;background:var(--cn)">6.5%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--jp)">大金</span><div class="bar-track"><div class="bar-fill" style="width:27.5%;background:var(--jp)">5.5%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--us)">惠而浦</span><div class="bar-track"><div class="bar-fill" style="width:5.5%;background:var(--us)">1.1%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--se)">伊莱克斯</span><div class="bar-track"><div class="bar-fill" style="width:3.5%;background:var(--se)">0.7%</div></div></div>
+  </div>
+
+  <h3>ROE对比</h3>
+  <div class="bar-group">
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">格力</span><div class="bar-track"><div class="bar-fill" style="width:99%;background:var(--cn)">19.8%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">美的</span><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--cn)">19.2%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--cn)">海尔</span><div class="bar-track"><div class="bar-fill" style="width:82.5%;background:var(--cn)">16.5%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--jp)">大金</span><div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--jp)">14.0%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--se)">伊莱克斯</span><div class="bar-track"><div class="bar-fill" style="width:47.5%;background:var(--se)">9.5%</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--us)">惠而浦</span><div class="bar-track"><div class="bar-fill" style="width:27.5%;background:var(--us)">5.5%</div></div></div>
+  </div>
+
+  <div class="box fire">
+    <p><strong>中国白电三巨头的盈利能力全面碾压海外同行。</strong>格力净利率16.9%是全球白电行业的天花板——同为空调/HVAC专家的大金只有5.5%。原因是多方面的：中国巨大的内需市场带来的规模效应、极致的供应链成本控制、以及更低的人力成本。西方同行（惠而浦1.1%、伊莱克斯0.7%）已经沦为"微利企业"，在高人力成本和激烈竞争下挣扎。</p>
+  </div>
+</section>
+
+<!-- ===== 估值鸿沟 ===== -->
+<section>
+  <h2>三、估值鸿沟——全球视角下的最大发现</h2>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>对比组</th><th>PE</th><th>PB</th><th>股息率</th><th>ROE</th><th>净利率</th><th>结论</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🇯🇵 大金 vs 🇨🇳 格力</td>
+          <td>25.4x vs <span class="best">7.8x</span></td>
+          <td>3.5x vs <span class="best">1.5x</span></td>
+          <td>1.4% vs <span class="best">7.7%</span></td>
+          <td>14% vs <span class="best">20%</span></td>
+          <td>5.5% vs <span class="best">16.9%</span></td>
+          <td style="color:var(--warn)">格力各项指标胜出但PE仅为大金的31%</td>
+        </tr>
+        <tr>
+          <td>🇯🇵 大金 vs 🇨🇳 美的</td>
+          <td>25.4x vs <span class="best">14.9x</span></td>
+          <td>3.5x vs <span class="best">3.1x</span></td>
+          <td>1.4% vs <span class="best">5.0%</span></td>
+          <td>14% vs <span class="best">19%</span></td>
+          <td>5.5% vs <span class="best">9.7%</span></td>
+          <td style="color:var(--warn)">美的全面领先但PE仍有41%折扣</td>
+        </tr>
+        <tr>
+          <td>🇺🇸 惠而浦 vs 🇨🇳 海尔</td>
+          <td>13.2x vs <span class="best">11.0x</span></td>
+          <td>1.0x vs 1.6x</td>
+          <td><span class="best">6.9%</span> vs 5.5%</td>
+          <td>5.5% vs <span class="best">16.5%</span></td>
+          <td>1.1% vs <span class="best">6.5%</span></td>
+          <td style="color:var(--warn)">海尔全面碾压但PE相近——海尔被低估</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ice">
+    <p><strong>大金 vs 格力：同为空调/HVAC龙头的"估值倍率之谜"。</strong>格力的ROE(20%)高于大金(14%)，净利率(16.9%)是大金(5.5%)的3倍，股息率(7.7%)是大金(1.4%)的5.5倍——几乎所有基本面指标都大幅领先。但大金的PE是格力的3.3倍、市值是格力的1.5倍。这个差距部分来自"日本溢价"（成熟市场、治理透明度、技术品牌力）、部分来自"中国折价"（地缘政治风险溢价、增长预期差异）。但如此极端的差距意味着，<strong>即使只回归到大金估值的50%（PE 12-13x），格力也有50-60%的上行空间</strong>。</p>
+  </div>
+
+  <div class="box">
+    <p><strong>惠而浦 vs 海尔：ROE 5.5% vs 16.5%，但PE几乎相同。</strong>海尔的盈利能力是惠而浦的3倍，增长前景也远好于正在萎缩的惠而浦，但市场给出了几乎相同的PE。惠而浦市值仅$24.5亿——曾经的全球家电之王已经萎缩到连海尔的1/10都不到。这说明西方家电的衰落不是暂时的，是结构性的——中国企业的制造效率和成本优势已经形成不可逆转的竞争壁垒。</p>
+  </div>
+
+  <div class="box warn">
+    <p><strong>"中国折价"到底有多大？</strong>如果美的和格力在日本或美国上市，按照大金的估值体系（PE 20-25x），美的市值将达$1240-1550亿（当前$927亿，+34-67%），格力市值将达$820-1020亿（当前$306亿，+168-233%）。当然这是理论上限——地缘风险折价、资本管制等因素客观存在。但即使打个五折，仍意味着中国白电存在显著的全球相对价值。</p>
+  </div>
+</section>
+
+<!-- ===== 行业格局 ===== -->
+<section>
+  <h2>四、全球白电竞争格局——两极分化加速</h2>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>🇨🇳 中国三巨头</th><th>🇯🇵 大金</th><th>🇺🇸🇸🇪 西方双雄</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>营收趋势</td><td>美的+12.5% CAGR<br>海尔+9.8% CAGR</td><td>+10% CAGR</td><td class="worst">惠而浦-7.7%<br>伊莱克斯-3%</td></tr>
+        <tr><td>盈利状态</td><td class="best">稳定高利润</td><td>稳定中利润</td><td class="worst">微利或亏损</td></tr>
+        <tr><td>资产负债表</td><td>净现金或轻负债</td><td>低杠杆</td><td class="worst">高负债<br>惠而浦净负债$65亿</td></tr>
+        <tr><td>全球化</td><td>海尔51%海外<br>美的43%海外</td><td class="best">84%海外</td><td>收缩中<br>惠而浦出售欧洲/印度业务</td></tr>
+        <tr><td>股东回报</td><td class="best">分红率50-74%<br>股息率5-7.7%</td><td>分红率30%<br>股息率1.4%</td><td>惠而浦6.9%但不可持续<br>伊莱克斯已停止分红</td></tr>
+        <tr><td>战略状态</td><td>扩张期→成熟早期</td><td>稳定成长</td><td class="worst">收缩防守</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box">
+    <p><strong>全球白电行业正在发生"东升西落"的结构性重塑。</strong>惠而浦已经出售了欧洲业务和印度子公司，收缩到美洲市场求生。伊莱克斯连续多年亏损，市值仅$7.5亿——不到美的的1%。与此同时，中国三巨头凭借规模、效率和全球化并购（海尔收购GEA、美的收购KUKA和东芝家电），已经从"中国市场冠军"升级为"全球行业统治者"。大金是唯一与中国企业在同一级别竞争的非中国公司，但其竞争力聚焦在HVAC/空调的高端技术领域。</p>
+  </div>
+</section>
+
+<!-- ===== 投资结论 ===== -->
+<section>
+  <h2>五、全球视角下的投资结论</h2>
+
+  <div class="box good" style="border-left-width:5px; padding:1.1rem 1.2rem; margin-bottom:1.5rem;">
+    <p style="font-size:0.92rem; color:var(--text); line-height:1.9;">
+      <strong>结论一：中国白电三巨头是全球家电行业中"性价比"最高的投资标的群。</strong><br>
+      它们拥有全球最高的ROE（16-20%）、最强的现金流（经营现金流/净利润 > 120%）、最高的股息率（5-7.7%），却只拿到了全球同行估值的30-60%。这种"基本面领先、估值折价"的组合，在全球范围内是稀缺的。
+    </p>
+  </div>
+
+  <div class="box good" style="border-left-width:5px; padding:1.1rem 1.2rem; margin-bottom:1.5rem;">
+    <p style="font-size:0.92rem; color:var(--text); line-height:1.9;">
+      <strong>结论二：估值折价的核心原因是"中国折价"，而非基本面劣势。</strong><br>
+      大金PE 25x vs 格力PE 8x——如果这个差距纯粹由基本面驱动，那格力应该在各项指标上远逊于大金。但事实恰恰相反：格力的ROE、净利率、股息率都显著优于大金。折价的本质是地缘政治风险溢价、资本市场开放度差异、以及对中国企业治理质量的怀疑。这些因素是否会永久存在——还是像日本股市在2023-2025年"价值重估"中被纠正——是判断中国白电投资价值的关键变量。
+    </p>
+  </div>
+
+  <div class="box warn" style="border-left-width:5px; padding:1.1rem 1.2rem; margin-bottom:1.5rem;">
+    <p style="font-size:0.92rem; color:var(--text); line-height:1.9;">
+      <strong>结论三：对投资胜率的判断——全球对标确实提升了分析维度。</strong><br>
+      如果只看A股内部，很难判断格力PE 7.8x到底是"合理的成熟期定价"还是"被低估"。但放到全球同行的坐标系里，答案变得更清晰：一家ROE 20%、净利率17%、股息率7.7%的公司，在任何成熟市场中都不应该只值7.8xPE。即使考虑"中国折价"打5折，合理PE也应在12-15x区间——这意味着存在50-90%的价值空间。<br><br>
+      当然，"存在价值空间"和"价值何时兑现"是两个不同的问题。催化剂可能是：①A股国际化深入（更多外资流入）；②公司治理改善（参考日本经验）；③地缘风险缓和。在等待催化剂的过程中，5-7.7%的股息率是"被付费等待"的保障。
+    </p>
+  </div>
+
+  <h3>全球视角下的标的选择矩阵</h3>
+  <div class="verdict-grid">
+    <div class="verdict-card vc-cn">
+      <div class="name" style="color:var(--cn)">最高确定性</div>
+      <div class="metric">美的集团 · PE 14.9x · 股息率 5.0%</div>
+      <div class="desc">全球最大、最赚钱的白电公司。PE只是大金的59%，但基本面全面领先。多元化+海外43%+B端27%的结构提供增长韧性。唯一的代价是估值不算便宜（5年84%分位），需要业绩持续兑现。</div>
+    </div>
+    <div class="verdict-card vc-cn">
+      <div class="name" style="color:var(--cn)">最高赔率</div>
+      <div class="metric">海尔智家 · PE 11.0x · 股息率 5.5%</div>
+      <div class="desc">全球化最深的中国白电公司（海外51%），估值处于10年底部5.7%分位。与惠而浦PE几乎相同，但ROE是惠而浦的3倍。全球对标最为"错误定价"的标的——如果市场纠偏，空间最大。</div>
+    </div>
+    <div class="verdict-card vc-cn">
+      <div class="name" style="color:var(--cn)">最高现金回报</div>
+      <div class="metric">格力电器 · PE 7.8x · 股息率 7.7%</div>
+      <div class="desc">全球净利率最高的白电公司，PE仅为同行业大金的31%。7.7%股息率在全球成熟市场中极为罕见（大金1.4%、伊莱克斯0%）。核心风险是增长引擎缺失——但即使零增长，7.7%的年化现金回报也优于绝大多数固收资产。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 风险 ===== -->
+<section>
+  <h2>六、全球视角下需额外关注的风险</h2>
+
+  <div class="box warn">
+    <p><strong>地缘政治风险是"中国折价"的最大单一因子。</strong>如果中美关系进一步恶化、或外资持续流出A股，估值折扣不仅不会收窄，反而可能扩大。这是买入中国白电必须承担的系统性风险——无法通过公司层面的分析对冲。</p>
+  </div>
+  <div class="box warn">
+    <p><strong>汇率风险在全球化程度提升后被放大。</strong>美的43%+海尔51%的海外收入意味着，人民币每升值1%，这两家公司的利润就被吃掉数亿美元。2026H1已经用"活生生的案例"展示了这一点——美的财务费用恶化92.6亿。大金同样面临日元波动风险，但日本央行的利率政策相对透明。</p>
+  </div>
+  <div class="box">
+    <p><strong>"中国折价"会永远存在吗？参考日本经验。</strong>日本股市在2012年前经历了20年的"日本折价"，PE长期低于欧美同行。2023年东京证券交易所推动治理改革（提高ROE、增加分红/回购），日本股市迎来大幅重估——日经225从2023年初的26,000点涨到2024年的40,000点。如果A股未来也发生类似的制度性变革（鼓励分红、改善治理透明度），中国白电的估值折扣有望系统性收窄。事实上，三家公司近年来大幅提升分红率（美的40%→74%、海尔30%→55%），已经在走同一条路。</p>
+  </div>
+</section>
+
+<div class="footer">
+  数据来源：各公司最新年报/半年报、Yahoo Finance、GuruFocus、StockAnalysis、MarketScreener、投资数据网<br>
+  汇率折算基于近似值（CNY/USD≈7.1, JPY/USD≈150, SEK/USD≈10.3），实际汇率以交易日为准<br>
+  本报告仅供投资研究参考，不构成投资建议 · 2026年9月
+</div>
+
+</div>
+
+<footer class="bd-footer dark" style="max-width:1080px">
+  <div class="bd-disc"><b>免责声明</b>：本页为个人研究笔记，基于公开财报与第三方数据整理，不构成任何投资建议。数据截至 2026 年半年度报告，口径与第三方数据源可能存在差异。</div>
+  <div><a href="/invest/#baidian">← 返回 白电投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/invest/">做投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/">主页</a><span style="float:right">白电投资 · 2026 中期分析 ｜ 2026-09-12</span></div>
+</footer>
+</body>
+</html>

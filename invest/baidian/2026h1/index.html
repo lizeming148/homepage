@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>白色家电三巨头 · 横纵交叉综合投资分析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #F5F4F0;
+    --surface: #FFFFFF;
+    --text: #18181B;
+    --text-2: #52525B;
+    --text-3: #A1A1AA;
+    --geli: #1A6B3A;
+    --geli-bg: #ECFDF5;
+    --meidi: #1D4ED8;
+    --meidi-bg: #EFF6FF;
+    --haier: #BE123C;
+    --haier-bg: #FFF1F2;
+    --border: #E4E4E7;
+    --red: #DC2626;
+    --green: #16A34A;
+    --amber: #D97706;
+    --blue: #2563EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', 'Noto Serif SC', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+  @media (max-width: 700px) {
+    .page { padding: 1.2rem 0.8rem; }
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 3rem 0 2.5rem;
+    border-bottom: 3px solid var(--text);
+    margin-bottom: 2.5rem;
+  }
+  .header h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+  .header .sub {
+    font-size: 0.88rem;
+    color: var(--text-2);
+    line-height: 1.6;
+  }
+  .badges {
+    display: flex; justify-content: center; gap: 1.2rem;
+    margin-top: 1rem; flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
+  }
+  .badge-g { background: var(--geli-bg); color: var(--geli); }
+  .badge-m { background: var(--meidi-bg); color: var(--meidi); }
+  .badge-h { background: var(--haier-bg); color: var(--haier); }
+
+  /* ── Section ── */
+  section { margin-bottom: 2.8rem; }
+  h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.4rem; font-weight: 700;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 { font-size: 1rem; font-weight: 700; margin: 1.4rem 0 0.5rem; }
+  p { font-size: 0.9rem; color: var(--text-2); margin-bottom: 0.7rem; }
+
+  /* ── Table ── */
+  .tw { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  thead th {
+    background: var(--text); color: #fff;
+    padding: 0.55rem 0.7rem; text-align: right; font-weight: 600; white-space: nowrap;
+  }
+  thead th:first-child { text-align: left; border-radius: 4px 0 0 0; }
+  thead th:last-child { border-radius: 0 4px 0 0; }
+  tbody td {
+    padding: 0.5rem 0.7rem; text-align: right;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  tbody td:first-child { text-align: left; font-weight: 600; color: var(--text); }
+  tbody tr:hover { background: #FAFAF8; }
+  .r { color: var(--red); font-weight: 600; }
+  .g { color: var(--green); font-weight: 600; }
+  .a { color: var(--amber); font-weight: 600; }
+
+  /* ── Insight boxes ── */
+  .box {
+    background: var(--surface);
+    border-left: 4px solid var(--blue);
+    padding: 0.9rem 1.1rem;
+    margin: 0.8rem 0;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .box p { margin: 0; font-size: 0.86rem; }
+  .box strong { color: var(--text); }
+  .box.warn { border-left-color: var(--red); background: #FEF2F2; }
+  .box.ok { border-left-color: var(--green); background: #F0FDF4; }
+  .box.note { border-left-color: var(--amber); background: #FFFBEB; }
+
+  /* ── Verdict cards ── */
+  .verdicts {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; margin: 1.2rem 0;
+  }
+  @media (max-width: 700px) { .verdicts { grid-template-columns: 1fr; } }
+  .vcard {
+    border-radius: 10px; padding: 1.3rem 1.1rem;
+    border: 2px solid; position: relative;
+  }
+  .vcard-g { border-color: var(--geli); background: var(--geli-bg); }
+  .vcard-m { border-color: var(--meidi); background: var(--meidi-bg); }
+  .vcard-h { border-color: var(--haier); background: var(--haier-bg); }
+  .vcard .name {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700; font-size: 1.1rem; margin-bottom: 0.3rem;
+  }
+  .vcard .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .vcard .desc { font-size: 0.82rem; color: var(--text-2); line-height: 1.6; }
+  .vcard .metric { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; margin-top: 0.5rem; color: var(--text); }
+
+  /* ── Radar-like grid ── */
+  .dimension-grid {
+    display: grid;
+    grid-template-columns: 200px repeat(3, 1fr);
+    gap: 0;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .dg-header {
+    background: var(--text); color: #fff;
+    padding: 0.5rem 0.7rem; font-weight: 600;
+    display: flex; align-items: center;
+  }
+  .dg-cell {
+    padding: 0.55rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .dg-label {
+    justify-content: flex-start; font-weight: 600; color: var(--text);
+    background: #FAFAF8;
+  }
+  .score {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    font-weight: 700; font-size: 0.75rem; color: #fff;
+  }
+  .score-a { background: var(--green); }
+  .score-b { background: var(--blue); }
+  .score-c { background: var(--amber); }
+  .score-d { background: var(--red); }
+
+  @media (max-width: 700px) {
+    .dimension-grid { grid-template-columns: 130px repeat(3, 1fr); font-size: 0.75rem; }
+  }
+
+  /* ── Footer ── */
+  .footer {
+    font-size: 0.76rem; color: var(--text-3);
+    text-align: center; margin-top: 2rem; padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Bar chart rows ── */
+  .bar-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 0.8rem; }
+  .bar-label { width: 80px; text-align: right; font-weight: 500; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 22px; background: #F0F0EE; border-radius: 4px; position: relative; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; color: #fff; font-size: 0.72rem; font-weight: 600; }
+  .bar-val { width: 60px; text-align: left; font-family: 'JetBrains Mono', monospace; font-weight: 500; flex-shrink: 0; }
+</style>
+<link rel="stylesheet" href="/invest/baidian/2026h1/topbar.css">
+</head>
+<body>
+<div class="bd-topbar" style="max-width:1080px">
+  <div class="bd-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">2026 中期分析 · 横纵交叉 · 综合投资分析</span></div>
+  <nav class="bd-nav"><span class="bd-kind">本专题 6 篇</span><a href="/invest/baidian/2026h1/" class="on">综合总纲</a><a href="/invest/baidian/2026h1/compare/">2026H1 对比</a><a href="/invest/baidian/2026h1/global/">全球图谱</a><a href="/invest/baidian/2026h1/gree/">格力</a><a href="/invest/baidian/2026h1/midea/">美的</a><a href="/invest/baidian/2026h1/haier/">海尔</a></nav>
+</div>
+
+<div class="page">
+
+<div class="header">
+  <h1>白色家电三巨头<br>横纵交叉 · 综合投资分析</h1>
+  <p class="sub">
+    格力电器 · 美的集团 · 海尔智家<br>
+    10年纵向趋势 × 2026H1最新横向对比 · 分析日期：2026年9月11日
+  </p>
+  <div class="badges">
+    <span class="badge badge-g">格力 000651 ¥38.74</span>
+    <span class="badge badge-m">美的 000333 ¥87.60</span>
+    <span class="badge badge-h">海尔 600690 ¥21.01</span>
+  </div>
+</div>
+
+<!-- ===== 核心判断 ===== -->
+<section>
+  <h2>核心判断：三个截然不同的投资故事</h2>
+
+  <div class="verdicts">
+    <div class="vcard vcard-g">
+      <div class="name">格力电器</div>
+      <div class="tag" style="background:var(--geli)">高息型价值</div>
+      <div class="desc">印钞机在减速，但没坏。收入见顶、增长熄火，但利润质量最纯、现金流最厚。7.7%股息率是三家中最高的"安全垫"。买格力本质上是买一张年化7-8%的"公司债"，赚息不赚价。</div>
+      <div class="metric">PE 7.8x · PB 1.46x · 股息率 7.7% · 市值 2,170亿</div>
+    </div>
+    <div class="vcard vcard-m">
+      <div class="name">美的集团</div>
+      <div class="tag" style="background:var(--meidi)">成长型价值</div>
+      <div class="desc">唯一保持10年净利润不降的公司。多元化最成功、B端第二曲线成型（占27%）、海外40%+。但当前PE 14.9x处于5年84%分位，估值不便宜——需要利润持续增长来消化估值。</div>
+      <div class="metric">PE 14.9x · PB 3.13x · 股息率 5.0% · 市值 6,580亿</div>
+    </div>
+    <div class="vcard vcard-h">
+      <div class="name">海尔智家</div>
+      <div class="tag" style="background:var(--haier)">底部反转候选</div>
+      <div class="desc">10年维度在持续变好（净利翻4倍、ROE稳定16%、费用率降10pp），但2026H1首次营收利润双降。PE 11x处于10年5.7%分位——市场定价极度悲观，赔率最高但确定性不如美的。</div>
+      <div class="metric">PE 11.0x · PB 1.64x · 股息率 5.5% · 市值 1,940亿</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10年成长轨迹 ===== -->
+<section>
+  <h2>一、10年成长轨迹对比——谁在真正"变好"？</h2>
+
+  <h3>1.1 营收与净利润的10年复合增速</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>公司</th><th>2016营收</th><th>2025营收</th><th>营收CAGR</th><th>2016净利</th><th>2025净利</th><th>净利CAGR</th><th>净利从未下降？</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>格力电器</td><td>1,101亿</td><td>1,711亿</td><td class="a">5.0%</td>
+          <td>154亿</td><td>290亿</td><td class="a">7.3%</td><td class="r">否（2019/2020/2025）</td>
+        </tr>
+        <tr>
+          <td>美的集团</td><td>1,598亿</td><td>4,585亿</td><td class="g">12.5%</td>
+          <td>147亿</td><td>439亿</td><td class="g">13.0%</td><td class="g">是（连续9年正增长）</td>
+        </tr>
+        <tr>
+          <td>海尔智家</td><td>1,191亿</td><td>3,024亿</td><td class="g">9.8%</td>
+          <td>50亿</td><td>196亿</td><td class="g">14.6%</td><td class="r">否（2026H1首次双降）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box">
+    <p><strong>美的是唯一实现"10年净利润从未下降"的白电公司</strong>——这在A股家电行业极为罕见。海尔净利润CAGR 14.6%最高，但起点低（2016年仅50亿），且刚在2026H1打破了"不降"记录。格力的CAGR最低，因为2018年后营收实质见顶。</p>
+  </div>
+
+  <h3>1.2 营收增长轨迹可视化</h3>
+  <div style="margin:1rem 0">
+    <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:4px">单位：亿元 · 条形长度按4600亿满格</p>
+    <!-- 格力 -->
+    <p style="font-size:0.78rem;font-weight:700;color:var(--geli);margin:8px 0 2px">格力电器 — 2018年触顶后横盘→下行</p>
+    <div class="bar-row"><span class="bar-label">2016</span><div class="bar-track"><div class="bar-fill" style="width:23.9%;background:var(--geli)">1,101</div></div></div>
+    <div class="bar-row"><span class="bar-label">2018</span><div class="bar-track"><div class="bar-fill" style="width:43.5%;background:var(--geli)">2,000</div></div></div>
+    <div class="bar-row"><span class="bar-label">2021</span><div class="bar-track"><div class="bar-fill" style="width:41.2%;background:var(--geli)">1,897</div></div></div>
+    <div class="bar-row"><span class="bar-label">2023</span><div class="bar-track"><div class="bar-fill" style="width:44.6%;background:var(--geli)">2,050</div></div></div>
+    <div class="bar-row"><span class="bar-label">2025</span><div class="bar-track"><div class="bar-fill" style="width:37.2%;background:var(--geli);opacity:0.7">1,711</div></div></div>
+    <!-- 美的 -->
+    <p style="font-size:0.78rem;font-weight:700;color:var(--meidi);margin:12px 0 2px">美的集团 — 持续上行，2017并购跳增后回归内生</p>
+    <div class="bar-row"><span class="bar-label">2016</span><div class="bar-track"><div class="bar-fill" style="width:34.7%;background:var(--meidi)">1,598</div></div></div>
+    <div class="bar-row"><span class="bar-label">2018</span><div class="bar-track"><div class="bar-fill" style="width:56.9%;background:var(--meidi)">2,618</div></div></div>
+    <div class="bar-row"><span class="bar-label">2021</span><div class="bar-track"><div class="bar-fill" style="width:74.7%;background:var(--meidi)">3,434</div></div></div>
+    <div class="bar-row"><span class="bar-label">2023</span><div class="bar-track"><div class="bar-fill" style="width:81.2%;background:var(--meidi)">3,737</div></div></div>
+    <div class="bar-row"><span class="bar-label">2025</span><div class="bar-track"><div class="bar-fill" style="width:99.7%;background:var(--meidi)">4,585</div></div></div>
+    <!-- 海尔 -->
+    <p style="font-size:0.78rem;font-weight:700;color:var(--haier);margin:12px 0 2px">海尔智家 — 稳步增长，2026H1首次拐头</p>
+    <div class="bar-row"><span class="bar-label">2016</span><div class="bar-track"><div class="bar-fill" style="width:25.9%;background:var(--haier)">1,191</div></div></div>
+    <div class="bar-row"><span class="bar-label">2018</span><div class="bar-track"><div class="bar-fill" style="width:39.8%;background:var(--haier)">1,833</div></div></div>
+    <div class="bar-row"><span class="bar-label">2021</span><div class="bar-track"><div class="bar-fill" style="width:49.5%;background:var(--haier)">2,276</div></div></div>
+    <div class="bar-row"><span class="bar-label">2023</span><div class="bar-track"><div class="bar-fill" style="width:56.8%;background:var(--haier)">2,614</div></div></div>
+    <div class="bar-row"><span class="bar-label">2025</span><div class="bar-track"><div class="bar-fill" style="width:65.7%;background:var(--haier)">3,024</div></div></div>
+  </div>
+</section>
+
+<!-- ===== 盈利能力演进 ===== -->
+<section>
+  <h2>二、盈利能力的10年演进——谁"赚得好"？</h2>
+
+  <h3>2.1 净利率10年走势</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>年份</th><th>格力</th><th>美的</th><th>海尔</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2016</td><td class="g">14.1%</td><td>9.9%</td><td>4.2%</td></tr>
+        <tr><td>2018</td><td class="g">13.2%</td><td>8.3%</td><td>4.0%</td></tr>
+        <tr><td>2020</td><td class="g">13.1%</td><td>9.6%</td><td>4.2%</td></tr>
+        <tr><td>2021</td><td class="g">12.0%</td><td>8.5%</td><td>5.8%</td></tr>
+        <tr><td>2023</td><td class="g">13.5%</td><td>9.0%</td><td>6.3%</td></tr>
+        <tr><td>2025</td><td class="g">16.9%</td><td>9.7%</td><td>6.5%</td></tr>
+        <tr><td>2026H1</td><td class="g">14.9%</td><td>10.2%</td><td>6.8%</td></tr>
+        <tr><td style="font-weight:700">10年变化</td><td class="g">+0.8pp ↑</td><td class="g">+0.3pp ↑</td><td class="g">+2.6pp ↑</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <p><strong>三家公司的净利率都在改善，但路径完全不同。</strong>格力靠"砍费用+收缩低毛利业务"把净利率从12%推到17%——这是用收入换利润率。美的靠"规模效应+费用率下降"从10%稳步走到10%。海尔进步最大——从4.2%翻了1.5倍到6.8%，驱动力是销售费用率从17.8%降到10.8%（渠道改革红利）。</p>
+  </div>
+
+  <h3>2.2 ROE与ROIC的10年趋势——效率在下降</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>年份</th><th colspan="2">格力</th><th colspan="2">美的</th><th colspan="2">海尔</th></tr>
+        <tr><th></th><th>ROE</th><th>ROIC</th><th>ROE</th><th>ROIC</th><th>ROE</th><th>ROIC</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2016</td><td>30.0%</td><td>18.3%</td><td>25.4%</td><td>21.4%</td><td>19.1%</td><td>—</td></tr>
+        <tr><td>2018</td><td>33.1%</td><td>25.3%</td><td>24.7%</td><td>15.7%</td><td>18.9%</td><td>—</td></tr>
+        <tr><td>2020</td><td>19.5%</td><td>15.6%</td><td>23.7%</td><td>15.7%</td><td>13.3%</td><td>—</td></tr>
+        <tr><td>2022</td><td>21.9%</td><td>12.7%</td><td>20.8%</td><td>13.2%</td><td>15.7%</td><td>—</td></tr>
+        <tr><td>2025</td><td class="a">19.8%</td><td class="r">11.3%</td><td class="a">19.2%</td><td class="a">12.8%</td><td>16.5%</td><td>—</td></tr>
+        <tr><td style="font-weight:700">方向</td><td class="r" colspan="2">↓ 从卓越到优秀</td><td class="a" colspan="2">↓ 从优秀到良好</td><td class="g" colspan="2">→ 稳定在16-17%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box note">
+    <p><strong>三家ROE都在下降或趋平，但海尔是唯一保持稳定的。</strong>格力ROE从30%→20%（资产周转率0.86→0.45，被巨额现金和金融资产拖累）。美的从25%→19%（体量膨胀后的效率稀释，B端业务天然低周转）。海尔16-17%最稳定——利润率提升恰好对冲了杠杆下降。从杜邦分解看，<strong>海尔是唯一"利润率驱动型ROE"的公司</strong>，质量最健康。</p>
+  </div>
+</section>
+
+<!-- ===== 业务结构 ===== -->
+<section>
+  <h2>三、业务结构演变——谁的"护城河"在拓宽？</h2>
+
+  <h3>3.1 多元化与国际化程度</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>核心品类依赖度</td><td class="r">空调83%</td><td>智能家居67%</td><td>冰箱28%+洗衣机22%</td></tr>
+        <tr><td>第二增长曲线</td><td class="r">未成型（工业品174亿，占比不足10%）</td><td class="g">B端已成型（楼宇+机器人+工业=1,228亿，占27%）</td><td class="a">发展中（空调占比上升但毛利率低）</td></tr>
+        <tr><td>海外收入占比(2025)</td><td class="r">16%</td><td class="g">43%</td><td class="g">51%</td></tr>
+        <tr><td>海外10年变化</td><td>12%→16%（+4pp）</td><td>40%→43%（+3pp）</td><td>50%→51%（稳定）</td></tr>
+        <tr><td>海外毛利率趋势</td><td>19.8%（低）</td><td>26.6%（接近国内）</td><td class="r">24.6%（连降4年）</td></tr>
+        <tr><td>品牌矩阵</td><td>格力（单品牌）</td><td>美的+小天鹅+KUKA+东芝</td><td class="g">7大品牌（GEA/F&P/Candy等）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box">
+    <p><strong>美的在"拓宽护城河"，格力在"加深护城河"，海尔在"全球化护城河"。</strong>美的的B端业务（楼宇科技+机器人+工业技术）从2021年的8%增长到27%，是三家中唯一成功培育出第二增长曲线的公司。格力的策略是深耕空调单品、做到极致利润率，但这意味着天花板来临时缺乏腾挪空间。海尔全球化最深（海外占比51%），但海外毛利率连降4年值得警惕——全球化的"质量"而非仅是"规模"需要关注。</p>
+  </div>
+</section>
+
+<!-- ===== 资产质量 ===== -->
+<section>
+  <h2>四、资产质量与财务安全——谁的"底盘"最稳？</h2>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>指标（2025/2026H1）</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>总资产（亿）</td><td>3,991</td><td>6,088</td><td>3,119</td></tr>
+        <tr><td>资产负债率</td><td>61.8%</td><td>61.2%</td><td class="g">58.5%</td></tr>
+        <tr><td>货币资金（亿）</td><td class="g">1,283</td><td>906</td><td>509</td></tr>
+        <tr><td>有息负债（亿）</td><td class="r">832</td><td>673</td><td>426</td></tr>
+        <tr><td>净现金头寸（亿）</td><td>451</td><td class="g">233</td><td>83</td></tr>
+        <tr><td>商誉（亿）</td><td class="g">13</td><td class="r">316</td><td class="r">263</td></tr>
+        <tr><td>商誉/归母权益</td><td class="g">0.9%</td><td class="r">14.8%</td><td class="r">22.0%</td></tr>
+        <tr><td>10年有息负债变化</td><td class="r">114→832亿（+7.3倍）</td><td>104→673亿（+6.5倍）</td><td>367→426亿（+16%）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <p><strong>格力10年有息负债膨胀7.3倍是三家中最大的结构性变化。</strong>从2016年的114亿飙升至832亿，彻底告别了"零有息负债"的黄金时代。虽然1283亿现金仍能覆盖，但净现金头寸从曾经的1000亿+收窄到451亿。原因是格力金融子公司业务扩张——本质上在做"类银行"赚利差，这改变了格力的资产负债表性质。</p>
+  </div>
+
+  <div class="box warn">
+    <p><strong>商誉是美的和海尔共同的"悬顶之剑"。</strong>美的316亿（来自KUKA、东芝家电等）、海尔263亿（来自GEA等），分别占归母权益的15%和22%。在行业上行期暂无减值压力，但若海外市场持续恶化或并购标的业绩不达预期，减值风险将直接冲击净资产——海尔22%的比例尤其需要警惕。格力13亿商誉几乎可忽略，这是轻并购策略的优势。</p>
+  </div>
+</section>
+
+<!-- ===== 现金流 ===== -->
+<section>
+  <h2>五、现金流与股东回报——谁在真正"对股东好"？</h2>
+
+  <h3>5.1 10年自由现金流累计</h3>
+  <div style="margin:0.8rem 0">
+    <div class="bar-row"><span class="bar-label" style="color:var(--geli);font-weight:700">格力</span><div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--geli)">~2,250亿</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--meidi);font-weight:700">美的</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--meidi)">~3,299亿</div></div></div>
+    <div class="bar-row"><span class="bar-label" style="color:var(--haier);font-weight:700">海尔</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--haier)">~1,500亿</div></div></div>
+  </div>
+
+  <h3>5.2 分红与回报政策演变</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>10年累计分红</td><td class="g">~1,600亿</td><td class="g">~1,500亿</td><td>~450亿</td></tr>
+        <tr><td>2016年分红率</td><td>70%</td><td>44%</td><td>30%</td></tr>
+        <tr><td>2025年分红率</td><td>58%</td><td class="g">74%</td><td class="g">55%</td></tr>
+        <tr><td>分红率趋势</td><td>波动（50-108%）</td><td class="g">持续提升（40→74%）</td><td class="g">持续提升（30→55%）</td></tr>
+        <tr><td>当前股息率</td><td class="g">7.7%</td><td>5.0%</td><td>5.5%</td></tr>
+        <tr><td>是否有中期分红</td><td>是（2018年起）</td><td>是（2025年起）</td><td>是（2025年起）</td></tr>
+        <tr><td>大额回购</td><td class="g">有（多轮）</td><td class="g">有（大额）</td><td>有</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <p><strong>三家公司都在系统性提升股东回报，这是行业进入成熟期的共同信号。</strong>美的分红率从44%→74%的提升最具说服力——公司在用行动告诉市场"增量资本回报递减，钱不如还给股东"。格力股息率7.7%最高，但需注意：如果净利润继续下滑而分红维持不变，分红率将被动走高，可持续性是隐忧。海尔从30%→55%的进步最大，曾经的"铁公鸡"已完全转变。</p>
+  </div>
+</section>
+
+<!-- ===== 2026H1 ===== -->
+<section>
+  <h2>六、2026H1最新信号——行业集体承压</h2>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>2026H1指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>营收同比</td><td class="r">-8.15%</td><td class="g">+3.55%</td><td class="r">-2.80%</td></tr>
+        <tr><td>归母净利润同比</td><td class="r">-7.87%</td><td class="g">+1.66%</td><td class="r">-14.27%</td></tr>
+        <tr><td>扣非净利润同比</td><td class="r">-8.89%</td><td class="r">-25.31%</td><td class="r">-20.54%</td></tr>
+        <tr><td>毛利率</td><td class="g">28.81%</td><td>25.26%</td><td>27.23%</td></tr>
+        <tr><td>净利率</td><td class="g">14.85%</td><td>10.17%</td><td>6.78%</td></tr>
+        <tr><td>经营现金流/净利润</td><td class="g">142%</td><td class="g">142%</td><td>95%</td></tr>
+        <tr><td>合同负债变化</td><td class="r">-44%</td><td>-3%</td><td class="r">-22%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <p><strong>三家扣非净利润全面下滑，行业逆风无人幸免。</strong>核心冲击来自三个方面：①国内空调零售量/额同比-13%/-16%（以旧换新红利递减）；②人民币升值导致汇兑损失（美的和海尔分别损失数十亿至近百亿）；③原材料成本高企。美的归母净利润看似+1.66%，但扣非-25.31%——67亿的外汇衍生品浮盈被计入非经常性损益，掩盖了主业利润的下滑。</p>
+  </div>
+</section>
+
+<!-- ===== 估值对比 ===== -->
+<section>
+  <h2>七、估值水位横纵对比——谁"最便宜"？</h2>
+
+  <h3>7.1 当前估值全景</h3>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>估值指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>PE-TTM</td><td>7.8x</td><td>14.9x</td><td>11.0x</td></tr>
+        <tr><td>PE 5年分位</td><td>—</td><td class="r">84.5%（偏高）</td><td class="g">8.7%（极低）</td></tr>
+        <tr><td>PE 10年分位</td><td class="a">26.3%（偏低）</td><td>52.7%（中性）</td><td class="g">5.7%（历史底部）</td></tr>
+        <tr><td>PB</td><td>1.46x</td><td>3.13x</td><td>1.64x</td></tr>
+        <tr><td>PB 10年分位</td><td class="g">3.0%（底部）</td><td>45.5%（中低）</td><td class="g">3.3%（底部）</td></tr>
+        <tr><td>PS-TTM</td><td>1.34x</td><td>1.42x</td><td>0.66x</td></tr>
+        <tr><td>股息率</td><td class="g">7.73%</td><td>4.95%</td><td class="g">5.53%</td></tr>
+        <tr><td>市值（亿）</td><td>2,170</td><td>6,580</td><td>1,940</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>7.2 估值的历史语境</h3>
+  <div class="box note">
+    <p><strong>格力PE 7.8x的"低估"需要审慎看待。</strong>5年均值PE仅7.7x，说明市场已经把格力的估值中枢永久性下调了一档——低PE不是"被低估"，而是"被重新定价为无增长型资产"。PB 1.46x处于10年3%分位确实极端，但这部分反映了有息负债膨胀导致净资产"含金量"降低的现实。</p>
+  </div>
+  <div class="box note">
+    <p><strong>美的PE 14.9x的"偏高"也需要语境。</strong>5年分位84.5%，但10年分位仅53%——因为2021年的PE高点曾到29x。考虑到美的是唯一保持增长的公司、分红率74%、股息率5%，14.9x并不算离谱。但如果2026全年增速放缓至个位数，这个PE就缺乏扩张空间。更理想的买入区间在12-13xPE（市值5200-5600亿）。</p>
+  </div>
+  <div class="box ok">
+    <p><strong>海尔PE 11x处于10年5.7%分位，是三家中估值折扣最大的。</strong>即使假设2026全年利润零增长（约195亿），11xPE对应的市值约2145亿，略高于当前1940亿——市场已经把"利润下降"定价进去了。如果利润止跌企稳，估值修复到13-14xPE的空间约20-30%，叠加5.5%股息率，赔率是三家中最高的。风险在于GEA商誉减值和海外毛利率继续下滑。</p>
+  </div>
+</section>
+
+<!-- ===== 多维评分 ===== -->
+<section>
+  <h2>八、10维度综合评分</h2>
+
+  <div class="dimension-grid">
+    <div class="dg-header">评估维度</div>
+    <div class="dg-header" style="justify-content:center;color:var(--geli-bg)">格力</div>
+    <div class="dg-header" style="justify-content:center;color:var(--meidi-bg)">美的</div>
+    <div class="dg-header" style="justify-content:center;color:var(--haier-bg)">海尔</div>
+
+    <div class="dg-cell dg-label">10年营收成长</div>
+    <div class="dg-cell"><span class="score score-c">C</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+
+    <div class="dg-cell dg-label">10年利润增长质量</div>
+    <div class="dg-cell"><span class="score score-b">B</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-a">A-</span></div>
+
+    <div class="dg-cell dg-label">盈利能力（净利率）</div>
+    <div class="dg-cell"><span class="score score-a">A+</span></div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+    <div class="dg-cell"><span class="score score-b">B</span></div>
+
+    <div class="dg-cell dg-label">ROE / ROIC效率</div>
+    <div class="dg-cell"><span class="score score-b">B</span></div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+    <div class="dg-cell"><span class="score score-a">A-</span></div>
+
+    <div class="dg-cell dg-label">现金流质量</div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+
+    <div class="dg-cell dg-label">多元化/抗风险</div>
+    <div class="dg-cell"><span class="score score-d">D</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+
+    <div class="dg-cell dg-label">资产安全（商誉等）</div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-b">B</span></div>
+    <div class="dg-cell"><span class="score score-b">B-</span></div>
+
+    <div class="dg-cell dg-label">股东回报</div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+    <div class="dg-cell"><span class="score score-a">A+</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+
+    <div class="dg-cell dg-label">当前估值吸引力</div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+    <div class="dg-cell"><span class="score score-c">C+</span></div>
+    <div class="dg-cell"><span class="score score-a">A</span></div>
+
+    <div class="dg-cell dg-label">未来增长潜力</div>
+    <div class="dg-cell"><span class="score score-c">C</span></div>
+    <div class="dg-cell"><span class="score score-b">B+</span></div>
+    <div class="dg-cell"><span class="score score-b">B</span></div>
+  </div>
+</section>
+
+<!-- ===== 投资情景 ===== -->
+<section>
+  <h2>九、三种投资者画像与匹配建议</h2>
+
+  <div class="verdicts">
+    <div class="vcard vcard-g">
+      <div class="name">画像一：追求稳定现金回报</div>
+      <div class="tag" style="background:var(--geli)">首选 格力</div>
+      <div class="desc">
+        <strong>逻辑：</strong>7.7%股息率 ≈ 10年国债3.5倍。即使零增长，每年吃息的回报率已跑赢大部分固收产品。PB 1.46x提供净资产保护的安全边际。<br><br>
+        <strong>预期年化回报：</strong>7-8%股息 + 0-3%增长 ≈ <strong>8-11%</strong><br>
+        <strong>核心风险：</strong>利润持续下滑导致分红削减；空调行业格局恶化。
+      </div>
+    </div>
+    <div class="vcard vcard-m">
+      <div class="name">画像二：愿意为增长支付溢价</div>
+      <div class="tag" style="background:var(--meidi)">首选 美的</div>
+      <div class="desc">
+        <strong>逻辑：</strong>唯一10年净利不降的公司，B端第二曲线成型，分红率74%提供5%的股息底。最理想的白电"核心持仓"。<br><br>
+        <strong>预期年化回报：</strong>5%股息 + 8-12%增长 ≈ <strong>13-17%</strong>（前提：增长持续）<br>
+        <strong>核心风险：</strong>PE 14.9x已包含增长预期，若增速降至个位数将面临"戴维斯双杀"；商誉316亿。<br>
+        <strong>更佳买点：</strong>PE 12-13x / 市值 5,200-5,600亿。
+      </div>
+    </div>
+    <div class="vcard vcard-h">
+      <div class="name">画像三：偏好逆向/困境反转</div>
+      <div class="tag" style="background:var(--haier)">首选 海尔</div>
+      <div class="desc">
+        <strong>逻辑：</strong>PE 11x处于10年5.7%分位，市场已极度悲观。10年趋势在变好（净利翻4倍、ROE稳定、费用率砍半），2026H1的下滑可能是周期性而非结构性。赔率最高。<br><br>
+        <strong>预期年化回报：</strong>5.5%股息 + 估值修复20-30% + 0-5%增长 ≈ <strong>15-25%</strong>（若反转成功）<br>
+        <strong>核心风险：</strong>GEA商誉263亿减值；海外毛利率继续下滑；反转不发生时继续煎熬。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 需紧盯的风险 ===== -->
+<section>
+  <h2>十、需紧盯的共性风险</h2>
+
+  <div class="box warn">
+    <p><strong>1. 人民币汇率。</strong>2026H1已经证明汇率是白电利润的最大外生变量。美的财务费用恶化92.6亿、海尔汇兑损失9.11亿——如果下半年人民币继续走强，三家（尤其美的和海尔）的全年利润将进一步承压。反之，如果人民币贬值，利润会得到修复。</p>
+  </div>
+  <div class="box warn">
+    <p><strong>2. 空调行业需求周期。</strong>2026H1空调零售量-13%、额-15%，以旧换新红利基本出尽。如果下半年冷夏或消费进一步走弱，格力将首当其冲（83%依赖空调），海尔次之，美的因多元化受影响最小。</p>
+  </div>
+  <div class="box warn">
+    <p><strong>3. 商誉减值的"达摩克利斯之剑"。</strong>美的316亿+海尔263亿的商誉合计579亿，一旦KUKA/GEA等标的业绩长期不达预期，单次减值就可能吃掉一年净利润的30-50%。格力无此风险。</p>
+  </div>
+  <div class="box warn">
+    <p><strong>4. 行业价格战与低端化。</strong>空调2100元以下占比已达54%（奥维云网数据），格力"坚持中高端"的战略与行业降级趋势形成错配，可能持续流失份额。</p>
+  </div>
+</section>
+
+<!-- ===== 总结 ===== -->
+<section>
+  <h2>终局判断</h2>
+
+  <div class="box" style="border-left-width:6px;padding:1.2rem 1.4rem;">
+    <p style="font-size:0.95rem;line-height:1.9;color:var(--text);">
+      三家白电龙头都已进入<strong>成熟期</strong>——标志是ROE趋降、分红率趋升、增速放缓。成熟期不等于"变差"，而是增长动能从"扩张"切换到"效率+回报"。在这个阶段，投资回报的来源从"赚估值扩张的钱"变成了"赚股息+业绩稳步增长的钱"。
+    </p>
+    <p style="font-size:0.95rem;line-height:1.9;color:var(--text);margin-top:0.6rem;">
+      <strong>如果只能选一家：</strong>美的是"最不容易出错"的选择——增长韧性最强、多元化最成功、现金流最充沛、分红率最高。但当前PE 14.9x不算便宜，更理想的击球点在12-13x。
+    </p>
+    <p style="font-size:0.95rem;line-height:1.9;color:var(--text);margin-top:0.6rem;">
+      <strong>如果追求最高赔率：</strong>海尔在PE 11x / 10年5.7%分位的位置，给了一个"按困境定价但基本面并未困境"的机会。风险是商誉和海外毛利率，但如果这两个风险被证伪，30%+的估值修复空间叠加5.5%股息，回报将非常可观。
+    </p>
+    <p style="font-size:0.95rem;line-height:1.9;color:var(--text);margin-top:0.6rem;">
+      <strong>如果只想安心收息：</strong>格力7.7%股息率+PB 1.46x的组合是白电板块里最"债券化"的标的。前提是接受"不赚股价差价"的心理预期，以及监控利润下滑是否会威胁到分红可持续性。
+    </p>
+  </div>
+</section>
+
+<div class="footer">
+  本报告综合了三家公司2016—2025年报、2026年半年报数据以及投资数据网(touzid.com)历史估值数据。<br>
+  所有分析仅供研究参考，不构成投资建议。估值分位数据截至2026年9月11日。<br>
+  报告由 Claude 生成 · 分析框架遵循用户自建的A股年报分析方法论
+</div>
+
+</div>
+
+<footer class="bd-footer" style="max-width:1080px">
+  <div class="bd-disc"><b>免责声明</b>：本页为个人研究笔记，基于公开财报与第三方数据整理，不构成任何投资建议。数据截至 2026 年半年度报告，口径与第三方数据源可能存在差异。</div>
+  <div><a href="/invest/#baidian">← 返回 白电投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/invest/">做投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/">主页</a><span style="float:right">白电投资 · 2026 中期分析 ｜ 2026-09-12</span></div>
+</footer>
+</body>
+</html>

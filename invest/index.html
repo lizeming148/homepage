@@ -124,6 +124,77 @@
         .stock-body .meta-info { font-size: 0.76rem; color: var(--text-tertiary); }
         .stock-body .arrow { font-size: 0.8rem; color: var(--accent); font-weight: 500; }
 
+        /* 子专题分组（白电投资板块下的一级切分） */
+        .topic-group { margin-bottom: 54px; }
+        .topic-group:last-child { margin-bottom: 0; }
+        .group-head {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .group-head h3 { font-family: 'Noto Serif SC', serif; font-size: 1.26rem; font-weight: 700; }
+        .group-head .g-badge {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.66rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
+            background: var(--accent);
+            border-radius: 999px;
+            padding: 3px 10px;
+        }
+        .group-head .g-date { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: var(--text-tertiary); margin-left: auto; }
+        .group-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 22px; }
+
+        /* 切面卡（两张并排） */
+        .duo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+        .brief-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 26px 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .brief-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .brief-card .b-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+        .brief-card h4 { font-family: 'Noto Serif SC', serif; font-size: 1.14rem; font-weight: 700; margin: 7px 0 9px; }
+        .brief-card .desc { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.75; flex: 1; }
+        .brief-card .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+        .brief-card .meta-info { font-size: 0.76rem; color: var(--text-tertiary); }
+        .brief-card .arrow { font-size: 0.8rem; color: var(--accent); font-weight: 500; }
+
+        /* 个股卡里的估值快照行 */
+        .stock-body .kpi-line {
+            align-self: flex-start;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: 7px;
+            padding: 5px 11px;
+            margin-bottom: 11px;
+        }
+
         .coming-soon {
             border: 1px dashed var(--border);
             border-radius: 14px;
@@ -211,71 +282,168 @@
 
     <header class="hero">
         <h1>做投资</h1>
-        <p>用耐心做投资，用系统做执行。从财报的字里行间，到指数的估值分位——把模糊的直觉，拆成可验证、可复盘的信号。</p>
+        <p>用耐心做投资，用系统做执行。从财报的字里行间，到个股的十年财务轨迹，再到指数的估值分位——把模糊的直觉，拆成可验证、可复盘的信号。</p>
     </header>
 
     <nav class="tabs">
-        <button class="tab active" type="button" data-target="panel-text">财报语义分析</button>
+        <button class="tab active" type="button" data-target="panel-baidian">白电投资</button>
         <button class="tab" type="button" data-target="panel-valuation">估值策略</button>
     </nav>
 
-    <section class="section-block" id="panel-text">
+    <section class="section-block" id="panel-baidian">
         <div class="section-head">
-            <span class="topic-tag">专题 · 白电三巨头</span>
-            <p class="section-sub">以投资者视角，逐字读三家 2016–2025 年报「管理层讨论与分析」全文，看措辞、语气与战略重心的十年演变。纯文本语义分析，不只看数字。</p>
+            <span class="topic-tag">专题 · 白色家电三巨头</span>
+            <p class="section-sub">格力 / 美的 / 海尔的长期跟踪档案。一边逐字读十年年报里管理层的自述，一边用财务数据做横纵交叉验证——看叙事与数字，到底对不对得上。</p>
         </div>
 
-        <a class="feature-card" href="/invest/baidian/" data-date="2026-06-15">
-            <span class="f-label">综合对比 · 起点推荐</span>
-            <h3>白电三巨头 · 管理层讨论横向对比</h3>
-            <p>格力 / 美的 / 海尔，同一套维度并排打分：战略主题着墨热力图（每万字词频）、统一维度打分矩阵、谁更早押注全球化与 AI。一页看懂三家十年叙事的分野。</p>
-            <span class="f-arrow">查看对比 →</span>
-        </a>
+        <!-- ── 子专题一：2026 中期分析 ── -->
+        <div class="topic-group" data-date="2026-09-12">
+            <div class="group-head">
+                <h3>2026 中期分析</h3>
+                <span class="g-badge">New</span>
+                <span class="g-date">数据截至 2026 年半年报 · 6 篇</span>
+            </div>
+            <p class="group-desc">以 2026 年半年度报告为切面，向前回溯十年财务轨迹，再横向放进全球同行的坐标系。从下面这张总纲进入最省力——它把纵向趋势与横向对比合成了一张判断表。</p>
 
-        <div class="cards-grid">
-
-            <a class="stock-card" href="/invest/baidian/midea/" data-date="2026-06-14">
-                <div class="stock-head midea">
-                    <div class="name">美的集团</div>
-                    <div class="code">000333.SZ</div>
-                </div>
-                <div class="stock-body">
-                    <p class="desc">纪律性极强的「全球科技集团」叙事，战略主轴十年仅升级一次便逐字坚守。靠并购真正建成 ToB 第二引擎，营收十年近 3 倍——增长靠并购与全球化驱动，整合风险是关注点。</p>
-                    <div class="meta">
-                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
-                        <span class="arrow">阅读分析 →</span>
-                    </div>
-                </div>
+            <a class="feature-card" href="/invest/baidian/2026h1/">
+                <span class="f-label">综合总纲 · 起点推荐</span>
+                <h3>白电三巨头 · 横纵交叉综合投资分析</h3>
+                <p>10 年纵向趋势 × 2026H1 横向切面，合成三个截然不同的投资故事：格力是「高息型价值」，美的是「成长型价值」，海尔是「底部反转候选」。含 10 维度综合评分、三种投资者画像的匹配建议，以及必须紧盯的共性风险。</p>
+                <span class="f-arrow">查看总纲 →</span>
             </a>
 
-            <a class="stock-card" href="/invest/baidian/gree/" data-date="2026-06-14">
-                <div class="stock-head gree">
-                    <div class="name">格力电器</div>
-                    <div class="code">000651.SZ</div>
-                </div>
-                <div class="stock-body">
-                    <p class="desc">从「开疆拓土的进攻者」到「守城增效的现金牛」。早年满纸转型突破，近年主旋律转向降本增效、风险防范，并首次公开承认市场份额损失风险。空调仍是唯一支柱。</p>
+            <div class="duo-grid">
+                <a class="brief-card" href="/invest/baidian/2026h1/compare/">
+                    <span class="b-label">横向切面 · 2026H1</span>
+                    <h4>三巨头 2026H1 深度对比</h4>
+                    <p class="desc">半年报逐项拆解：营收、净利、毛利率、费用率、业务结构、内外销。行业整体承压——国内空调零售额同比 -15.9%，三家中仅美的实现营收与利润双增。</p>
                     <div class="meta">
-                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
-                        <span class="arrow">阅读分析 →</span>
+                        <span class="meta-info">2026 年半年度报告</span>
+                        <span class="arrow">阅读对比 →</span>
                     </div>
-                </div>
+                </a>
+
+                <a class="brief-card" href="/invest/baidian/2026h1/global/">
+                    <span class="b-label">全球坐标 · 六家同行</span>
+                    <h4>白电全球投资图谱</h4>
+                    <p class="desc">把三巨头放进全球坐标，与大金、惠而浦、伊莱克斯并排比。中国白电的盈利能力已全面领先，估值却是最低的一档——大金 PE 25.4x 对格力 7.8x，是全篇最大的发现。</p>
+                    <div class="meta">
+                        <span class="meta-info">中 · 日 · 美 · 瑞典 六家对比</span>
+                        <span class="arrow">查看图谱 →</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="cards-grid">
+
+                <a class="stock-card" href="/invest/baidian/2026h1/gree/">
+                    <div class="stock-head gree">
+                        <div class="name">格力电器</div>
+                        <div class="code">000651.SZ</div>
+                    </div>
+                    <div class="stock-body">
+                        <span class="kpi-line">PE 7.8x · PB 1.46x · 股息 7.7%</span>
+                        <p class="desc">收入见顶、利润筑顶、估值低位。2018 年触及 2000 亿后再未突破，却靠压费用把净利率从 12% 推到 17%。PB 处十年 3% 分位——价值陷阱与深度价值的分水岭。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年财务 · 2016–2026H1</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="stock-card" href="/invest/baidian/2026h1/midea/">
+                    <div class="stock-head midea">
+                        <div class="name">美的集团</div>
+                        <div class="code">000333.SZ</div>
+                    </div>
+                    <div class="stock-body">
+                        <span class="kpi-line">PE 14.9x · PB 3.13x · 股息 5.0%</span>
+                        <p class="desc">十年营收 CAGR 12.5%，净利润从未下降——在 A 股家电业极为罕见。但 ROE 从 25% 滑到 19%，靠把分红率提到 74% 维护回报。估值处 5 年 84% 分位，不便宜。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年财务 · 2016–2026H1</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="stock-card" href="/invest/baidian/2026h1/haier/">
+                    <div class="stock-head haier">
+                        <div class="name">海尔智家</div>
+                        <div class="code">600690.SH</div>
+                    </div>
+                    <div class="stock-body">
+                        <span class="kpi-line">PE 11.0x · PB 1.64x · 股息 5.5%</span>
+                        <p class="desc">十年净利翻近 4 倍、销售费用率压降 7pp，三家里改善最明显。但 2026H1 首次营收利润双降，PE 落到十年 5.7% 分位——市场对「成长放缓」已有过度定价之嫌。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年财务 · 2016–2026H1</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- ── 子专题二：十年管理层叙事 ── -->
+        <div class="topic-group" data-date="2026-06-15">
+            <div class="group-head">
+                <h3>十年管理层叙事</h3>
+                <span class="g-date">2016–2025 年报 MD&amp;A · 4 篇</span>
+            </div>
+            <p class="group-desc">不看数字，只读话。逐字读三家 2016–2025 年报「管理层讨论与分析」全文，看措辞、语气与战略重心的十年演变——谁更早押注全球化，谁在回避问题，谁的口号换得最勤。</p>
+
+            <a class="feature-card" href="/invest/baidian/">
+                <span class="f-label">综合对比 · 起点推荐</span>
+                <h3>白电三巨头 · 管理层讨论横向对比</h3>
+                <p>格力 / 美的 / 海尔，同一套维度并排打分：战略主题着墨热力图（每万字词频）、统一维度打分矩阵、谁更早押注全球化与 AI。一页看懂三家十年叙事的分野。</p>
+                <span class="f-arrow">查看对比 →</span>
             </a>
 
-            <a class="stock-card" href="/invest/baidian/haier/" data-date="2026-06-15">
-                <div class="stock-head haier">
-                    <div class="name">海尔智家</div>
-                    <div class="code">600690.SH</div>
-                </div>
-                <div class="stock-body">
-                    <p class="desc">三家里最独特、也最「概念密集」的叙事：以「人单合一」为内核，全球创牌 + 卡萨帝高端 + 物联网生态三条腿。全球化最彻底，净利增速快于营收，但净利率仍低于同行。</p>
-                    <div class="meta">
-                        <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
-                        <span class="arrow">阅读分析 →</span>
-                    </div>
-                </div>
-            </a>
+            <div class="cards-grid">
 
+                <a class="stock-card" href="/invest/baidian/midea/">
+                    <div class="stock-head midea">
+                        <div class="name">美的集团</div>
+                        <div class="code">000333.SZ</div>
+                    </div>
+                    <div class="stock-body">
+                        <p class="desc">纪律性极强的「全球科技集团」叙事，战略主轴十年仅升级一次便逐字坚守。靠并购真正建成 ToB 第二引擎，营收十年近 3 倍——增长靠并购与全球化驱动，整合风险是关注点。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="stock-card" href="/invest/baidian/gree/">
+                    <div class="stock-head gree">
+                        <div class="name">格力电器</div>
+                        <div class="code">000651.SZ</div>
+                    </div>
+                    <div class="stock-body">
+                        <p class="desc">从「开疆拓土的进攻者」到「守城增效的现金牛」。早年满纸转型突破，近年主旋律转向降本增效、风险防范，并首次公开承认市场份额损失风险。空调仍是唯一支柱。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="stock-card" href="/invest/baidian/haier/">
+                    <div class="stock-head haier">
+                        <div class="name">海尔智家</div>
+                        <div class="code">600690.SH</div>
+                    </div>
+                    <div class="stock-body">
+                        <p class="desc">三家里最独特、也最「概念密集」的叙事：以「人单合一」为内核，全球创牌 + 卡萨帝高端 + 物联网生态三条腿。全球化最彻底，净利增速快于营收，但净利率仍低于同行。</p>
+                        <div class="meta">
+                            <span class="meta-info">十年 MD&amp;A · 2016–2025</span>
+                            <span class="arrow">阅读分析 →</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
         </div>
     </section>
 
@@ -296,21 +464,33 @@
 </div>
 
 <script>
-    function activateTab(target) {
+    function activateTab(target, setHash) {
         document.querySelectorAll('.tab').forEach(function (t) {
             t.classList.toggle('active', t.dataset.target === target);
         });
         document.querySelectorAll('.section-block').forEach(function (p) {
             p.hidden = p.id !== target;
         });
+        // 标签写进 URL（#baidian / #valuation），子页面的面包屑才能直接跳回对应板块
+        if (setHash && window.history && history.replaceState) {
+            history.replaceState(null, '', '#' + target.replace(/^panel-/, ''));
+        }
     }
     document.querySelectorAll('.tab').forEach(function (tab) {
-        tab.addEventListener('click', function () { activateTab(tab.dataset.target); });
+        tab.addEventListener('click', function () { activateTab(tab.dataset.target, true); });
     });
 
-    // 默认显示「最新更新」所在的标签：扫描所有带 data-date 的元素（卡片或整块面板），取最新的那条。
+    // 选择初始标签：① URL 里带 #baidian / #valuation 就听它的；
+    // ② 否则显示「最新更新」所在的标签——扫描所有带 data-date 的元素（卡片、子专题或整块面板），取最新的那条。
     // 以后给新内容填上更晚的 data-date（YYYY-MM-DD），进页面就会自动切到它所在的标签。
+    function tabFromHash() {
+        var h = (location.hash || '').replace(/^#/, '');
+        return h && document.getElementById('panel-' + h) ? 'panel-' + h : null;
+    }
     (function () {
+        var fromHash = tabFromHash();
+        if (fromHash) { activateTab(fromHash); return; }
+
         var latestDate = null, latestPanel = null;
         document.querySelectorAll('[data-date]').forEach(function (el) {
             var d = el.getAttribute('data-date');
@@ -322,6 +502,11 @@
         });
         if (latestPanel) { activateTab(latestPanel); }
     })();
+
+    window.addEventListener('hashchange', function () {
+        var t = tabFromHash();
+        if (t) { activateTab(t); }
+    });
 
     // ── 估值策略：加载指数信号卡 ──
     function esc(s) {

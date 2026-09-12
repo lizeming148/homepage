@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股白色家电三巨头 2026H1 深度对比分析</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+  
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent-gree: #00875a;
+    --accent-midea: #0066cc;
+    --accent-haier: #e63946;
+    --border: #e0e0e0;
+    --highlight: #fff3cd;
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  
+  header {
+    text-align: center;
+    padding: 48px 0 32px;
+    border-bottom: 2px solid var(--text);
+    margin-bottom: 40px;
+  }
+  
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  
+  header .subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+  
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 20px 0;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  
+  section { margin-bottom: 48px; }
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  h2 .num {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: var(--text);
+    color: #fff;
+    text-align: center;
+    line-height: 28px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 20px 0 10px;
+    color: var(--text);
+  }
+  
+  p { margin-bottom: 12px; color: var(--text-secondary); }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  
+  thead th {
+    background: var(--text);
+    color: #fff;
+    padding: 10px 12px;
+    text-align: right;
+    font-weight: 500;
+  }
+  
+  thead th:first-child { text-align: left; }
+  
+  tbody td {
+    padding: 9px 12px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+  }
+  
+  tbody tr:hover { background: #f5f5f5; }
+  
+  .highlight-best {
+    font-weight: 700;
+    position: relative;
+  }
+  
+  .gree-color { color: var(--accent-gree); }
+  .midea-color { color: var(--accent-midea); }
+  .haier-color { color: var(--accent-haier); }
+  
+  .negative { color: #c0392b; }
+  .positive { color: #27ae60; }
+  
+  .insight-box {
+    background: #f0f4f8;
+    border-left: 4px solid var(--accent-midea);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .insight-box.warn {
+    background: #fff8e1;
+    border-left-color: #f39c12;
+  }
+  
+  .insight-box p { margin: 0; color: var(--text); font-size: 14px; }
+  
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    justify-content: center;
+    padding: 24px 0;
+    min-height: 200px;
+  }
+  
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .bar {
+    width: 56px;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s;
+    position: relative;
+  }
+  
+  .bar-label {
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  
+  .bar-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  
+  .metric-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .metric-card {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .metric-card.gree { background: #e8f5e9; border-top: 3px solid var(--accent-gree); }
+  .metric-card.midea { background: #e3f2fd; border-top: 3px solid var(--accent-midea); }
+  .metric-card.haier { background: #fce4ec; border-top: 3px solid var(--accent-haier); }
+  
+  .metric-card .company { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+  .metric-card .value { font-size: 28px; font-weight: 700; }
+  .metric-card .label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 16px 0;
+  }
+  
+  .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0 24px; }
+  .tbl-wrap table { margin: 0; min-width: 560px; }
+  @media (max-width: 768px) {
+    .two-col, .metric-cards { grid-template-columns: 1fr; }
+    .container { padding: 20px 16px; }
+    header h1 { font-size: 22px; }
+    .bar-chart { gap: 12px; }
+    .bar { width: 40px; }
+  }
+  
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .summary-item {
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  
+  .summary-item h4 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .summary-item p {
+    font-size: 13px;
+    margin: 0;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 12px;
+    color: #999;
+    border-top: 1px solid var(--border);
+  }
+</style>
+<link rel="stylesheet" href="/invest/baidian/2026h1/topbar.css">
+</head>
+<body>
+<div class="bd-topbar" style="max-width:1100px">
+  <div class="bd-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">2026 中期分析 · 三巨头 2026H1 深度对比</span></div>
+  <nav class="bd-nav"><span class="bd-kind">本专题 6 篇</span><a href="/invest/baidian/2026h1/">综合总纲</a><a href="/invest/baidian/2026h1/compare/" class="on">2026H1 对比</a><a href="/invest/baidian/2026h1/global/">全球图谱</a><a href="/invest/baidian/2026h1/gree/">格力</a><a href="/invest/baidian/2026h1/midea/">美的</a><a href="/invest/baidian/2026h1/haier/">海尔</a></nav>
+</div>
+
+<div class="container">
+
+<header>
+  <h1>A股白色家电三巨头 · 2026H1 深度对比</h1>
+  <div class="subtitle">格力电器 · 美的集团 · 海尔智家 ｜ 2026年半年度报告分析</div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-gree)"></div>格力电器</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-midea)"></div>美的集团</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-haier)"></div>海尔智家</div>
+  </div>
+</header>
+
+<!-- ===== 1. 核心指标总览 ===== -->
+<section>
+  <h2><span class="num">1</span>核心指标总览</h2>
+  
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>营业收入（亿元）</td><td>893.98</td><td class="highlight-best midea-color">2,600.42</td><td>1,521.15</td></tr>
+      <tr><td>收入同比</td><td class="negative">-8.15%</td><td class="positive highlight-best">+3.55%</td><td class="negative">-2.80%</td></tr>
+      <tr><td>归母净利润（亿元）</td><td>132.78</td><td class="highlight-best midea-color">264.46</td><td>103.16</td></tr>
+      <tr><td>净利润同比</td><td class="negative">-7.87%</td><td class="positive highlight-best">+1.66%</td><td class="negative">-14.27%</td></tr>
+      <tr><td>扣非净利润（亿元）</td><td>127.07</td><td class="highlight-best midea-color">195.95</td><td>92.99</td></tr>
+      <tr><td>净利润率</td><td class="highlight-best gree-color">14.85%</td><td>10.17%</td><td>6.78%</td></tr>
+      <tr><td>毛利率</td><td class="highlight-best gree-color">28.81%</td><td>25.26%</td><td>27.20%</td></tr>
+      <tr><td>加权平均ROE</td><td>8.68%</td><td class="highlight-best midea-color">11.33%</td><td>8.36%</td></tr>
+      <tr><td>基本每股收益（元）</td><td>2.38</td><td class="highlight-best midea-color">3.52</td><td>1.12</td></tr>
+      <tr><td>经营现金流净额（亿元）</td><td>188.09</td><td class="highlight-best midea-color">375.52</td><td>97.52</td></tr>
+      <tr><td>经营现金流/净利润</td><td class="highlight-best">1.42×</td><td class="highlight-best">1.42×</td><td>0.95×</td></tr>
+      <tr><td>总资产（亿元）</td><td>3,991.37</td><td class="highlight-best midea-color">6,431.02</td><td>3,119.12</td></tr>
+      <tr><td>归母净资产（亿元）</td><td>1,485.08</td><td class="highlight-best midea-color">2,128.61</td><td>1,196.78</td></tr>
+      <tr><td>研发费用（亿元）</td><td>31.67</td><td class="highlight-best midea-color">84.67</td><td>50.72</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="insight-box">
+    <p><strong>关键发现：</strong>2026年上半年白电行业整体承压——国内空调零售额同比下滑15.9%，以旧换新政策刺激效应递减。三家公司中，<strong>仅美的集团实现营收和利润双增</strong>，格力和海尔均出现不同程度下滑，海尔智家净利润降幅最大（-14.27%），主要受人民币升值导致的汇兑损失拖累。</p>
+  </div>
+</section>
+
+<!-- ===== 2. 盈利能力 ===== -->
+<section>
+  <h2><span class="num">2</span>盈利能力对比</h2>
+
+  <div class="metric-cards">
+    <div class="metric-card gree">
+      <div class="company">格力电器</div>
+      <div class="value">14.85%</div>
+      <div class="label">净利润率 · 行业最高</div>
+    </div>
+    <div class="metric-card midea">
+      <div class="company">美的集团</div>
+      <div class="value">11.33%</div>
+      <div class="label">加权ROE · 行业最高</div>
+    </div>
+    <div class="metric-card haier">
+      <div class="company">海尔智家</div>
+      <div class="value">27.20%</div>
+      <div class="label">毛利率 · 同比+0.4pct</div>
+    </div>
+  </div>
+
+  <h3>费用率对比</h3>
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>费用率</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>销售费用率</td><td>5.74%</td><td>8.29%</td><td>10.80%</td></tr>
+      <tr><td>管理费用率</td><td>3.69%</td><td>2.93%</td><td>3.96%</td></tr>
+      <tr><td>研发费用率</td><td>3.54%</td><td>3.26%</td><td>3.33%</td></tr>
+      <tr><td>财务费用率</td><td>-1.87%</td><td>-1.26%</td><td>0.73%</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="insight-box">
+    <p><strong>分析：</strong>格力净利润率（14.85%）遥遥领先，核心原因在于：① 销售费用率仅5.74%，远低于海尔的10.80%，渠道效率优势明显；② 财务费用为负（-1.87%），1,282亿货币资金产生可观利息收入。美的ROE最高（11.33%），得益于更大的经营规模和资产周转效率。海尔毛利率同比提升0.4个百分点，显示成本管控策略生效，但销售费用和财务费用（汇兑损失）拖累了底线利润。</p>
+  </div>
+</section>
+
+<!-- ===== 3. 收入结构 ===== -->
+<section>
+  <h2><span class="num">3</span>收入结构与业务布局</h2>
+  
+  <h3>格力电器 —— 空调为王，聚焦主业</h3>
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>业务板块</th><th>收入（亿元）</th><th>占比</th><th>同比</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>消费电器（以空调为主）</td><td>740.74</td><td>82.86%</td><td class="negative">-2.89%</td></tr>
+      <tr><td>工业制品及绿色能源</td><td>86.52</td><td>9.68%</td><td class="negative">-9.79%</td></tr>
+      <tr><td>智能装备</td><td>3.74</td><td>0.42%</td><td class="positive">+19.02%</td></tr>
+      <tr><td>其他主营</td><td>21.56</td><td>2.41%</td><td class="positive">+64.50%</td></tr>
+      <tr><td>其他业务</td><td>41.42</td><td>4.63%</td><td class="negative">-57.87%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>美的集团 —— ToC+ToB双轮驱动</h3>
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>业务板块</th><th>收入（亿元）</th><th>占比</th><th>同比</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>智能家居</td><td>1,743.41</td><td>67.04%</td><td class="positive">+4.27%</td></tr>
+      <tr><td>楼宇科技</td><td>216.25</td><td>8.32%</td><td class="positive">+10.84%</td></tr>
+      <tr><td>机器人与自动化</td><td>166.21</td><td>6.39%</td><td class="positive">+10.27%</td></tr>
+      <tr><td>工业技术</td><td>131.37</td><td>5.05%</td><td class="negative">-12.72%</td></tr>
+      <tr><td>其他业务</td><td>342.18</td><td>13.20%</td><td class="positive">+0.78%</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>海尔智家 —— 全品类智慧家庭</h3>
+  <p>海尔智家以智慧家庭场景化为核心战略，覆盖冰箱（线上/线下零售额份额均超40%领先）、洗衣机（线上/线下份额均超40%）、空调（智慧暖通解决方案产业）、厨电、热水器等全品类。2026年7月进一步整合成立"智慧生活电器"和"智慧暖通解决方案"两大产业平台。</p>
+
+  <div class="insight-box">
+    <p><strong>战略分化明显：</strong>格力仍高度依赖空调（消费电器占82.9%），但主动收缩非主营业务（其他业务收入大降57.9%），聚焦主业策略清晰。美的多元化布局最深——楼宇科技和机器人业务合计增长超10%，ToB商业及工业解决方案收入已占25.6%，成为第二增长曲线。海尔聚焦高端品牌战略，冰箱洗衣机品类市占率行业第一，但收入体量介于二者之间。</p>
+  </div>
+</section>
+
+<!-- ===== 4. 内外销 ===== -->
+<section>
+  <h2><span class="num">4</span>内外销结构与全球化能力</h2>
+  
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>内销收入（亿元）</td><td>725.12</td><td>1,469.15</td><td>~750*</td></tr>
+      <tr><td>内销同比</td><td class="positive">+1.90%</td><td class="positive">+2.07%</td><td>下降</td></tr>
+      <tr><td>外销收入（亿元）</td><td>127.44</td><td>1,131.27</td><td>~770*</td></tr>
+      <tr><td>外销同比</td><td class="negative">-21.98%</td><td class="positive">+5.54%</td><td>基本稳定</td></tr>
+      <tr><td>外销占比</td><td>14.96%</td><td>43.50%</td><td>~50%+</td></tr>
+      <tr><td>海外制造基地</td><td>巴西等</td><td>45个(海外)</td><td>多国</td></tr>
+      <tr><td>自主品牌(OBM)占出口</td><td>70%</td><td>50%+(智能家居海外)</td><td>100%</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:12px;color:#999;">*海尔智家未在半年报中披露精确内外销金额分拆，数据根据管理层讨论推算</p>
+
+  <div class="insight-box warn">
+    <p><strong>风险聚焦：</strong>格力海外业务大幅下滑21.98%，是三家中表现最差的。公司坦言中东市场大幅下滑拖累整体，且"追求品牌价值与品质溢价的海外市场策略，一定程度上影响了海外出货规模"。美的海外收入超1,131亿元且仍增长5.5%，全球化布局最为成熟。海尔以自主品牌为主的海外战略（100%创牌出海），在欧洲和东南亚保持增长，但美国市场承压。</p>
+  </div>
+</section>
+
+<!-- ===== 5. 现金流与资产负债 ===== -->
+<section>
+  <h2><span class="num">5</span>现金流与资产质量</h2>
+  
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>经营现金流净额（亿元）</td><td>188.09</td><td>375.52</td><td>97.52</td></tr>
+      <tr><td>经营现金流/净利润</td><td>1.42×</td><td>1.42×</td><td>0.95×</td></tr>
+      <tr><td>货币资金（亿元）</td><td>1,282.48</td><td>906.43</td><td>508.59</td></tr>
+      <tr><td>存货（亿元）</td><td>261.07</td><td>554.41</td><td>453.17</td></tr>
+      <tr><td>合同负债（亿元）</td><td>84.74</td><td>454.58</td><td>66.51</td></tr>
+      <tr><td>合同负债同比</td><td class="negative">-44.3%</td><td class="negative">-3.3%</td><td class="negative">-22.1%</td></tr>
+      <tr><td>短期借款（亿元）</td><td>797.19</td><td>473.05</td><td>216.78</td></tr>
+      <tr><td>销售返利余额（亿元）</td><td>484.67</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="insight-box">
+    <p><strong>格力的"金融化"特征突出：</strong>货币资金高达1,282亿，同时短期借款797亿，大量存贷并存的根源是旗下财务公司的吸存放贷模式——实质上利用息差赚钱，这是格力财务费用为负的重要原因。合同负债（预收款）大幅下降44.3%，需关注经销商打款意愿是否减弱。此外，格力的销售返利余额（其他流动负债）高达485亿，这是一笔隐性"蓄水池"——可在未来平滑利润但也存在一次性释放的不确定性。</p>
+  </div>
+  <div class="insight-box">
+    <p><strong>美的经营现金流最为健康：</strong>375.52亿的经营现金流远超净利润（1.42×覆盖），且存货同比减少（554→554亿基本持平），库存管理得当。海尔现金流/净利润比仅0.95×，低于1.0，主要因应收账款大幅增长21.8%（从271亿增至330亿），回款质量值得关注。</p>
+  </div>
+</section>
+
+<!-- ===== 6. 研发 ===== -->
+<section>
+  <h2><span class="num">6</span>研发投入与创新能力</h2>
+  
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>研发费用（亿元）</td><td>31.67</td><td>84.67</td><td>50.72</td></tr>
+      <tr><td>研发费用率</td><td>3.54%</td><td>3.26%</td><td>3.33%</td></tr>
+      <tr><td>研发同比</td><td class="negative">-19.01%</td><td class="negative">-3.41%</td><td class="negative">-12.41%</td></tr>
+      <tr><td>累计专利申请（万件）</td><td>14.10</td><td>17.00+</td><td>—</td></tr>
+      <tr><td>研发中心数</td><td>16研究院/152研究所</td><td>41个(全球)</td><td>多国</td></tr>
+      <tr><td>灯塔工厂</td><td>1家领航级</td><td>8家</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="insight-box">
+    <p><strong>研发投入三家均同比下降，值得警惕。</strong>格力降幅最大（-19%），与收入下滑幅度不匹配，可能反映短期利润保全策略。美的绝对研发投入最高（85亿），重点布局AI算力散热（AIDC液冷）、人形机器人、具身智能等前沿领域，研发方向与产业趋势高度吻合。格力在压缩机自研、磁悬浮技术方面保持核心优势，累计50项"国际领先"鉴定成果。</p>
+  </div>
+</section>
+
+<!-- ===== 7. 行业竞争 ===== -->
+<section>
+  <h2><span class="num">7</span>行业格局与市场份额</h2>
+
+  <div class="two-col">
+    <div>
+      <h3>空调市场（2026H1）</h3>
+      <p>奥维云网推总数据：国内空调零售量4,096万台（-13.1%），零售额1,221亿元（-15.9%）。格力品牌全渠道零售份额25.8%，线上24.2%行业第一。美的系线上线下均为行业第一（含美的+Comfee等多品牌）。行业低端化趋势加剧，2100元以下机型占比升至54.45%。</p>
+    </div>
+    <div>
+      <h3>冰洗市场</h3>
+      <p>海尔冰箱线上/线下零售额份额均超40%，保持绝对领先。洗衣机同样超40%。美的系在洗衣机和冰箱品类市占率也位居前列。格力生活电器板块销售额同比增长超20%，但基数较小，冰洗市场仍是追赶者。</p>
+    </div>
+  </div>
+
+  <h3>中央空调/楼宇科技</h3>
+  <p>产业在线数据：美的中央空调国内销售额占比超22%，稳居行业第一；商用多联机占比超29%居首；离心机占比超16%居首。格力中央空调同样是龙头之一，格力磁悬浮离心机技术实力突出。美的楼宇科技板块收入增长10.84%，数据中心液冷业务实现全面突破。</p>
+</section>
+
+<!-- ===== 8. 股东回报 ===== -->
+<section>
+  <h2><span class="num">8</span>股东回报</h2>
+  
+  <div class="tbl-wrap"><table>
+    <thead>
+      <tr><th>指标</th><th>格力电器</th><th>美的集团</th><th>海尔智家</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>中期分红</td><td>未分配</td><td>每10股5元</td><td>—</td></tr>
+      <tr><td>历史累计现金分红</td><td>1,588亿+</td><td>1,600亿+</td><td>—</td></tr>
+      <tr><td>回购计划</td><td>50-100亿(新一轮)</td><td>69亿+(H1已回购)</td><td>—</td></tr>
+      <tr><td>历史累计回购</td><td>~300亿</td><td>450亿+(A股最高)</td><td>—</td></tr>
+      <tr><td>员工持股/股权激励</td><td>第3期(已归属)+第4期</td><td>多期并行(9+7+17期)</td><td>有</td></tr>
+    </tbody>
+  </table></div>
+  
+  <div class="insight-box">
+    <p><strong>三家公司均为A股家电板块中股东回报最慷慨的企业。</strong>美的累计回购金额超450亿居A股历史第一，且本期仍推出中期分红（每10股5元）。格力2025年全年分红比例达57.88%，并推出新一轮50-100亿回购计划。两家公司的累计分红均超1,500亿。</p>
+  </div>
+</section>
+
+<!-- ===== 9. 综合评价 ===== -->
+<section>
+  <h2><span class="num">9</span>综合投资评价</h2>
+  
+  <div class="summary-grid">
+    <div class="summary-item" style="border-top:3px solid var(--accent-gree)">
+      <h4 class="gree-color">格力电器</h4>
+      <p><strong>优势：</strong>净利润率行业最高（14.85%），空调主业护城河深，核心部件自研自制，现金储备充裕（1,282亿），分红回购力度大。</p>
+      <p style="margin-top:8px"><strong>风险：</strong>收入结构单一（空调占83%），海外业务大幅萎缩（-22%），合同负债骤降44%信号偏负面，研发投入大降19%，多元化进展缓慢。</p>
+    </div>
+    <div class="summary-item" style="border-top:3px solid var(--accent-midea)">
+      <h4 class="midea-color">美的集团</h4>
+      <p><strong>优势：</strong>规模最大且仍保持增长，多元化布局（ToB占比26%+），全球化最成熟（海外收入43.5%），研发投入最高，ROE行业最高（11.33%），AI+数字化战略领先。</p>
+      <p style="margin-top:8px"><strong>风险：</strong>扣非净利润下降25.3%（受汇兑分类影响），大体量下增速放缓，商誉减值风险（库卡等并购资产），汇率波动敞口最大。</p>
+    </div>
+    <div class="summary-item" style="border-top:3px solid var(--accent-haier)">
+      <h4 class="haier-color">海尔智家</h4>
+      <p><strong>优势：</strong>冰洗品类市占率绝对第一（40%+），全球自主品牌战略（100%创牌），毛利率同比提升，组织变革积极（大白电+大暖通整合）。</p>
+      <p style="margin-top:8px"><strong>风险：</strong>净利润率最低（6.78%），销售费用率偏高（10.8%），经营现金流/净利润<1.0，应收账款增长过快（+21.8%），汇兑损失冲击利润。</p>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>总结：</strong>2026上半年白电行业面临"国补退坡+地产低迷+原材料高企+人民币升值"四重压力，三家龙头表现分化。美的凭借多元化和全球化优势实现逆势微增，综合实力最为均衡；格力盈利能力突出但增长瓶颈显现，空调"一条腿走路"的风险在行业下行期被放大；海尔在冰洗品类保持绝对领先，但盈利效率仍有提升空间。从价值投资角度看，三家公司均具备强现金流、高分红的优质白马特征，核心关注点在于：格力能否打开第二增长曲线、美的ToB业务能否兑现盈利、海尔能否缩小与竞争对手的利润率差距。</p>
+  </div>
+</section>
+
+<footer>
+  <p>数据来源：格力电器、美的集团、海尔智家 2026年半年度报告（PDF→JSON结构化数据）</p>
+  <p>本报告仅供研究参考，不构成投资建议</p>
+</footer>
+
+</div>
+
+<footer class="bd-footer" style="max-width:1100px">
+  <div class="bd-disc"><b>免责声明</b>：本页为个人研究笔记，基于公开财报与第三方数据整理，不构成任何投资建议。数据截至 2026 年半年度报告，口径与第三方数据源可能存在差异。</div>
+  <div><a href="/invest/#baidian">← 返回 白电投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/invest/">做投资</a><span style="margin:0 10px;opacity:.4">·</span><a href="/">主页</a><span style="float:right">白电投资 · 2026 中期分析 ｜ 2026-09-12</span></div>
+</footer>
+</body>
+</html>
