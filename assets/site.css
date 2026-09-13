@@ -1,0 +1,184 @@
+/* lizeming.net 全站共享样式
+   ------------------------------------------------------------
+   与主页 /index.html 同一套设计语言：暖白底 #FAFAF8、墨绿强调色 #2B5B4B、
+   标题 Noto Serif SC、数字与标签 Inter、1px 细边框 + 14px 圆角卡片。
+   内页（研究报告、学习材料）统一引入本文件，得到：
+     · 设计令牌（--site-*），页面自己的 :root 变量应映射到这些令牌
+     · .site-topbar  面包屑 + 专题篇目导航
+     · .site-footer  免责声明 + 返回链接 + 版权
+   页面宽度通过 --page-width 调整（默认 920px，与主页一致）。 */
+
+:root {
+    --site-bg: #FAFAF8;
+    --site-card: #FFFFFF;
+    --site-text: #1C1C1C;
+    --site-text-2: #5A5A58;
+    --site-text-3: #8A8A88;
+    --site-accent: #2B5B4B;
+    --site-accent-soft: #E8F0EC;
+    --site-border: #E5E5E0;
+    --site-border-soft: #EFEFEA;
+    --site-warm: #F5F2EC;
+
+    /* 语义色：涨/好、跌/坏、警示（低饱和，贴合暖白底） */
+    --site-pos: #2E7D4F;
+    --site-pos-soft: #E7F2EA;
+    --site-neg: #B5412F;
+    --site-neg-soft: #F8EAE6;
+    --site-warn: #A8731F;
+    --site-warn-soft: #F7F0E1;
+
+    /* 白电三家的识别色（与 /invest/ 个股卡片一致） */
+    --site-gree: #A0662A;
+    --site-gree-soft: #F5EDE2;
+    --site-midea: #0B7A4E;
+    --site-midea-soft: #E5F1EA;
+    --site-haier: #2F5FAE;
+    --site-haier-soft: #E8EEF7;
+
+    --site-serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    --site-sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    /* 正文：拉丁字母与数字走 Inter，中文落到 Noto Serif SC（与主页 body 相同） */
+    --site-body: 'Inter', 'Noto Serif SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --page-width: 920px;
+}
+
+/* ── 顶部：面包屑 + 篇目导航 ── */
+.site-topbar {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 40px 24px 0;
+    font-family: var(--site-sans);
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+.site-crumb {
+    font-size: 0.84rem;
+    color: var(--site-text-3);
+}
+.site-crumb a {
+    color: var(--site-text-3);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--site-text-3);
+}
+.site-crumb a:hover { color: var(--site-accent); border-bottom-color: var(--site-accent); }
+.site-crumb .sep { margin: 0 8px; opacity: 0.5; }
+.site-crumb .here { color: var(--site-text-2); }
+
+.site-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav .kind {
+    flex: 0 0 auto;
+    align-self: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--site-text-3);
+    padding-right: 4px;
+}
+.site-nav a {
+    flex: 0 0 auto;
+    font-family: var(--site-serif);
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--site-text-2);
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid var(--site-border);
+    border-radius: 999px;
+    padding: 5px 15px;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.site-nav a:hover { color: var(--site-accent); border-color: var(--site-accent); }
+.site-nav a.on { color: #fff; background: var(--site-accent); border-color: var(--site-accent); }
+
+/* ── 页脚 ── */
+.site-footer {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    font-family: var(--site-sans);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--site-text-3);
+    box-sizing: border-box;
+}
+.site-footer .disc {
+    background: #FFF8F0;
+    border: 1px solid #F0D9B5;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 0 0 28px;
+    font-family: var(--site-serif);
+    font-size: 0.84rem;
+    color: #6B5630;
+}
+.site-footer .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 24px;
+    flex-wrap: wrap;
+    padding-top: 22px;
+    border-top: 1px solid var(--site-border);
+}
+.site-footer a {
+    color: var(--site-text-3);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--site-text-3);
+}
+.site-footer a:hover { color: var(--site-accent); border-bottom-color: var(--site-accent); }
+.site-footer .dot { margin: 0 8px; opacity: 0.5; }
+
+/* ── 报告 / 学习材料页的基础排版（body 加 class="site-report"） ──
+   全部包在 :where() 里，特异性为 0，页面自己的样式可随意覆盖。 */
+:where(body.site-report) {
+    margin: 0;
+    background: var(--site-bg);
+    color: var(--site-text);
+    font-family: var(--site-body);
+    font-size: 15px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+:where(.site-report) :where(h1, h2, h3, h4) { font-family: var(--site-serif); font-weight: 700; color: var(--site-text); letter-spacing: 0.01em; }
+:where(.site-report) :where(strong, b) { font-weight: 700; }
+:where(.site-report) :where(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', var(--site-serif);
+    font-variant-numeric: tabular-nums;
+    background: var(--site-card);
+}
+:where(.site-report) :where(th) { background: var(--site-accent-soft); color: var(--site-accent); font-weight: 600; }
+/* 报告页标题上方的小胶囊标签（同 /invest/strategy/ 详解页的 .kicker） */
+.site-kicker {
+    display: inline-block;
+    font-family: var(--site-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+    color: #fff;
+    background: var(--kicker-bg, var(--site-accent));
+    border-radius: 999px;
+    padding: 3px 13px;
+    margin-bottom: 14px;
+}
+:where(.site-report) :where(code) { font-family: 'Inter', monospace; font-size: 0.88em; background: var(--site-warm); border-radius: 4px; padding: 1px 5px; }
+
+@media (max-width: 720px) {
+    .site-topbar { padding: 28px 20px 0; }
+    .site-footer { padding: 0 20px 64px; }
+    .site-footer .row { flex-direction: column; align-items: flex-start; }
+}

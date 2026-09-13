@@ -1,30 +1,81 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>白电三巨头 · 管理层讨论横向对比（格力/美的/海尔）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 <style>
- :root{--ink:#1f2430;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f8fa;--brand:#0a6cff;--card:#fff}
- *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;line-height:1.8;font-size:16px}
- .wrap{max-width:920px;margin:0 auto;padding:38px 24px 80px}
- header{border-bottom:3px solid var(--brand);padding-bottom:18px}
- h1{font-size:26px;margin:0 0 6px} .sub{color:var(--muted);font-size:13.5px}
- h2{font-size:20px;margin:38px 0 6px;padding-left:12px;border-left:5px solid var(--brand)}
- .note{color:var(--muted);font-size:13.5px;margin:4px 0 12px}
- table{width:100%;border-collapse:collapse;margin:14px 0;background:var(--card);font-size:14px}
- th,td{border:1px solid var(--line);padding:8px 10px;text-align:center;vertical-align:middle}
- th{background:#f0f3f7} td.lab{text-align:left;font-weight:600;background:#fafbfc;white-space:nowrap}
- td.num{font-variant-numeric:tabular-nums;font-weight:600;position:relative}
- .fy{display:block;font-weight:400;font-size:11px;color:#555;margin-top:2px}
- .sc{display:block;font-size:19px;font-weight:700} .rsn{display:block;font-size:11.5px;color:#444;line-height:1.4;margin-top:3px}
- td.ol{font-size:13px;color:#2a3550;background:#eef4ff;font-weight:600}
- .insight{background:linear-gradient(135deg,#0a6cff0d,#0a6cff05);border:1px solid #0a6cff33;border-radius:12px;padding:16px 20px;margin:14px 0}
- .insight b{color:var(--brand)}
- .legend{font-size:12.5px;color:var(--muted);margin-top:6px}
- .disc{background:#fff8f0;border:1px solid #f0d9b5;border-radius:10px;padding:13px 18px;font-size:13px;color:#6b5630;margin-top:28px}
- footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+*{box-sizing:border-box}
+:root{
+  --page-width:920px;
+  --ink:var(--site-text);--muted:var(--site-text-2);--line:var(--site-border);--bg:var(--site-bg);--card:var(--site-card);
+  --brand:var(--co);--brand2:var(--site-haier);--green:var(--site-pos);--amber:var(--site-warn);--red:var(--site-neg);
+}
+body.site-report{font-size:15.5px;line-height:1.9}
+.wrap{max-width:var(--page-width);margin:0 auto;padding:0 24px 40px}
+header.top,.wrap > header{padding:30px 0 24px;border-bottom:1px solid var(--line);margin-bottom:8px}
+header.top h1,.wrap > header h1,h1{font-family:var(--site-serif);font-size:1.95rem;font-weight:700;line-height:1.4;margin:0 0 10px}
+.sub{color:var(--muted);font-size:.9rem;line-height:1.8}
+h2{font-family:var(--site-serif);font-size:1.28rem;font-weight:700;margin:48px 0 16px;padding:0 0 12px;border:0;border-bottom:1px solid var(--line)}
+h3{font-family:var(--site-serif);font-size:1.05rem;font-weight:700;margin:26px 0 8px}
+p{margin:10px 0}
+.note{color:var(--site-text-3);font-size:.84rem;margin:4px 0 12px}
+.verdict{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 28px 22px;margin:26px 0}
+.verdict::before{content:'';position:absolute;top:0;left:14px;right:14px;height:3px;border-radius:0 0 3px 3px;background:var(--brand)}
+.verdict h2{border:0;padding:0;margin:0 0 10px;font-size:1.15rem;color:var(--brand)}
+.pill{display:inline-block;font-family:var(--site-sans);font-size:.76rem;font-weight:600;padding:2px 11px;border-radius:999px;margin-right:6px}
+.pill.grow,.pill.cash{background:var(--site-pos-soft);color:var(--green)}
+.pill.tob,.pill.glob{background:var(--site-haier-soft);color:var(--site-haier)}
+.pill.watch{background:var(--site-warn-soft);color:var(--amber)}
+.pill.def{background:var(--site-neg-soft);color:var(--red)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88rem;background:var(--card);font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--site-accent-soft);color:var(--site-accent);font-weight:600}
+td.num{text-align:right;white-space:nowrap}
+.up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--site-text-3)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:14px 0}
+.finding{border-left:3px solid var(--brand);padding-left:18px;margin:24px 0}
+.finding .tag{font-family:var(--site-sans);font-size:.74rem;color:var(--brand);letter-spacing:.1em;font-weight:600}
+ul{margin:8px 0;padding-left:22px} li{margin:6px 0}
+.quote{background:var(--site-warm);border:0;border-left:3px solid var(--site-border);border-radius:0 8px 8px 0;padding:10px 16px;color:var(--site-text-2);font-size:.9rem;margin:10px 0}
+.era{display:grid;grid-template-columns:90px 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:12px 0;background:var(--card)}
+.era .yr{background:var(--co-soft);padding:14px;font-family:var(--site-sans);font-weight:600;color:var(--brand);border-right:1px solid var(--line)}
+.era .body{padding:14px 16px}
+.vs th:first-child{background:var(--site-accent-soft)}
+.vs .midea,.vs .m{color:var(--site-midea);font-weight:600}
+.vs .gree,.vs .g{color:var(--site-gree);font-weight:600}
+.vs .h{color:var(--site-haier);font-weight:600}
+.disc{background:#FFF8F0;border:1px solid #F0D9B5;border-radius:10px;padding:14px 18px;font-size:.84rem;color:#6B5630;line-height:1.8}
+.wrap > footer{margin-top:28px;color:var(--site-text-3);font-size:.78rem;line-height:1.8}
+code{font-family:var(--site-sans);font-size:.9em;background:var(--site-warm);border-radius:4px;padding:1px 5px}
+/* 横向对比页 */
+td.lab{text-align:left;font-weight:600;background:var(--row-hover,#FAFAF6);white-space:nowrap}
+.fy{display:block;font-weight:400;font-size:.7rem;color:var(--site-text-2);margin-top:2px}
+.sc{display:block;font-family:var(--site-sans);font-size:1.15rem;font-weight:700}
+.rsn{display:block;font-size:.74rem;color:var(--site-text-2);line-height:1.5;margin-top:3px}
+td.ol{font-size:.84rem;color:var(--site-accent);background:var(--site-accent-soft);font-weight:600}
+.insight{background:var(--site-accent-soft);border:0;border-left:3px solid var(--site-accent);border-radius:0 10px 10px 0;padding:14px 20px;margin:14px 0}
+.insight b{color:var(--site-accent)}
+.legend{font-size:.8rem;color:var(--site-text-3);margin-top:6px}
+@media (max-width:760px){
+  .wrap{padding:0 20px 32px}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  h1,header.top h1,.wrap > header h1{font-size:1.55rem}
+}
+
+:root{--co:#2B5B4B;--co-soft:#E8F0EC;--kicker-bg:#2B5B4B}
 </style><!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46ed83a374df48dc91468350119d7d78"}'></script><!-- End Cloudflare Web Analytics -->
-</head><body><div class="wrap">
-<nav style="font-size:13px;margin-bottom:16px"><a href="/invest/" style="color:#6b7280;text-decoration:none">← 做投资</a> <span style="color:#cbd5e1">·</span> <a href="/" style="color:#6b7280;text-decoration:none">主页</a></nav>
+</head><body class="site-report">
+<div class="site-topbar">
+  <div class="site-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">十年 MD&amp;A 语义分析 · 横向对比</span></div>
+  <nav class="site-nav"><span class="kind">十年 MD&amp;A 4 篇</span><a href="/invest/baidian/" class="on">横向对比</a><a href="/invest/baidian/gree/">格力</a><a href="/invest/baidian/midea/">美的</a><a href="/invest/baidian/haier/">海尔</a></nav>
+</div>
+
+<div class="wrap">
+
 <header>
+  <span class="site-kicker">白电投资 · 十年 MD&amp;A 语义分析</span>
   <h1>白电三巨头 · 管理层讨论横向对比</h1>
   <div class="sub">格力电器 · 美的集团 · 海尔智家 ｜ 样本：三家 2016–2025 年报 MD&amp;A 全文（海尔含青岛海尔/海尔智家）｜ 生成 2026-06-15</div>
 </header>
@@ -33,18 +84,18 @@
 <div class="note">颜色越深=该家在此主题着墨越多（按各家词频相对比较）；“首现”=该主题在其年报中首次出现的年份，看谁更早押注。纯文本词频，不调 AI。</div>
 <table>
 <thead><tr><th>战略主题 ＼ 公司</th><th>格力</th><th>美的</th><th>海尔</th></tr></thead>
-<tbody><tr><td class='lab'>全球化/出海</td><td class="num" style="background:rgba(10,108,255,0.23)">9.6<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.59)">32.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">39.3<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>高端化</td><td class="num" style="background:rgba(10,108,255,0.14)">2.2<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.27)">6.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">21.2<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>数字化</td><td class="num" style="background:rgba(10,108,255,0.23)">3.6<span class="fy">首现 2018</span></td><td class="num" style="background:rgba(10,108,255,0.70)">14.5<span class="fy">首现 2017</span></td><td class="num" style="background:rgba(10,108,255,0.37)">6.7<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>AI/大模型</td><td class="num" style="background:rgba(10,108,255,0.35)">2.8<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">6.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.46)">4.0<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>ToB/工业</td><td class="num" style="background:rgba(10,108,255,0.33)">15.0<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">37.3<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.14)">3.6<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>生态/平台/场景</td><td class="num" style="background:rgba(10,108,255,0.27)">9.9<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.52)">22.4<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">31.6<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>渠道变革</td><td class="num" style="background:rgba(10,108,255,0.50)">3.7<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.53)">4.0<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">5.5<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>研发/技术</td><td class="num" style="background:rgba(10,108,255,0.70)">22.8<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.56)">17.6<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.45)">13.7<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>党建/政治话语</td><td class="num" style="background:rgba(10,108,255,0.70)">1.1<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.08)">0.0<span class="fy">首现 —</span></td><td class="num" style="background:rgba(10,108,255,0.08)">0.0<span class="fy">首现 —</span></td></tr>
-<tr><td class='lab'>风险/审慎</td><td class="num" style="background:rgba(10,108,255,0.56)">8.9<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.55)">8.7<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.70)">11.4<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>组织/个人色彩</td><td class="num" style="background:rgba(10,108,255,0.29)">0.6<span class="fy">首现 2019</span></td><td class="num" style="background:rgba(10,108,255,0.08)">0.0<span class="fy">首现 2021</span></td><td class="num" style="background:rgba(10,108,255,0.70)">1.8<span class="fy">首现 2016</span></td></tr>
-<tr><td class='lab'>绿色/双碳</td><td class="num" style="background:rgba(10,108,255,0.70)">11.2<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.55)">8.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(10,108,255,0.43)">6.3<span class="fy">首现 2016</span></td></tr></tbody>
+<tbody><tr><td class='lab'>全球化/出海</td><td class="num" style="background:rgba(43,91,75,0.14)">9.6<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.35)">32.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">39.3<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>高端化</td><td class="num" style="background:rgba(43,91,75,0.08)">2.2<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.16)">6.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">21.2<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>数字化</td><td class="num" style="background:rgba(43,91,75,0.14)">3.6<span class="fy">首现 2018</span></td><td class="num" style="background:rgba(43,91,75,0.42)">14.5<span class="fy">首现 2017</span></td><td class="num" style="background:rgba(43,91,75,0.22)">6.7<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>AI/大模型</td><td class="num" style="background:rgba(43,91,75,0.21)">2.8<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">6.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.28)">4.0<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>ToB/工业</td><td class="num" style="background:rgba(43,91,75,0.20)">15.0<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">37.3<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.08)">3.6<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>生态/平台/场景</td><td class="num" style="background:rgba(43,91,75,0.16)">9.9<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.31)">22.4<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">31.6<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>渠道变革</td><td class="num" style="background:rgba(43,91,75,0.30)">3.7<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.32)">4.0<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">5.5<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>研发/技术</td><td class="num" style="background:rgba(43,91,75,0.42)">22.8<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.34)">17.6<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.27)">13.7<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>党建/政治话语</td><td class="num" style="background:rgba(43,91,75,0.42)">1.1<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.05)">0.0<span class="fy">首现 —</span></td><td class="num" style="background:rgba(43,91,75,0.05)">0.0<span class="fy">首现 —</span></td></tr>
+<tr><td class='lab'>风险/审慎</td><td class="num" style="background:rgba(43,91,75,0.34)">8.9<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.33)">8.7<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.42)">11.4<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>组织/个人色彩</td><td class="num" style="background:rgba(43,91,75,0.17)">0.6<span class="fy">首现 2019</span></td><td class="num" style="background:rgba(43,91,75,0.05)">0.0<span class="fy">首现 2021</span></td><td class="num" style="background:rgba(43,91,75,0.42)">1.8<span class="fy">首现 2016</span></td></tr>
+<tr><td class='lab'>绿色/双碳</td><td class="num" style="background:rgba(43,91,75,0.42)">11.2<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.33)">8.5<span class="fy">首现 2016</span></td><td class="num" style="background:rgba(43,91,75,0.26)">6.3<span class="fy">首现 2016</span></td></tr></tbody>
 </table>
 <div class="insight">
   <p style="margin:4px 0"><b>行业β（三家都在讲 = 大势）：</b>全球化/出海、高端化、数字化、AI/大模型、ToB/工业、生态/平台/场景、渠道变革、研发/技术、风险/审慎、绿色/双碳</p>
@@ -76,4 +127,9 @@
 
 <div class="disc"><b>方法与免责</b>：热力图为纯文本词频（同义词归桶、按字数归一化），仅反映“着墨多少”，不代表做得好坏。打分矩阵由 AI 基于管理层自述文本相对判断，主观且未做财务核验。本文为研究性文本分析，<b>不构成投资建议</b>。</div>
 <footer>数据来源：mda_extractor 抽取的三家 2016–2025 MD&amp;A ｜ 词频本地计算 ｜ 打分引擎：DeepSeek deepseek-chat</footer>
-</div></body></html>
+</div>
+
+<footer class="site-footer">
+  <div class="row"><span><a href="/invest/#baidian">← 返回 白电投资</a><span class="dot">·</span><a href="/invest/">做投资</a><span class="dot">·</span><a href="/">主页</a></span><span>白电投资 · 十年 MD&amp;A 语义分析</span></div>
+</footer>
+</body></html>
