@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>格力首轮研究总结：结论、估值框架与分析系统</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://www.lizeming.net/assets/site.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --page-width:1000px;
+  --co:var(--site-gree);--co-soft:var(--site-gree-soft);
+  /* 扩展：证据等级「推测」用暖灰而非红色——红色在本站表示「坏」，而推测只表示置信度低 */
+}
+.container{max-width:var(--page-width);margin:0 auto;padding:0 24px 40px}
+
+/* 页头 */
+.page-head{padding:30px 0 26px;border-bottom:1px solid var(--site-border);margin-bottom:40px}
+.page-head h1{font-family:var(--site-serif);font-size:2rem;font-weight:700;line-height:1.35;letter-spacing:.01em;margin-bottom:10px}
+.page-head .sub{font-size:.92rem;color:var(--site-text-2);line-height:1.75}
+
+/* 区块 */
+section{margin-bottom:40px}
+section h3{font-family:var(--site-serif);font-size:1.1rem;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--site-border)}
+p{margin-bottom:.9em}
+
+/* 核心结论卡 */
+.hero-card{position:relative;overflow:hidden;background:var(--site-card);border:1px solid var(--site-border);border-radius:14px;padding:30px 32px 28px;margin-bottom:40px}
+.hero-card::before{content:'';position:absolute;top:0;left:14px;right:14px;height:3px;border-radius:0 0 3px 3px;background:var(--co)}
+.hero-card h2{font-family:var(--site-serif);font-size:1.2rem;color:var(--co);margin-bottom:14px}
+.hero-card p{font-size:.95rem;line-height:1.95;color:var(--site-text-2)}
+.hero-card p:last-child{margin-bottom:0}
+.hero-card strong{color:var(--site-text)}
+
+/* KPI 快照 */
+.snapshot{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:40px}
+.snap-card{background:var(--site-card);border:1px solid var(--site-border);border-radius:14px;padding:16px 12px;text-align:center}
+.snap-card .label{font-family:var(--site-sans);font-size:.74rem;color:var(--site-text-3);letter-spacing:.04em}
+.snap-card .val{font-family:var(--site-sans);font-size:1.45rem;font-weight:600;margin:2px 0;font-variant-numeric:tabular-nums}
+.snap-card .sub{font-size:.74rem;color:var(--site-text-3)}
+
+/* 胶囊 */
+.pill{display:inline-block;font-family:var(--site-sans);font-size:.72rem;font-weight:600;padding:1px 9px;border-radius:999px;margin-top:6px}
+.pill-pos{background:var(--site-pos-soft);color:var(--site-pos)}
+.pill-neg{background:var(--site-neg-soft);color:var(--site-neg)}
+.pill-warn{background:var(--site-warn-soft);color:var(--site-warn)}
+.pill-accent{background:var(--site-accent-soft);color:var(--site-accent)}
+.pos{color:var(--site-pos)}.neg{color:var(--site-neg)}.warn{color:var(--site-warn)}
+
+/* 证据等级标签 */
+.ev{display:inline-block;font-family:var(--site-sans);font-size:.68rem;font-weight:600;padding:1px 8px;border-radius:999px;white-space:nowrap;vertical-align:.08em}
+.ev-fact{background:var(--site-accent-soft);color:var(--site-accent)}
+.ev-mgmt{background:var(--site-warn-soft);color:var(--site-warn)}
+.ev-guess{background:var(--site-warm);color:var(--site-text-3)}
+
+/* 标签页 */
+.tab-bar{display:flex;gap:8px;margin-bottom:28px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-bar button{flex:0 0 auto;font-family:var(--site-serif);font-size:.88rem;font-weight:700;color:var(--site-text-2);background:transparent;border:1px solid var(--site-border);border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.tab-bar button:hover{color:var(--site-accent);border-color:var(--site-accent)}
+.tab-bar button.active{background:var(--site-accent);border-color:var(--site-accent);color:#fff}
+.panel{display:none}.panel.active{display:block}
+
+/* 表格 */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0 20px;background:var(--site-card);border:1px solid var(--site-border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:.84rem;font-variant-numeric:tabular-nums}
+th{background:var(--site-accent-soft);color:var(--site-accent);font-weight:600;padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--site-border)}
+td{padding:9px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--site-border-soft)}
+th:first-child,td:first-child{text-align:left}
+td:first-child{font-weight:600}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td,tr:hover td{background:#FAFAF6}
+td.wrap-cell,th.wrap-cell{white-space:normal;text-align:left;font-weight:400;line-height:1.7;min-width:200px}
+td.wrap-cell:first-child{font-weight:600}
+
+/* 解读框 */
+.insight{background:var(--site-card);border:1px solid var(--site-border);border-left:3px solid var(--co);border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0;font-size:.9rem;color:var(--site-text-2);line-height:1.95}
+.insight strong{color:var(--site-text)}
+
+/* 引用 */
+blockquote{font-family:var(--site-serif);background:var(--site-warm);border-radius:10px;padding:14px 18px;margin:16px 0;color:var(--site-text-2);line-height:1.9;font-size:.9rem}
+blockquote + blockquote{margin-top:10px}
+
+/* 胜率带状图：单色深浅（墨绿），不使用带好坏含义的语义色 */
+.band-fig{background:var(--site-card);border:1px solid var(--site-border);border-radius:12px;padding:22px 24px 16px;margin:18px 0}
+.band-fig .cap{font-family:var(--site-sans);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--site-text-3);margin-bottom:4px}
+.band-fig .cap-zh{font-family:var(--site-serif);font-size:.95rem;font-weight:700;margin-bottom:16px}
+.band-outer{position:relative;padding-top:22px}
+/* 胜率标注放在色带外，避免中间调底色上的文字对比度不足 */
+.band-labels{position:relative;height:19px;margin-top:7px}
+.band-labels i{position:absolute;top:0;transform:translateX(-50%);font-family:var(--site-sans);font-size:.72rem;font-weight:700;font-style:normal;color:var(--site-accent);white-space:nowrap}
+.band{display:flex;height:30px;border-radius:8px;overflow:hidden;border:1px solid var(--site-border)}
+.band span{display:block;height:100%;background:var(--site-accent-soft)}
+.b100{background:color-mix(in srgb,var(--site-accent) 68%,var(--site-card))}
+.b90{background:color-mix(in srgb,var(--site-accent) 55%,var(--site-card))}
+.b65{background:color-mix(in srgb,var(--site-accent) 42%,var(--site-card))}
+.b35{background:color-mix(in srgb,var(--site-accent) 30%,var(--site-card))}
+.b20{background:color-mix(in srgb,var(--site-accent) 19%,var(--site-card))}
+.b0{background:color-mix(in srgb,var(--site-accent) 9%,var(--site-card))}
+.mark{position:absolute;top:22px;bottom:0;width:0;border-left:2px solid var(--co)}
+.mark em{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-family:var(--site-sans);font-size:.72rem;font-weight:700;font-style:normal;color:var(--co);background:var(--site-card);padding:0 5px;white-space:nowrap}
+.axis{position:relative;height:22px;margin-top:4px}
+.axis i{position:absolute;top:0;transform:translateX(-50%);font-family:var(--site-sans);font-size:.68rem;font-style:normal;color:var(--site-text-3);white-space:nowrap}
+.axis i::before{content:'';position:absolute;top:-6px;left:50%;width:1px;height:5px;background:var(--site-border)}
+.band-note{font-size:.78rem;color:var(--site-text-3);line-height:1.8;margin-top:6px}
+
+.src-note{margin-top:8px;font-size:.78rem;color:var(--site-text-3);line-height:1.8}
+.foot-note{font-size:.78rem;color:var(--site-text-3);line-height:1.8;margin:-8px 0 18px}
+
+@media (max-width:760px){
+  .container{padding:0 20px 32px}
+  .page-head{padding-top:22px;margin-bottom:32px}
+  .page-head h1{font-size:1.6rem}
+  .hero-card{padding:24px 20px 22px}
+  .band-fig{padding:18px 16px 12px}
+  .axis i.tight{display:none}
+}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46ed83a374df48dc91468350119d7d78"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="site-report">
+
+<div class="site-topbar">
+  <div class="site-crumb">
+    <a href="/">主页</a><span class="sep">/</span>
+    <a href="/invest/">做投资</a><span class="sep">/</span>
+    <span class="here">格力首轮研究总结</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <header class="page-head">
+    <span class="site-kicker">做投资 · 研究方法</span>
+    <h1>格力首轮研究总结</h1>
+    <div class="sub">一轮完整 L1–L5 的产出：格力的经营判断、按给定参数的估值计算，以及支撑它们的分析系统。<br>覆盖 2019–2025 年报 + 2026 中报 · 估值基线 2026-09-20 · 更新 2026-09-21</div>
+  </header>
+
+  <div class="hero-card">
+    <h2>两句话</h2>
+    <p><strong>格力的问题不在"收入会不会反转"，而在毛利率最终稳定在哪个水平。</strong>内销量份额 2021 年 37.4% 见顶、2023 年降至约 29.9%，两年丢了约 7.5 个百分点，而同期收入与利润仍在增长——份额流失被提价掩盖了两年，在财务报表上看不出来。2026 年上半年转向让价：内销收入由负转正 +1.90%，内销毛利率同比 −2.62pp。<span class="ev ev-guess">推测，证据较强</span></p>
+    <p><strong>这一轮同时暴露出分析工具本身的系统性错误，修正模型的工作量大于分析本身。</strong>二阶段 DCF 公式有两个 bug、现金流均值因筛选上下文丢了一年数据、400–560 亿存款类产品被归进经营资产——任何一条都足以让结论作废。已修完六个批次，并固化为 21 条纠错记录和一套可复用的接入流程。<span class="ev ev-fact">事实</span></p>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap-card">
+      <div class="label">内销毛利率</div>
+      <div class="val">31.94%</div>
+      <div class="sub">2026H1 · 2025 全年 34.52%</div>
+      <span class="pill pill-neg">同比 −2.62pp</span>
+    </div>
+    <div class="snap-card">
+      <div class="label">内销量份额</div>
+      <div class="val">约 29.9%</div>
+      <div class="sub">2023 · 2021 峰值 37.4%</div>
+      <span class="pill pill-neg">两年 −7.5pp</span>
+    </div>
+    <div class="snap-card">
+      <div class="label">净现金头寸</div>
+      <div class="val">1,767 亿</div>
+      <div class="sub">2025 · 约每股 31.6 元</div>
+      <span class="pill pill-accent">修正后口径</span>
+    </div>
+    <div class="snap-card">
+      <div class="label">期望每股价值</div>
+      <div class="val">40.06 元</div>
+      <div class="sub">主方案 C · 股价 38.56 元</div>
+      <span class="pill pill-accent">胜率 65%</span>
+    </div>
+    <div class="snap-card">
+      <div class="label">股息率</div>
+      <div class="val">7.8%</div>
+      <div class="sub">每股分红 2.99 元</div>
+      <span class="pill pill-accent">含中期分红</span>
+    </div>
+    <div class="snap-card">
+      <div class="label">纠错记录</div>
+      <div class="val">21 条</div>
+      <div class="sub">6 个已完成批次</div>
+      <span class="pill pill-warn">系统侧</span>
+    </div>
+  </div>
+
+  <div class="tab-bar" id="tabs">
+    <button class="active" data-tab="p1">格力 · 研究结论</button>
+    <button data-tab="p2">分析系统 · 开发进展</button>
+  </div>
+
+  <!-- ==================== 标签页 A ==================== -->
+  <div class="panel active" id="p1">
+
+    <section>
+      <h3>一、三阶段：丢量 → 价格补不回 → 转向让价</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>阶段</th><th>期间</th><th>份额</th><th>内销收入同比</th><th>内销毛利率</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>① 丢量，但被提价掩盖</td><td>2022–2023</td>
+              <td>内销量 37.4% → 约 29.9%<br><span class="neg">−7.5pp</span></td>
+              <td class="pos">+6.21% / +15.22%</td>
+              <td>34.06% → 36.84%<br><span class="pos">+2.78pp</span></td>
+            </tr>
+            <tr>
+              <td>② 价格补不回销量</td><td>2024–2025</td>
+              <td>线上零售额 28.15% → 24.31%</td>
+              <td class="neg">−5.45% / −10.67%</td>
+              <td>34.25% / 34.52%<br>基本守住</td>
+            </tr>
+            <tr>
+              <td>③ 转向让价</td><td>2026H1</td>
+              <td>线上零售额 24.2%<br>基本持平</td>
+              <td class="pos">+1.90%</td>
+              <td>31.94%<br><span class="neg">−2.62pp</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="foot-note">毛利率为<strong>内销（分地区）</strong>口径，全页统一。<strong>2024 年起执行《企业会计准则解释第 18 号》</strong>，保证类质保费用由销售费用改入营业成本，2023 年及以前为旧口径，与 2024 年起的数值不宜直接相减（格力重述幅度约 1.14pp，占营收）。另：2020 年起执行新收入准则，销售返利由销售费用改为冲减营业收入，2019 年与其后不可比。</div>
+
+      <div class="insight">
+        <strong>含义：</strong>问题不是"格力的份额会不会开始丢"——已经丢了四年；而是<strong>"守住份额的成本有多高、能否持续"</strong>。格力面对的不是周期底部等待反转，而是在"守价丢量"与"降价保量"之间二选一：守价则收入持续下滑（2024–2025 已验证），降价则收入可以止跌（2026H1 已初步验证），但毛利率向行业水平收敛。<span class="ev ev-guess">推测</span>
+      </div>
+    </section>
+
+    <section>
+      <h3>二、支撑证据与证据等级</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th class="wrap-cell">证据</th><th>等级</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="wrap-cell">2023 年收入 +15.22%，而内销量仅 +4.05%（行业 +13.8%）——增长主要来自提价或结构上移，不是销量</td><td><span class="ev ev-fact">事实 + 算术</span></td></tr>
+            <tr><td>2</td><td class="wrap-cell">2024–2025 内销连续两年跑输行业出货量 10pp 以上（−10.3pp、−11.4pp），同期内销毛利率基本稳住</td><td><span class="ev ev-fact">事实</span></td></tr>
+            <tr><td>3</td><td class="wrap-cell">2025 年行业均价下降约 5%、海尔空调毛利率 −1.43pp，格力毛利率反而 +0.37pp（消费电器口径），收入 −10.67%</td><td><span class="ev ev-fact">事实</span> <span class="ev ev-mgmt">管理层 · 美的</span></td></tr>
+            <tr><td>4</td><td class="wrap-cell">2026H1 行业零售量 −13.1%、零售额 −15.9%，格力内销 +1.90%；同时内销毛利率 −2.62pp</td><td><span class="ev ev-fact">事实</span></td></tr>
+            <tr><td>5</td><td class="wrap-cell">管理层称"及时优化激励政策，适时推出渠道专项补贴方案"；行业零售中 2,100 元以下机型销量占比升至 54.45%（+6.97pp）</td><td><span class="ev ev-mgmt">管理层</span> <span class="ev ev-fact">事实</span></td></tr>
+            <tr><td>6</td><td class="wrap-cell">2020 年起返利冲减收入，"渠道补贴加码"在机制上会直接表现为收入端毛利率下降——与第 4 条吻合</td><td><span class="ev ev-fact">事实 · 会计政策</span> <span class="ev ev-guess">推测 · 因果</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        <strong>不利的结构性因素：</strong>价格带持续下移；竞争对手以价换量（海尔 2025 年空调国内销量 +16.3%、毛利率 −1.43pp）；以旧换新透支需求且补贴力度收缩；管理层已承认"低价位段零售市场和工程机领域"是短板。<br>
+        <strong>有利的缓冲：</strong>净现金约 1,767 亿（约每股 31.6 元）；主业息税前经营利润 ÷ 长期经营资产 2025 年 47.42%，处于均值附近（+0.11σ）；毛利率仍有下降空间——格力空调约 35%、美的智能家居约 30%、海尔空调约 22%。<span class="ev ev-fact">事实</span> <span class="ev ev-mgmt">管理层</span>
+      </div>
+    </section>
+
+    <section>
+      <h3>三、不是"囤现金"公司</h3>
+      <p style="font-size:.9rem;color:var(--site-text-2)">一个常见误读是"格力账上一堆钱不分给股东"。两组数字都不支持这个说法。</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>股东回报（2019–2025 合计）</th><th>金额（亿元）</th></tr></thead>
+          <tbody>
+            <tr><td>归母净利润</td><td>1,846.48</td></tr>
+            <tr><td>经营资产自由现金流</td><td>1,813.23</td></tr>
+            <tr><td>现金分红（七年累计分红率 56.5%）</td><td>1,043.83</td></tr>
+            <tr><td>回购（累计约 6.17 亿股，注销 4.14 亿股 = 注销前总股本 6.89%）</td><td>约 300</td></tr>
+            <tr><td>股东回报合计 ÷ 自由现金流</td><td><strong>约 1,344 ／ 约 74%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="foot-note">2025 年单年分红率 57.8%。<span class="ev ev-fact">事实 · 年报利润分配章节 + 权益分派实施记录</span> <span class="ev ev-guess">粗算</span></div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>金融资产从哪来</th><th>2019</th><th>2025</th><th>变化</th></tr></thead>
+          <tbody>
+            <tr><td>金融资产</td><td>1,605.49</td><td>2,624.19</td><td class="pos">+1,018.70</td></tr>
+            <tr><td>有息负债</td><td>194.19</td><td>856.87</td><td class="warn">+662.68</td></tr>
+            <tr><td>净现金头寸</td><td>1,411.31</td><td>1,767.32</td><td class="pos">+356.01</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight">
+        金融资产七年增加 1,019 亿，其中约 663 亿（<strong>65%</strong>）对应有息负债增加——是资产负债表的<strong>存贷双向膨胀</strong>，真正由利润留存带来的净现金增加只有 356 亿。而且<strong>利差接近于零</strong>：2025 年借款成本约 2.46%、金融资产收益率约 2.39%。<br>
+        净现金 1,767 亿、利差接近零，却新增 547 亿信用借款——<strong>借款的真实目的是本轮最重要的未决问题</strong>。另有 316.70 亿金融资产被质押，担保对象尚未查清。<span class="ev ev-fact">事实</span> <span class="ev ev-guess">推测 · 利差含义</span>
+      </div>
+    </section>
+
+    <section>
+      <h3>四、按给定参数的估值计算</h3>
+      <div class="insight">
+        <strong>这一节不是估值结论。</strong>折现率、现金流窗口、情景假设与各情景概率<strong>全部由本人设定</strong>，脚本只做算术并与 Power BI 模型对数（同参数下两边同为 73.467941 元，差 0.000000 元）。换一组参数就是另一组数字。下方不含任何买卖判断。
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>参数（2026-09-20 设定）</th><th class="wrap-cell">取值</th></tr></thead>
+          <tbody>
+            <tr><td>模型</td><td class="wrap-cell">零增长永续</td></tr>
+            <tr><td>FCF0</td><td class="wrap-cell">2021–2025 五年均值 286.83 亿元</td></tr>
+            <tr><td>折现率 r</td><td class="wrap-cell">12%（行业 3% + 经营 3% + 财务 0% + 市场 4% + 无风险 2%）</td></tr>
+            <tr><td>股价</td><td class="wrap-cell">38.56 元（2026-09-18 收盘，iFinD）</td></tr>
+            <tr><td>每股分红</td><td class="wrap-cell">2.99 元</td></tr>
+            <tr><td>净金融资产计价</td><td class="wrap-cell">主方案 C 357.71 亿（每股 6.22 元）／上限方案 B 916.94 亿（每股 15.95 元）／对照 A 1,833.88 亿（每股 31.90 元）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>情景</th><th>内销毛利率</th><th>内销收入</th><th>情景 FCF0（亿）</th><th>主方案 C</th><th>上限方案 B</th><th>概率</th></tr></thead>
+          <tbody>
+            <tr><td>S1 让价保量</td><td>32%</td><td>持平</td><td>265.22</td><td><strong>44.66 元</strong></td><td>54.39 元</td><td>20%</td></tr>
+            <tr><td>S2 价格战加深</td><td>30%</td><td>持平</td><td>244.16</td><td><strong>41.61 元</strong></td><td>51.34 元</td><td>30%</td></tr>
+            <tr><td>S3 守价丢量</td><td>34.05%</td><td>−10%</td><td>250.97</td><td><strong>42.60 元</strong></td><td>52.32 元</td><td>15%</td></tr>
+            <tr><td>S4 降价仍丢量</td><td>30%</td><td>−10%</td><td>212.57</td><td><strong>37.03 元</strong></td><td>46.76 元</td><td>25%</td></tr>
+            <tr><td>S5 严重情景</td><td>28%</td><td>−20%</td><td>164.12</td><td><strong>30.01 元</strong></td><td>39.74 元</td><td>10%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="band-fig">
+        <div class="cap">Win rate by price</div>
+        <div class="cap-zh">五个情景中价值高于股价的比例，随股价的变化</div>
+        <div class="band-outer">
+          <div class="band">
+            <span class="b100" style="width:11.17%"></span>
+            <span class="b90"  style="width:39.00%"></span>
+            <span class="b65"  style="width:25.44%"></span>
+            <span class="b35"  style="width:5.50%"></span>
+            <span class="b20"  style="width:11.44%"></span>
+            <span class="b0"   style="width:7.45%"></span>
+          </div>
+          <div class="mark" style="left:58.67%"><em>38.56 元</em></div>
+        </div>
+        <div class="band-labels">
+          <i style="left:5.59%">100%</i>
+          <i style="left:30.67%">90%</i>
+          <i style="left:62.89%">65%</i>
+          <i class="tight" style="left:78.36%">35%</i>
+          <i class="tight" style="left:86.84%">20%</i>
+          <i style="left:96.28%">0%</i>
+        </div>
+        <div class="axis">
+          <i style="left:11.17%">30.01</i>
+          <i style="left:50.17%">37.03</i>
+          <i class="tight" style="left:75.61%">41.61</i>
+          <i class="tight" style="left:81.11%">42.60</i>
+          <i style="left:92.56%">44.66</i>
+        </div>
+        <div class="band-note">横轴为股价（28–46 元，线性）；底色深浅表示胜率高低，同一色系、无好坏含义。竖线为 2026-09-18 收盘价。五个断点即五个情景的每股价值；胜率只在断点处跳变。按 2026-09-20 给定参数的计算结果。</div>
+      </div>
+
+      <div class="insight">
+        当前价离下方断点更近：下跌 <strong>1.53 元</strong>，胜率升至 90%；上涨 <strong>3.05 元</strong>，才会降至 35%。<br>
+        当前 38.56 元下：主方案 C 期望每股价值 <strong>40.06 元</strong>（+3.9%），上限方案 B 49.79 元（+29.1%）；胜率 <strong>65%</strong>；盈利情景平均幅度 +4.22 元、亏损情景平均幅度 −3.54 元，<strong>赔率 1.19</strong>；收益风险比 2.21；最坏情景（S5）回报 −22.2%。胜率 65%、赔率 1.19 的组合意味着<strong>期望值的正号主要来自胜率而不是赔率</strong>。<span class="ev ev-fact">事实 · 算术</span>
+      </div>
+
+      <div class="insight">
+        <strong>结论最敏感的两个假设都不是毛利率：</strong>FCF0 取几年——五年均值 286.83 亿 vs 剔除 2021 年后的四年均值 368.09 亿，主方案 S1 情景由 44.66 元变 56.44 元，差 <strong>11.78 元</strong>；净现金计价方式——A / B / C 三种口径在 S1 情景下极差 <strong>25.67 元</strong>。两者都大于毛利率 32%→30% 之间的 3.05 元，以及 r 从 11% 到 13% 之间的 6.45 元。<br>
+        <strong>本轮已决定保留五年均值、不剔除 2021 年：</strong>2021 年（−38.18 亿）与 2023 年（529.04 亿）疑为同一轮营运资金波动的两端，只剔除低端属于选择性取数。<br>
+        <strong>使用前提：</strong>上图只在情景价值不变时有效。若股价变动源于基本面变化而非市场波动，须先重估情景与概率再查表；除息日股价机械下调约等于每股分红。
+      </div>
+    </section>
+
+    <section>
+      <h3>五、四个决定性变量</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th class="wrap-cell">变量</th><th class="wrap-cell">当前值 / 敏感度</th><th class="wrap-cell">下一个检验点</th></tr></thead>
+          <tbody>
+            <tr><td>V1</td><td class="wrap-cell"><strong>内销毛利率的稳定水平</strong></td><td class="wrap-cell">2025 年 34.52% → 2026H1 31.94%。以 2025 年内销 1,264 亿为基数，每下降 1pp，毛利减少约 12.6 亿、税后约 10.5 亿，<strong>约每股 0.19 元</strong></td><td class="wrap-cell">2026 年报全年内销毛利率；是否跌破 30%</td></tr>
+            <tr><td>V2</td><td class="wrap-cell">内销份额能否企稳</td><td class="wrap-cell">线上零售额份额 24.2%（2026H1）</td><td class="wrap-cell">奥维全渠道份额同比；产业在线份额需外部获取</td></tr>
+            <tr><td>V3</td><td class="wrap-cell">渠道库存</td><td class="wrap-cell">未知。若 2026H1 为压货，下半年出货将放缓</td><td class="wrap-cell">2026 三季报的合同负债、应收账款、存货</td></tr>
+            <tr><td>V4</td><td class="wrap-cell">资本配置</td><td class="wrap-cell">2025 年分红率 57.8%、净现金约 1,767 亿（约每股 31.6 元）</td><td class="wrap-cell">2026 年 10 月底至 2027 年 1 月的中期分红预案；年报的股东回报规划</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="foot-note">V1 敏感度假设：所得税比率取 2025 年的 83.31%，股本 56.01 亿股；未考虑收入变化与费用联动，仅用于判断量级。<span class="ev ev-guess">粗算</span></div>
+
+      <div class="insight">
+        <strong>中期分红的观察窗口：</strong>2025 年中期为每 10 股派 10 元（公告 2025-041，2025-10-31；实施公告 2026-001，2026-01-16）。但两年公告节奏不固定——2024 年中期预案是 2024-12-31 董事会、次年 1 月 1 日公告。因此判定窗口定在 <strong>2027 年 1 月 31 日</strong>：到期仍未公告中期预案，视同中期分红取消，股息率按仅年度分红重算为约 5.2%（每股 2 元）。<span class="ev ev-fact">事实 · 已回核公告原文</span>
+      </div>
+    </section>
+
+    <section>
+      <h3>六、还不知道的事</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>#</th><th class="wrap-cell">未决疑点</th><th class="wrap-cell">判定标准</th></tr></thead>
+          <tbody>
+            <tr><td>Q9</td><td class="wrap-cell"><strong>净现金 1,767 亿、利差接近零，为什么新增 547 亿信用借款？</strong></td><td class="wrap-cell">若借款主体为财务公司或与票据/供应链业务相关，属经营配套；若为集团层面低息融资，需看管理层对资金用途的表述</td></tr>
+            <tr><td>Q12</td><td class="wrap-cell">316.70 亿金融资产被质押，担保的是什么负债？</td><td class="wrap-cell">质押资产与质押借款（129.46 亿）、应付票据（155.44 亿）的对应关系</td></tr>
+            <tr><td>Q15</td><td class="wrap-cell">2026H1 内销跑赢行业零售额 17.8pp，而线上份额基本持平——跑赢部分是否为渠道库存增加？</td><td class="wrap-cell">若三季度出货放缓而零售未同步改善，指向上半年压货。推测强度中等：行业出货量增速长期高于零售量增速，可能含统计覆盖面差异</td></tr>
+            <tr><td>Q16</td><td class="wrap-cell">格力 2024 年起不再披露内销量与份额，如何继续跟踪？</td><td class="wrap-cell">能否从产业在线、奥维云网独立取得 2024–2026 份额数据。<strong>这是 V2 的前置条件</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight">
+        <strong>判断失效条件（事前验尸）：</strong>出现以下任一情况，说明当前的情景框架可能已不适用，需要全面复核而不是微调概率——内销毛利率跌破 28%；每股分红下调或管理层明确降低分红率；出现与主业无关的大额多元化投资；份额加速流失且降幅扩大；公司治理或重大诉讼事件；模型检验度量出现非零。
+      </div>
+    </section>
+
+    <section>
+      <h3>七、三处不可连线的口径断点</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>断点</th><th>时间</th><th class="wrap-cell">影响</th></tr></thead>
+          <tbody>
+            <tr><td>新收入准则</td><td>2020</td><td class="wrap-cell">销售返利由销售费用改为冲减营业收入。2019 年与其后的收入、毛利率、销售费用率不可直接比较。美的同年亦有约 89.28 亿重分类，海尔勾选"不适用"——2019 年三家口径互不一致</td></tr>
+            <tr><td>解释第 18 号</td><td>2024</td><td class="wrap-cell">保证类质保费用由销售费用改入营业成本。重述幅度格力 1.14%、美的 0.79%、海尔 3.19%，<strong>三家差一个数量级</strong></td></tr>
+            <tr><td>行业零售额换源</td><td>2022→2023<br>2024→2025</td><td class="wrap-cell">前者由全国家用电器工业信息中心换为奥维云网，1,411 → 2,117 亿是换源不是增长；后者奥维空调口径扩大约 295.5 亿（+14.3%），缺口集中在空调一项</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        另有两处提示：格力 2025 年报的"&gt;10%"表<strong>未披露外销毛利率</strong>（外销占营收 16.06%，已过披露门槛）；三家份额监测机构不同（格力、美的用奥维，海尔用 GfK 中怡康），<strong>份额数据不可加总或排序</strong>。海外收入占比差异也很大——海尔 51.4%、美的 42.9%、格力 17.8%，同行的"空调分部增速"主要反映全球市场，格力主要反映国内，直接横比比的不是同一件事。<span class="ev ev-fact">事实</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==================== 标签页 B ==================== -->
+  <div class="panel" id="p2">
+
+    <section>
+      <h3>一、研究流程：五层分工</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>层</th><th class="wrap-cell">做什么</th><th>谁主导</th></tr></thead>
+          <tbody>
+            <tr><td>L1 数据</td><td class="wrap-cell">iFinD 拉三大主表，财报 PDF 解析成 JSON 入库</td><td>机器</td></tr>
+            <tr><td>L2 扫描</td><td class="wrap-cell">跑度量值，输出红灯清单（偏离历史均值、拐点、多表交叉信号）</td><td>机器</td></tr>
+            <tr><td>L3 归因</td><td class="wrap-cell">每个红灯拆成问题树，到财报附注找证据，按三级证据标注；结合同行判断是公司问题还是行业问题</td><td>协作</td></tr>
+            <tr><td>L4 判断</td><td class="wrap-cell">收敛为 2–3 个决定性变量，设情景与概率，做估值计算</td><td><strong>本人</strong></td></tr>
+            <tr><td>L5 跟踪</td><td class="wrap-cell">更新事实底座、核心判断、未决疑点；每条疑点写明需要的数据和判定标准</td><td>机器维护、本人确认</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        <strong>数据分工是硬规则：</strong>三大主表数值只用 iFinD；财报 JSON 只用于 iFinD 没有的东西——分部收入与毛利率、附注明细、管理层表述、行业数据。财报 JSON 中的主表跨年排版差异太大，不从 JSON 抽主表数值。
+      </div>
+    </section>
+
+    <section>
+      <h3>二、模型修正：六个批次</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>批次</th><th class="wrap-cell">内容</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td>第一批</td><td class="wrap-cell">资产资本表配平；归属母公司权益漏加股本；二阶段 DCF 公式两个 bug</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第 1.5 批</td><td class="wrap-cell">近 N 年现金流均值的筛选上下文 bug；新增「股权价值勾稽差」哨兵度量</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第 1.6 批</td><td class="wrap-cell">BLANK 传导：数据不足时不再把经营业务当作零价值</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第二批</td><td class="wrap-cell">其他流动资产的金融性部分；ROE 剔除其他综合收益；递延所得税负债归类；新增运营负债占营收比</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第 2.5 批</td><td class="wrap-cell">其他非流动资产的金融性部分改归金融资产</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第 2.6 批</td><td class="wrap-cell">并行链路「期末长期经营资产净额」同口径修正</td><td><span class="pill pill-pos">已完成</span></td></tr>
+            <tr><td>第三批</td><td class="wrap-cell">TTM 度量；其余 124 个参数兜底；消除平行链路；股利支付率取数错误；ROE 分母对齐；模型文件纳入版本管理</td><td><span class="pill pill-warn">待做</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>三、最贵的几个错误</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th class="wrap-cell">错误</th><th class="wrap-cell">影响</th></tr></thead>
+          <tbody>
+            <tr><td class="wrap-cell"><strong>二阶段 DCF 有两个 bug</strong>：高速增长段取标量而非逐年序号，把每年现金流都折现到第 n 年；余值引用已折现的现金流，重复折现一次</td><td class="wrap-cell">零增长时算出的估值结果偏低约 <strong>36%（n=5）至 50%（n=10）</strong>，n 越大越严重。<strong>此前所有 DCF 估值结论作废</strong></td></tr>
+            <tr><td class="wrap-cell"><strong>近 N 年现金流均值丢了一年数据</strong>：外层报告期筛选与内层筛选取交集为空，那一期恒为空值，分母仍除以 N</td><td class="wrap-cell">每股价值算低了 <strong>近 3 年 11.71 元、近 5 年 7.02 元、近 8 年 4.39 元</strong>；近 5 年口径的股权价值缺口约 404 亿</td></tr>
+            <tr><td class="wrap-cell"><strong>存款类产品被归进经营资产</strong>：其他非流动资产 2023 年起 97%–99% 是一年以上的存款类产品</td><td class="wrap-cell">调整额 2023 年 410.18 亿、2024 年 561.73 亿、2025 年 423.78 亿。<strong>净现金头寸 2025 年由 1,343.55 亿修正为 1,767.32 亿</strong></td></tr>
+            <tr><td class="wrap-cell"><strong>权益漏加股本、误加比率项</strong></td><td class="wrap-cell">ROE 系统性偏高 <strong>0.7–1.9pp</strong>；资产总额减资本总额恒等于总股本</td></tr>
+            <tr><td class="wrap-cell"><strong>其他综合收益污染 ROE 主链</strong></td><td class="wrap-cell">与 iFinD 加权 ROE 的差：2019 年 +5.25pp、2022 年 −11.33pp；剔除后收敛到 −1.47pp / −2.83pp</td></tr>
+            <tr><td class="wrap-cell"><strong>平行链路</strong>：区间观察与资产树绕过主度量、用报告参数直接重建科目</td><td class="wrap-cell">七年均值偏差：金融资产 −358.57 亿、运营资产 +159.19 亿、长期经营资产 +199.38 亿。合计正确，分项全错</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight">
+        <strong>存款类产品那条最典型。</strong>它不只是改了一个数——L2 扫描原本的结论是"资产膨胀主要来自长期经营资产"。修正后，2019→2025 年资产周转率下滑的分母归因里，<strong>金融资产的贡献由 27.9% 升到 56.5%，长期经营资产由 55.0% 降到 26.5%，两者位次正好对调</strong>。原结论被自己的数据推翻。<span class="ev ev-fact">事实</span>
+      </div>
+      <div class="foot-note">修正前后两组数字均取自 L2 扫描报告第十二节的对照表（同一分解方法、同一算法，差异只来自数据本身）。</div>
+    </section>
+
+    <section>
+      <h3>四、工具与回归测试</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>脚本</th><th class="wrap-cell">用途</th></tr></thead>
+          <tbody>
+            <tr><td>report_extractor</td><td class="wrap-cell">财报 JSON 读取与表格解析；<strong>报告期识别的唯一实现</strong>，其余脚本一律从这里导入</td></tr>
+            <tr><td>oca_extractor</td><td class="wrap-cell">其他流动资产中的金融性部分</td></tr>
+            <tr><td>onca_extractor</td><td class="wrap-cell">其他非流动资产中的金融性部分；含标签缺失还原</td></tr>
+            <tr><td>segment_extractor</td><td class="wrap-cell">分产品、分地区、分销售模式的收入与毛利率（三家 25 期全部通过勾稽）</td></tr>
+            <tr><td>make_oca_datefile</td><td class="wrap-cell">生成 Power BI 可加载的调整项文件，内置对读取逻辑的模拟自检</td></tr>
+            <tr><td>l4_valuation</td><td class="wrap-cell">情景 DCF、净现金计价、反向估值、胜率赔率、价格梯度表</td></tr>
+            <tr><td>dcf_check</td><td class="wrap-cell">DCF 公式校验（原公式转录 vs 修正版）</td></tr>
+            <tr><td>tests/</td><td class="wrap-cell">标签还原的回归测试，四组对照实验；改任何抽取器后跑一次</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight">
+        <strong>回归测试是本轮新加的，起因是一个真实缺陷。</strong>标签还原原先按"处理顺序"取上一期期末值，隐含假设"上一个处理期就是上一个年报期"。补入各期中报后这个假设不成立了，格力 2025 年报的标签还原全部失配——当时数值侥幸没变，但若 2026 年中报缺席，2025 年末那 423.78 亿的调整会<strong>整行消失</strong>。已改为按期末日期查找。该测试对修复前的代码 3/5 失败，修复后 5/5 通过。<span class="ev ev-fact">事实</span>
+      </div>
+    </section>
+
+    <section>
+      <h3>五、方法论沉淀</h3>
+      <blockquote>数字量级吻合不等于找到原因。只有能复现、能闭合验算的解释才采信。<br><span style="font-size:.82rem;color:var(--site-text-3)">——484 亿销售返利与 7–9 元/股的暗差量级相近，但两者没有因果关系；真正的原因是现金流均值的筛选 bug，能逐位闭合。</span></blockquote>
+      <blockquote>媒体转述不能替代公告原文。凡涉及公司表态的措辞，一律以公告原文为准。<br><span style="font-size:.82rem;color:var(--site-text-3)">——某财经媒体把格力 2025 年中报的"计划不派发现金红利"转述为"暂不分红"，据此误判 2025 与 2026 两年中报措辞相同。实际 2026 年多了"另行决定中期利润分配事宜"一句，措辞更积极。</span></blockquote>
+      <blockquote>单一来源：派生计算一律引用主度量或主函数，不重建一条平行链路。<br><span style="font-size:.82rem;color:var(--site-text-3)">——区间观察与资产树两个页面至今仍是旧口径，分项读数不可与主表对照。</span></blockquote>
+      <blockquote>取数阶段只陈述不下结论。<br><span style="font-size:.82rem;color:var(--site-text-3)">——L2 自动扫描曾顺着直观印象下错结论，此后取数任务明确禁止写结论。</span></blockquote>
+    </section>
+
+    <section>
+      <h3>六、下一步</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>方向</th><th class="wrap-cell">待办</th></tr></thead>
+          <tbody>
+            <tr><td>模型</td><td class="wrap-cell">TTM 度量（在此之前估值只用最新年报期）；其余 124 个度量的参数兜底；消除两条平行链路；股利支付率取数错误（模型 0% / 17.4% / 19.3%，年报真实值 45.3% / 52.1% / 57.8%）；ROE 分母与 iFinD 对齐；模型文件纳入版本管理</td></tr>
+            <tr><td>数据</td><td class="wrap-cell">补齐中报期的调整数据（目前有 8 个未覆盖期间，金额 70–569 亿，这些期间的三分法结构不可与年报期比较）；美的、海尔的金融性调整——<strong>完成前三分法指标不可与格力横比</strong></td></tr>
+            <tr><td>研究</td><td class="wrap-cell">Q9、Q12、Q13、Q14 四条资本配置疑点；Q16 的外部份额数据（V2 的前置条件）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="src-note">
+    数据来源：同花顺 iFinD（三大主表、股本、行情、分红）；格力电器、美的集团、海尔智家年报与中报（分部数据、附注明细、管理层表述）；产业在线、奥维云网、全国家用电器工业信息中心（行业数据，经年报引用）；深交所公告原文（分红预案与实施公告）。估值计算基于自建 Power BI 模型与 Python 脚本，参数由本人设定。<br>
+    证据等级：<span class="ev ev-fact">事实</span> 可追溯到财报数字或公告原文 · <span class="ev ev-mgmt">管理层</span> 财报中的管理层表述，未独立验证 · <span class="ev ev-guess">推测</span> 需进一步验证。
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="disc"><b>免责声明</b>：本页为个人研究笔记，基于公开资料整理，不构成任何投资建议。页内估值均为按本人设定参数的算术计算结果，不代表对证券价值的判断。</div>
+  <div class="row">
+    <span><a href="/invest/">← 返回 做投资</a><span class="dot">·</span><a href="/">主页</a></span>
+    <span>格力首轮研究 ｜ 2026-09-21</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('tabs')?.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('active', x === b));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === b.dataset.tab));
+});
+</script>
+</body>
+</html>
