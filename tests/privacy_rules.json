@@ -1,0 +1,19 @@
+{
+ "key_tokens": [
+  "holding",
+  "position",
+  "amount",
+  "asset",
+  "仓位",
+  "金额",
+  "持仓",
+  "市值",
+  "资产"
+ ],
+ "value_patterns": [
+  "\\d[\\d.,]*\\s*万",
+  "仓位|金额|总资产|持仓快照|市值"
+ ],
+ "sha256": "3307cb69ccc7e7a6884ee4a04ff0b75d3c524b0ad63c8385f606f5b156709cf8",
+ "说明": "公开数据隐私规则的固定副本。csi300-valuation-engine / hsi-monitor（index_rules/privacy.py）与 homepage（scripts/fetch_index_state.py 的 assert_public）各存一份同样的文件，测试分别与之比对；改规则时三处代码和两份副本必须一起改，sha256 = 规则（不含本说明）的规范 JSON 的哈希。"
+}

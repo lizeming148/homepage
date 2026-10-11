@@ -59,6 +59,21 @@ class TestPrivacy(unittest.TestCase):
         self.assertFalse(os.path.exists(os.path.join(DATA, "should_not_exist.json")))
 
 
+class TestPrivacyRulesCopy(unittest.TestCase):
+    """与 tests/privacy_rules.json（固定副本 + 哈希）比对。引擎仓库（csi300-valuation-engine / hsi-monitor 的
+    index_rules/privacy.py）存有同一份副本并做同样的比对，所以 CI 只拉本仓库时也能保证两边规则一致。"""
+
+    def test_rules_match_fixed_copy(self):
+        import hashlib
+        with open(os.path.join(ROOT, "tests", "privacy_rules.json"), encoding="utf-8") as f:
+            fx = json.load(f)
+        canon = json.dumps({"key_tokens": fx["key_tokens"], "value_patterns": fx["value_patterns"]},
+                           ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        self.assertEqual(hashlib.sha256(canon.encode("utf-8")).hexdigest(), fx["sha256"], "副本内容与哈希不符")
+        self.assertEqual(list(fis.FORBIDDEN_KEY_TOKENS), fx["key_tokens"])
+        self.assertEqual([p.pattern for p in fis.FORBIDDEN_VALUE_PATTERNS], fx["value_patterns"])
+
+
 class TestSignalPayload(unittest.TestCase):
     def test_new_rule_card(self):
         p = fis.signal_payload("沪深300", "000300.SH", MS, "Zone", ROW)
