@@ -58,6 +58,7 @@
 
     <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
 
+    <div class="rule-notice" style="background:#FFF8E6;border:1px solid #E8C872;border-radius:10px;padding:10px 14px;margin:14px 0 18px;font-size:0.92rem;color:#6B5313">本页策略已于 2026-10 更新为“滚动 10 年综合便宜度”规则（v1.1），下方方法说明为旧版，待更新。</div>
     <header class="phead">
         <span class="kicker">指数估值策略</span>
         <h1>中证红利 · 股息率档位策略</h1>
@@ -124,14 +125,16 @@
         .then(function(d){
             var el=document.getElementById('signal');
             if(!d){el.innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>';return}
+            // 新规则信号卡（v1.1）：与飞书月末卡片同一句话；不含任何持仓信息
+            var summary=d.summary?'<div class="sig-meta">'+esc(d.summary)+'</div>':'';
+            var rulers=d.rulers?'<div class="sig-meta">尺子（原值 / 近 10 年便宜分位）：'+esc(d.rulers)+'</div>':'';
             var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
-            var hint=d.hint?'<div class="sig-meta">📍 '+esc(d.hint)+'</div>':'';
             el.innerHTML=
                 '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
                 '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
-                extra+hint+
-                '<div class="sig-foot">当前信号 · 更新于 '+esc(d.date)+'</div>';
+                summary+rulers+extra+
+                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>';
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
 </script>

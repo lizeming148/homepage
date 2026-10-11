@@ -468,7 +468,7 @@
     <section class="section-block" id="panel-valuation" hidden data-date="2026-06-22">
         <div class="section-head">
             <span class="topic-tag">指数 · 估值定投系统</span>
-            <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按历史阈值分档给出买卖信号，去除情绪干扰。下面是当前三个跟踪指数的最新信号——点击任意一张卡片，可查看该指数的策略、逻辑推导、风险与不成立条件。</p>
+            <p class="section-sub">把估值判断交给规则：每日自动抓取估值数据，按“滚动 10 年综合便宜度”（2026-10 起，v1.1）分档给出买卖信号，去除情绪干扰。下面是当前三个跟踪指数的最新信号——点击任意一张卡片，可查看该指数的策略、逻辑推导、风险与不成立条件。</p>
         </div>
         <div class="index-grid" id="index-cards">
             <div class="index-loading">正在加载最新信号…</div>
@@ -569,11 +569,12 @@
     }
     function renderIndexCard(d, slug) {
         var extra = d.extra ? '<div class="ic-extra">' + esc(d.extra) + '</div>' : '';
-        var hint = d.hint ? '<div class="ic-hint">📍 ' + esc(d.hint) + '</div>' : '';
-        // 分红质量过滤层：仅恒生有该字段，其余指数自动跳过
+        // 2026-10 起为新规则（滚动 10 年综合便宜度 v1.1）：显示各尺子读数，不再显示旧阈值阶梯；不含任何持仓信息
+        var hint = d.rulers ? '<div class="ic-hint">' + esc(d.rulers) + '</div>' : '';
+        // 分红质量：仅恒生有该字段；2026-10 起只作风险提示，不调整买入倍数
         var dq = d.dq_grade
             ? '<div class="ic-hint">🧪 分红质量 <span style="color:' + esc(d.dq_color) + ';font-weight:600">' + esc(d.dq_label) + '</span>'
-                + (d.dq_discount != null && Number(d.dq_discount) < 1 ? ' · 买入 ×' + esc(d.dq_discount) : ' · 不打折') + '</div>'
+                + ' · 仅风险提示</div>'
             : '';
         return '' +
             '<a class="index-card" href="/invest/strategy/' + esc(slug) + '/">' +
@@ -587,8 +588,8 @@
               extra +
               '<div class="ic-action">📌 ' + esc(d.action) + '</div>' +
               hint + dq +
-              '<div class="ic-ladder">' + esc(d.ladder) + '</div>' +
-              '<div class="ic-foot">更新于 ' + esc(d.date) + '</div>' +
+              (d.ladder ? '<div class="ic-ladder">' + esc(d.ladder) + '</div>' : '') +
+              '<div class="ic-foot">' + esc(d.reading_kind || '') + (d.reading_kind ? ' · ' : '') + '更新于 ' + esc(d.date) + '</div>' +
               '<div class="ic-more">查看策略详解 →</div>' +
             '</a>';
     }

@@ -60,6 +60,7 @@
 
     <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
 
+    <div class="rule-notice" style="background:#FFF8E6;border:1px solid #E8C872;border-radius:10px;padding:10px 14px;margin:14px 0 18px;font-size:0.92rem;color:#6B5313">本页策略已于 2026-10 更新为“滚动 10 年综合便宜度”规则（v1.1），下方方法说明为旧版，待更新。</div>
     <header class="phead">
         <span class="kicker">指数估值策略</span>
         <h1>恒生指数 · 股息率五档策略</h1>
@@ -157,7 +158,8 @@
 <script>
     function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
     function dqDiscount(d){
-        return (d.dq_discount==null||Number(d.dq_discount)>=1)?'不打折':('买入 ×'+esc(d.dq_discount));
+        // 2026-10 起分红质量只作风险提示，不调整买入倍数（审计 4.9）
+        return '仅风险提示，不调整买入倍数';
     }
     // 顶部信号卡里的分红质量行（独立于五档主信号）
     function dqSignalLine(d){
@@ -169,23 +171,25 @@
     function fillDqCallout(d){
         var box=document.getElementById('dq-callout');
         if(!box||!d.dq_grade) return;
-        var payout=(d.dq_payout!=null)?'加权派息率 '+esc(d.dq_payout)+'%，':'';
+        var payout=(d.dq_payout!=null)?'加权派息率 '+esc(d.dq_payout)+'%；':'';
         var alerts=(d.dq_alerts&&d.dq_alerts!=='无'&&d.dq_alerts!=='-')?esc(d.dq_alerts)+'。':'';
-        box.innerHTML='<strong>当前状态（'+esc(d.dq_date||d.date)+'）：'+esc(d.dq_label)+'。</strong>'+alerts+payout+'买入力度'+dqDiscount(d)+'。每季度更新一次。';
+        box.innerHTML='<strong>当前状态（'+esc(d.dq_date||d.date)+'）：'+esc(d.dq_label)+'。</strong>'+alerts+payout+dqDiscount(d)+'。每季度更新一次。';
     }
     fetch('/invest/strategy/data/hsi.json',{cache:'no-store'})
         .then(function(r){return r.ok?r.json():null})
         .then(function(d){
             var el=document.getElementById('signal');
             if(!d){el.innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>';return}
+            // 新规则信号卡（v1.1）：与飞书月末卡片同一句话；不含任何持仓信息
+            var summary=d.summary?'<div class="sig-meta">'+esc(d.summary)+'</div>':'';
+            var rulers=d.rulers?'<div class="sig-meta">尺子（原值 / 近 10 年便宜分位）：'+esc(d.rulers)+'</div>':'';
             var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
-            var hint=d.hint?'<div class="sig-meta">📍 '+esc(d.hint)+'</div>':'';
             el.innerHTML=
                 '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
                 '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
-                extra+hint+dqSignalLine(d)+
-                '<div class="sig-foot">当前信号 · 更新于 '+esc(d.date)+'</div>';
+                summary+rulers+extra+dqSignalLine(d)+
+                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>';
             fillDqCallout(d);
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
