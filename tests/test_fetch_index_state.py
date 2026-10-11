@@ -76,6 +76,32 @@ class TestSignalPayload(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "不是新规则档名"):
             fis.signal_payload("沪深300", "000300.SH", MS, "Zone", dict(ROW, Zone="卖出中"))   # 旧引擎档名
 
+    def test_latest_complete_record_is_used(self):
+        # 最新一条不全（例如引擎刚切换、或当天写了一半）→ 用最近一条齐全的，并显示它自己的日期
+        day = 86400000
+        items = [
+            {"fields": dict(ROW, Date=MS - 2 * day)},                                  # 齐全，较早
+            {"fields": dict(ROW, Date=MS - day, Zone="中性", composite=56.0)},          # 齐全，最近
+            {"fields": {"Date": MS, "Zone": "中性", "composite": 57.0}},                # 最新，但缺 summary 等
+            {"fields": {"Date": MS - 30 * day, "Zone": "卖出中"}},                      # 旧引擎记录
+        ]
+        import contextlib
+        import io
+        with contextlib.redirect_stdout(io.StringIO()) as buf:
+            ms, f = fis.latest_complete(items, "Zone", "沪深300")
+        self.assertEqual(ms, MS - day)
+        self.assertIn("最近 1 条记录新字段不全", buf.getvalue())
+        p = fis.signal_payload("沪深300", "000300.SH", ms, "Zone", f)
+        self.assertEqual((p["date"], p["metric_value"]), ("2026-09-29", "56"))
+
+    def test_all_incomplete_raises(self):
+        items = [{"fields": {"Date": MS, "Zone": "卖出中", "PE_converted": 14.2}},
+                 {"fields": {"Date": MS - 1, "Zone": "中性", "composite": "abc", **{k: "x" for k in fis.PUBLIC_FIELDS if k != "composite"}}}]
+        with self.assertRaisesRegex(RuntimeError, "全部 2 条记录都缺新规则字段"):
+            fis.latest_complete(items, "Zone", "沪深300")
+        with self.assertRaisesRegex(RuntimeError, "表为空"):
+            fis.latest_complete([], "Zone", "沪深300")
+
     def test_feishu_text_list_format(self):
         row = dict(ROW, Zone=[{"type": "text", "text": "中性"}], summary=[{"type": "text", "text": "a"}, {"type": "text", "text": "b"}])
         p = fis.signal_payload("沪深300", "000300.SH", MS, "Zone", row)

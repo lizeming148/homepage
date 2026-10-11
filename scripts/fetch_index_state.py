@@ -140,8 +140,39 @@ def _plain_text(field_value):
 # ─────────────────────────────────────────────
 # 新规则信号卡（三个指数共用）
 # ─────────────────────────────────────────────
+def record_problems(tier_field, fields):
+    """一条记录作为新规则信号是否齐全；返回问题列表（空 = 齐全）。"""
+    problems = []
+    tier = _plain_text(fields.get(tier_field)).strip()
+    if tier not in TIER_HEX:
+        problems.append(f"{tier_field}={tier!r} 不是新规则档名")
+    missing = [k for k in PUBLIC_FIELDS if fields.get(k) in (None, "", [])]
+    if missing:
+        problems.append(f"缺少新字段 {missing}")
+    elif safe_float(fields.get("composite")) is None:
+        problems.append(f"composite 不是数值：{fields.get('composite')!r}")
+    return problems
+
+
+def latest_complete(items, tier_field, name, date_field="Date"):
+    """取日期最新、且新规则字段齐全的一条记录 → (date_ms, fields)。
+    最新几条不全时跳过并打印日志（页面显示的是所取记录自己的日期）；全部记录都不全时才报错。"""
+    rows = sorted(((it.get("fields", {}).get(date_field), it.get("fields", {})) for it in items
+                   if it.get("fields", {}).get(date_field)), key=lambda x: x[0], reverse=True)
+    if not rows:
+        raise RuntimeError(f"{name}：表为空")
+    for i, (ms, f) in enumerate(rows):
+        if not record_problems(tier_field, f):
+            if i:
+                print(f"⚠️ {name}：最近 {i} 条记录新字段不全（最新 {ms_to_date(rows[0][0])}：{record_problems(tier_field, rows[0][1])}），"
+                      f"改用 {ms_to_date(ms)} 的记录")
+            return ms, f
+    raise RuntimeError(f"{name}：全部 {len(rows)} 条记录都缺新规则字段（最新一条：{record_problems(tier_field, rows[0][1])}）"
+                       "——请先在飞书表建好字段，并等引擎切换后写入")
+
+
 def signal_payload(name, code, date_ms, tier_field, fields):
-    """由飞书表最新一行组装信号卡 JSON。缺少新字段时显式报错（不按旧阈值兜底）。"""
+    """由一条齐全的记录组装信号卡 JSON。缺少新字段时显式报错（不按旧阈值兜底）。"""
     tier = _plain_text(fields.get(tier_field)).strip()
     if tier not in TIER_HEX:
         raise RuntimeError(f"{name}：最新一行 {tier_field}={tier!r} 不是新规则档名（引擎尚未切换？）")
@@ -173,10 +204,8 @@ def build_csi300(token):
     table = os.environ.get("FEISHU_PE_HISTORY_TABLE_ID")
     if not (app and table):
         raise RuntimeError("未配置 FEISHU_APP_TOKEN_300 / FEISHU_PE_HISTORY_TABLE_ID")
-    latest = latest_by_date(fetch_all(token, app, table, ["Date", "Zone", *PUBLIC_FIELDS]))
-    if not latest:
-        raise RuntimeError("沪深300 pe_history 为空")
-    return signal_payload("沪深300", "000300.SH", latest[0], "Zone", latest[1])
+    ms, f = latest_complete(fetch_all(token, app, table, ["Date", "Zone", *PUBLIC_FIELDS]), "Zone", "沪深300 pe_history")
+    return signal_payload("沪深300", "000300.SH", ms, "Zone", f)
 
 
 def build_hongli(token):
@@ -184,10 +213,8 @@ def build_hongli(token):
     table = os.environ.get("FEISHU_DATA_TABLE_922")
     if not (app and table):
         raise RuntimeError("未配置 FEISHU_APP_TOKEN_922 / FEISHU_DATA_TABLE_922")
-    latest = latest_by_date(fetch_all(token, app, table, ["Date", "tier", *PUBLIC_FIELDS]))
-    if not latest:
-        raise RuntimeError("中证红利 PEPBDIV 为空")
-    return signal_payload("中证红利", "000922.CSI", latest[0], "tier", latest[1])
+    ms, f = latest_complete(fetch_all(token, app, table, ["Date", "tier", *PUBLIC_FIELDS]), "tier", "中证红利 PEPBDIV")
+    return signal_payload("中证红利", "000922.CSI", ms, "tier", f)
 
 
 HSI_APP_TOKEN = os.environ.get("FEISHU_APP_TOKEN_HSI", "Wp3XbNSkMaPwBbs17pbcMFjhnEf")
@@ -225,11 +252,9 @@ def fetch_hsi_dividend(token):
 
 
 def build_hsi(token):
-    latest = latest_by_date(fetch_all(token, HSI_APP_TOKEN, HSI_HISTORY_TABLE,
-                                      ["date", "tier", "spread_dy_cn", "erp_cn", *PUBLIC_FIELDS]), date_field="date")
-    if not latest:
-        raise RuntimeError("恒生指数 hsi_history 为空")
-    ms, f = latest
+    ms, f = latest_complete(fetch_all(token, HSI_APP_TOKEN, HSI_HISTORY_TABLE,
+                                      ["date", "tier", "spread_dy_cn", "erp_cn", *PUBLIC_FIELDS]),
+                            "tier", "恒生指数 hsi_history", date_field="date")
     payload = signal_payload("恒生指数", "HSI.HK", ms, "tier", f)
     erp = safe_float(f.get("erp_cn"))   # 股债差已在尺子读数里，这里只补 ERP（仅展示）
     payload["extra"] = f"ERP（仅展示）{erp:+.2f}%" if erp is not None else ""
