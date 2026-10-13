@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 import fetch_index_state as fis  # noqa: E402
 
 DATA = os.path.join(ROOT, "invest", "strategy", "data")
-MS = int(datetime(2026, 9, 30, 12).timestamp() * 1000)
+MS = int(datetime(2026, 9, 30, 12, tzinfo=fis.BEIJING).timestamp() * 1000)   # 引擎写入北京中午
 ROW = {
     "Zone": "中性",
     "composite": 55.3,
@@ -72,6 +72,16 @@ class TestPrivacyRulesCopy(unittest.TestCase):
         self.assertEqual(hashlib.sha256(canon.encode("utf-8")).hexdigest(), fx["sha256"], "副本内容与哈希不符")
         self.assertEqual(list(fis.FORBIDDEN_KEY_TOKENS), fx["key_tokens"])
         self.assertEqual([p.pattern for p in fis.FORBIDDEN_VALUE_PATTERNS], fx["value_patterns"])
+
+
+class TestBeijingDates(unittest.TestCase):
+    def test_ms_to_date_is_beijing_regardless_of_machine_tz(self):
+        from datetime import timezone
+        self.assertEqual(fis.ms_to_date(MS), "2026-09-30")                                   # 新记录：北京中午
+        utc0 = int(datetime(2026, 9, 30, tzinfo=timezone.utc).timestamp() * 1000)            # 旧记录：UTC 零点
+        self.assertEqual(fis.ms_to_date(utc0), "2026-09-30")
+        self.assertEqual(fis.ms_to_date(int(datetime(2026, 9, 30, 23, 59, tzinfo=fis.BEIJING).timestamp() * 1000)), "2026-09-30")
+        self.assertIsNone(fis.ms_to_date(None))
 
 
 class TestSignalPayload(unittest.TestCase):

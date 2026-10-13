@@ -21,7 +21,7 @@ import os
 import re
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import requests
 
@@ -104,10 +104,15 @@ def fetch_all(token, app_token, table_id, fields=None):
     return items
 
 
+# 飞书日期字段按北京时间解读（与引擎 index_rules/bjtime.py 一致）：引擎写入北京中午，
+# 旧记录是 UTC 零点 / 中午写入的，按北京日期读回都是正确日期；不能用运行机器的本地时区（Actions 是 UTC）。
+BEIJING = timezone(timedelta(hours=8), "Asia/Shanghai")
+
+
 def ms_to_date(ms):
     if not ms:
         return None
-    return datetime.fromtimestamp(ms / 1000).strftime("%Y-%m-%d")
+    return datetime.fromtimestamp(ms / 1000, tz=BEIJING).strftime("%Y-%m-%d")
 
 
 def latest_by_date(items, date_field="Date"):
@@ -272,7 +277,7 @@ def build_hsi(token):
 # ─────────────────────────────────────────────
 def write_json(name, payload):
     os.makedirs(OUT_DIR, exist_ok=True)
-    payload["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+    payload["updated_at"] = datetime.now(BEIJING).strftime("%Y-%m-%d %H:%M")
     assert_public(payload, f"{name}.json")
     path = os.path.join(OUT_DIR, f"{name}.json")
     with open(path, "w", encoding="utf-8") as fp:
