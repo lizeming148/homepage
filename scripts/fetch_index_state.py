@@ -42,24 +42,46 @@ TIER_HEX = {
 COLOR_HEX = {"red": "#C0392B", "orange": "#CB6B1E", "yellow": "#B8902A", "green": "#2B7A4B", "blue": "#2F5FAE"}
 
 # ─────────────────────────────────────────────
-# 隐私：公开仓库，任何持仓金额、仓位比例、卖出金额都不得进入 JSON
+# 隐私：公开仓库，持仓金额、卖出金额等绝对值不得进入 JSON（比例允许，2026-10-13 起）
 # ─────────────────────────────────────────────
-FORBIDDEN_KEY_TOKENS = ("holding", "position", "amount", "asset", "仓位", "金额", "持仓", "市值", "资产")
+# 2026-10-13 起：允许比例、禁止绝对值（与 csi300-valuation-engine / hsi-monitor 的 index_rules/privacy.py 相同，
+# 由 tests/privacy_rules.json 固定副本 + 哈希核对）
+KEY_TOKENS_ABSOLUTE = ("amount", "asset", "金额", "市值", "资产")
+KEY_TOKENS_CONTEXT = ("holding", "position", "仓位", "持仓")
+RATIO_MARKERS = ("pct", "ratio", "percent", "weight", "比例", "占比", "比重")
 FORBIDDEN_VALUE_PATTERNS = (
-    re.compile(r"\d[\d.,]*\s*万"),          # 金额：“36.5 万”“10.0 万元”
-    re.compile(r"仓位|金额|总资产|持仓快照|市值"),
+    re.compile(r"\d[\d.,]*\s*[万亿]"),                                         # “36.5 万”“3 亿”
+    re.compile(r"\d[\d.,]*\s*(?:元|块钱|港元|港币|美元|RMB|CNY|HKD|USD)"),      # “10000 元”
+    re.compile(r"[¥￥$]\s*\d"),                                                 # “¥5000”
+    re.compile(r"\d[\d.,]*\s*(?:股|份)(?![息价票指债利])"),                     # “持仓 100 股”（不误伤“股息率”）
+    re.compile(r"(?:总资产|市值|金额|本金|资金|持仓|仓位)\s*[:：为约是]?\s*\d[\d.,]*(?![\d.,])(?!\s*[%％/倍成])"),
 )
 
 
+def key_problem(key):
+    low = str(key).lower()
+    for t in KEY_TOKENS_ABSOLUTE:
+        if t in low:
+            return t
+    for t in KEY_TOKENS_CONTEXT:
+        if t in low and not any(m in low for m in RATIO_MARKERS):
+            return t
+    return None
+
+
+def rules_dict():
+    return {"key_tokens_absolute": list(KEY_TOKENS_ABSOLUTE), "key_tokens_context": list(KEY_TOKENS_CONTEXT),
+            "ratio_markers": list(RATIO_MARKERS), "value_patterns": [p.pattern for p in FORBIDDEN_VALUE_PATTERNS]}
+
+
 def assert_public(payload, where="payload"):
-    """导出前的隐私检查：键名或取值里出现持仓 / 仓位 / 金额类内容即抛 ValueError。"""
+    """导出前的隐私检查：键名或取值里出现持仓金额 / 绝对数量即抛 ValueError（比例允许）。"""
     def walk(obj, path):
         if isinstance(obj, dict):
             for k, v in obj.items():
-                low = str(k).lower()
-                for t in FORBIDDEN_KEY_TOKENS:
-                    if t in low:
-                        raise ValueError(f"{where}：字段名 {path}{k} 含隐私敏感词“{t}”")
+                t = key_problem(k)
+                if t:
+                    raise ValueError(f"{where}：字段名 {path}{k} 含隐私敏感词“{t}”（只允许比例字段）")
                 walk(v, f"{path}{k}.")
         elif isinstance(obj, (list, tuple)):
             for i, v in enumerate(obj):
@@ -68,7 +90,7 @@ def assert_public(payload, where="payload"):
             for p in FORBIDDEN_VALUE_PATTERNS:
                 m = p.search(obj)
                 if m:
-                    raise ValueError(f"{where}：{path.rstrip('.')} 的取值含隐私敏感内容“{m.group(0)}”")
+                    raise ValueError(f"{where}：{path.rstrip('.')} 的取值含绝对金额 / 数量“{m.group(0)}”")
     walk(payload, "")
     return payload
 
@@ -201,6 +223,8 @@ def signal_payload(name, code, date_ms, tier_field, fields):
         "reading_kind": _plain_text(fields.get("reading_kind")),
         "rule_version": _plain_text(fields.get("rule_version")),
         "extra": "",
+        # 除息重叠标注生效中：引擎在 rulers 里注明“（折算；原始 x%，除息重叠标注）”，网站据此显示标签
+        "dy_overlap": "除息重叠标注" in _plain_text(fields.get("rulers")),
     }
 
 

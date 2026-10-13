@@ -128,13 +128,15 @@
             // 新规则信号卡（v1.1）：与飞书月末卡片同一句话；不含任何持仓信息
             var summary=d.summary?'<div class="sig-meta">'+esc(d.summary)+'</div>':'';
             var rulers=d.rulers?'<div class="sig-meta">尺子（原值 / 近 10 年便宜分位）：'+esc(d.rulers)+'</div>':'';
+            var ov=d.dy_overlap?'<div class="sig-meta"><strong style="color:#CB6B1E">除息重叠标注中</strong>：iFinD 原始股息率可能重复计入了一次中期分红，判档用折算股息率（规则说明书 v1.1 附注）</div>':'';
             var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
             el.innerHTML=
                 '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
                 '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
-                summary+rulers+extra+
-                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>';
+                summary+rulers+ov+extra+
+                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>'+
+                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益，独立样本数 = 互不重叠的行情段数，&lt;3 标“证据弱”。</div>';
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
 </script>

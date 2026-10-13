@@ -1,19 +1,33 @@
 {
- "key_tokens": [
-  "holding",
-  "position",
+ "key_tokens_absolute": [
   "amount",
   "asset",
-  "仓位",
   "金额",
-  "持仓",
   "市值",
   "资产"
  ],
- "value_patterns": [
-  "\\d[\\d.,]*\\s*万",
-  "仓位|金额|总资产|持仓快照|市值"
+ "key_tokens_context": [
+  "holding",
+  "position",
+  "仓位",
+  "持仓"
  ],
- "sha256": "3307cb69ccc7e7a6884ee4a04ff0b75d3c524b0ad63c8385f606f5b156709cf8",
- "说明": "公开数据隐私规则的固定副本。csi300-valuation-engine / hsi-monitor（index_rules/privacy.py）与 homepage（scripts/fetch_index_state.py 的 assert_public）各存一份同样的文件，测试分别与之比对；改规则时三处代码和两份副本必须一起改，sha256 = 规则（不含本说明）的规范 JSON 的哈希。"
+ "ratio_markers": [
+  "pct",
+  "ratio",
+  "percent",
+  "weight",
+  "比例",
+  "占比",
+  "比重"
+ ],
+ "value_patterns": [
+  "\\d[\\d.,]*\\s*[万亿]",
+  "\\d[\\d.,]*\\s*(?:元|块钱|港元|港币|美元|RMB|CNY|HKD|USD)",
+  "[¥￥$]\\s*\\d",
+  "\\d[\\d.,]*\\s*(?:股|份)(?![息价票指债利])",
+  "(?:总资产|市值|金额|本金|资金|持仓|仓位)\\s*[:：为约是]?\\s*\\d[\\d.,]*(?![\\d.,])(?!\\s*[%％/倍成])"
+ ],
+ "sha256": "aba86fa9421f58fb8394f433878ea661eace48345f0063b532a347913075346c",
+ "说明": "公开数据隐私规则的固定副本（2026-10-13 起：允许比例、禁止绝对值）。csi300-valuation-engine / hsi-monitor（index_rules/privacy.py）与 homepage（scripts/fetch_index_state.py）各存一份同样的文件，测试分别与之比对；改规则时三处代码和两份副本必须一起改，sha256 = 规则（不含本说明）的规范 JSON 的哈希。"
 }

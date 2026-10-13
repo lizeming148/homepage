@@ -109,7 +109,7 @@
         <p>为检验「20 年百分位在新时代可能失效」的质疑，对面板数据做了 2006–2017 与 2018–2026 的分段回测。结论：当前阈值安全，框架在新时代更有效。</p>
         <p>股息率分布确实发生了结构性下移——2018 后 P50 从 4.20% 降到 3.46%（Mann-Whitney U 检验 p&lt;0.001）。这意味着当前全样本阈值（甜区入口 P50 = 3.57%）比近期窗口偏高约 0.1pp，系统偏保守，是安全侧的偏差。</p>
         <p>信号预测力不降反升：股息率对未来 24 月收益的 Spearman 相关从 2006–2017 的 +0.38 升至 2018–2026 的 +0.84；股债差从 +0.66 升至 +0.86。盈利引擎熄火后恒指变成了更纯粹的均值回归钟摆，估值信号反而更管用了。</p>
-        <div class="warn"><strong>独立的利率尾部预警（不影响档位，只提示）。</strong>美债 10Y 单月飙升 &gt;50bp 或 6 个月累计 &gt;150bp 时触发预警；中债 10Y &lt;1.8% 时提示「中债异常低，股债差可能被机械推高、失真」——2024 年后中债长期处在 1.6~1.8%，这条提示经常亮，此时更要以股息率本身为主信号。</div>
+        <div class="warn"><strong>独立的利率尾部预警（不影响档位，只提示）。</strong>美债 10Y 近1月上升 &gt;50bp 或近6月累计 &gt;150bp 时触发预警；中债 10Y &lt;1.8% 时提示「中债异常低，股债差可能被机械推高、失真」——2024 年后中债长期处在 1.6~1.8%，这条提示经常亮，此时更要以股息率本身为主信号。</div>
     </section>
 
     <section class="block">
@@ -183,13 +183,15 @@
             // 新规则信号卡（v1.1）：与飞书月末卡片同一句话；不含任何持仓信息
             var summary=d.summary?'<div class="sig-meta">'+esc(d.summary)+'</div>':'';
             var rulers=d.rulers?'<div class="sig-meta">尺子（原值 / 近 10 年便宜分位）：'+esc(d.rulers)+'</div>':'';
+            var ov=d.dy_overlap?'<div class="sig-meta"><strong style="color:#CB6B1E">除息重叠标注中</strong>：iFinD 原始股息率可能重复计入了一次中期分红，判档用折算股息率（规则说明书 v1.1 附注）</div>':'';
             var extra=d.extra?'<div class="sig-meta">'+esc(d.extra)+'</div>':'';
             el.innerHTML=
                 '<div class="sig-metric"><span class="sig-value">'+esc(d.metric_value)+'</span><span class="sig-label">'+esc(d.metric_label)+'</span></div>'+
                 '<span class="sig-pill" style="background:'+esc(d.color)+'">'+esc(d.status)+'</span>'+
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
-                summary+rulers+extra+dqSignalLine(d)+
-                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>';
+                summary+rulers+ov+extra+dqSignalLine(d)+
+                '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>'+
+                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益，独立样本数 = 互不重叠的行情段数，&lt;3 标“证据弱”。</div>';
             fillDqCallout(d);
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});

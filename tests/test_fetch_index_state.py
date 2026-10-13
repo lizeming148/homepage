@@ -21,7 +21,7 @@ ROW = {
     "Zone": "中性",
     "composite": 55.3,
     "action": "不买入，持有",
-    "summary": "沪深300｜2026-09｜综合便宜度 55（中性）｜历史上同档买入持有 2 年：中位数 +4%，最差 10% −13%，4 段独立行情 → 不买入，持有",
+    "summary": "沪深300｜2026-09｜综合便宜度 55（中性）｜历史上同档买入持有 2 年：中位数 +4%，最差 1/10：亏 13% 以上，独立样本数 4 → 不买入，持有",
     "rulers": "PE 13.20（38） / PB 1.39（62） / 股息率 2.90%（67）",
     "reading_kind": "月末正式读数",
     "rule_version": "宽基v1.1(方案D+②b)+行业与策略v1.1",
@@ -29,21 +29,28 @@ ROW = {
 
 
 class TestPrivacy(unittest.TestCase):
+    """2026-10-13 起：允许比例、禁止绝对值。"""
+
     def test_forbidden_keys(self):
-        for key in ("holdings", "position_pct", "仓位", "卖出金额", "持仓市值", "total_assets", "amount"):
+        for key in ("holdings", "position", "仓位", "卖出金额", "持仓市值", "total_assets", "amount"):
             with self.assertRaises(ValueError, msg=key):
                 fis.assert_public({"name": "x", key: 1})
         with self.assertRaises(ValueError):
             fis.assert_public({"nested": [{"Holdings": 1}]})
+        for key in ("position_pct", "持仓比例", "仓位占比"):
+            fis.assert_public({"name": "x", key: 30})
 
     def test_forbidden_values(self):
-        for v in ("本月应卖出约 10.0 万", "医药 105.1 万，占 28.5%", "仓位提醒", "总资产 369.2", "持仓快照 2026-10-09"):
+        for v in ("本月应卖出约 10.0 万", "医药 105.1 万，占 28.5%", "总资产 369.2", "默认 10000 元", "¥5000",
+                  "持仓 100 股", "市值：36.5", "3 亿"):
             with self.assertRaises(ValueError, msg=v):
                 fis.assert_public({"summary": v})
 
-    def test_rule_texts_pass(self):
-        # 规则动作里的“持仓”（如②b 的“进入贵档时持仓的 1/12”）不是金额，允许
-        fis.assert_public({"action": "卖出进入贵档时持仓的 1/12（本轮贵档已卖 3/12），卖出资金回资金池"})
+    def test_ratios_and_rule_texts_pass(self):
+        for v in ("仓位 30%", "占 28.5%", "仓位提醒", "持仓快照 2026-10-09", "仓位 3 成",
+                  "卖出进入贵档时持仓的 1/12（本轮贵档已卖 3/12），卖出资金回资金池",
+                  "PE 10.65（48） / PB 1.13（43） / 股息率 3.76%（53） / 股债差 2.09%（82）"):
+            fis.assert_public({"summary": v})
         fis.assert_public(fis.signal_payload("沪深300", "000300.SH", MS, "Zone", ROW))
 
     def test_committed_json_files_are_public_safe(self):
@@ -67,11 +74,36 @@ class TestPrivacyRulesCopy(unittest.TestCase):
         import hashlib
         with open(os.path.join(ROOT, "tests", "privacy_rules.json"), encoding="utf-8") as f:
             fx = json.load(f)
-        canon = json.dumps({"key_tokens": fx["key_tokens"], "value_patterns": fx["value_patterns"]},
-                           ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        keys = ("key_tokens_absolute", "key_tokens_context", "ratio_markers", "value_patterns")
+        canon = json.dumps({k: fx[k] for k in keys}, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         self.assertEqual(hashlib.sha256(canon.encode("utf-8")).hexdigest(), fx["sha256"], "副本内容与哈希不符")
-        self.assertEqual(list(fis.FORBIDDEN_KEY_TOKENS), fx["key_tokens"])
-        self.assertEqual([p.pattern for p in fis.FORBIDDEN_VALUE_PATTERNS], fx["value_patterns"])
+        self.assertEqual(fis.rules_dict(), {k: fx[k] for k in keys})
+
+
+class TestOverlapAndPages(unittest.TestCase):
+    def test_dy_overlap_flag_from_rulers(self):
+        p = fis.signal_payload("恒生指数", "HSI.HK", MS, "Zone", dict(ROW, rulers="PE 10.65（48） / 股息率 3.58%（折算；原始 3.75%，除息重叠标注）（42）"))
+        self.assertTrue(p["dy_overlap"])
+        self.assertFalse(fis.signal_payload("沪深300", "000300.SH", MS, "Zone", ROW)["dy_overlap"])
+
+    def test_pages_have_note_and_no_absolute_amounts(self):
+        import re
+        for slug in ("csi300", "hongli", "hsi"):
+            with open(os.path.join(ROOT, "invest", "strategy", slug, "index.html"), encoding="utf-8") as f:
+                t = f.read()
+            self.assertIn("便宜分位：当前值在近 10 年", t, slug)
+            self.assertIn("d.dy_overlap", t, slug)
+            self.assertNotIn("默认 1 万元", t)
+            self.assertNotIn("单月飙升", t)
+        with open(os.path.join(ROOT, "invest", "index.html"), encoding="utf-8") as f:
+            t = f.read()
+        self.assertIn("原值（便宜分位）", t)
+        self.assertIn("便宜分位：当前值在近 10 年", t)
+        # 估值策略页（含脚本）不得出现个人金额（“1 万元”“10000 元”“¥”）
+        for slug in ("csi300", "hongli", "hsi"):
+            with open(os.path.join(ROOT, "invest", "strategy", slug, "index.html"), encoding="utf-8") as f:
+                t = f.read()
+            self.assertIsNone(re.search(r"\d[\d.,]*\s*万元|\d[\d.,]*\s*元(?!/)|[¥￥]\s*\d", t), slug)
 
 
 class TestBeijingDates(unittest.TestCase):
