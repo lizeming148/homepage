@@ -3,7 +3,7 @@
   "code": "000922.CSI",
   "date": "2026-10-14",
   "status": "偏贵",
-  "color": "#2F5FAE",
+  "color": "#CB6B1E",
   "metric_label": "综合便宜度",
   "metric_value": "23",
   "action": "不买入，持有",
@@ -13,5 +13,5 @@
   "rule_version": "宽基v1.1(方案D+②b)+行业与策略v1.1",
   "extra": "",
   "dy_overlap": false,
-  "updated_at": "2026-10-15 21:33"
+  "updated_at": "2026-10-15 22:14"
 }

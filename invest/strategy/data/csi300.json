@@ -3,7 +3,7 @@
   "code": "000300.SH",
   "date": "2026-10-14",
   "status": "中性",
-  "color": "#2B7A4B",
+  "color": "#8A8A88",
   "metric_label": "综合便宜度",
   "metric_value": "57",
   "action": "不买入，持有",
@@ -13,5 +13,5 @@
   "rule_version": "宽基v1.1(方案D+②b)+行业与策略v1.1",
   "extra": "",
   "dy_overlap": false,
-  "updated_at": "2026-10-15 21:33"
+  "updated_at": "2026-10-15 22:14"
 }

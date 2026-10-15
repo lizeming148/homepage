@@ -3,7 +3,7 @@
   "code": "HSI.HK",
   "date": "2026-10-15",
   "status": "中性",
-  "color": "#2B7A4B",
+  "color": "#8A8A88",
   "metric_label": "综合便宜度",
   "metric_value": "55",
   "action": "不买入，持有",
@@ -19,5 +19,5 @@
   "dq_payout": 32.9,
   "dq_alerts": "腾讯控股 回购同比 -28.6% (下降)",
   "dq_date": "2026-07-02",
-  "updated_at": "2026-10-15 21:33"
+  "updated_at": "2026-10-15 22:14"
 }
