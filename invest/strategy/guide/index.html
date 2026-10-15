@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>读卡说明 · 指数估值监控 — lizeming.net</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --bg:#FAFAF8;--text:#1C1C1C;--text-secondary:#5A5A58;--text-tertiary:#8A8A88;
+        --accent:#2B5B4B;--accent-soft:#E8F0EC;--card-bg:#FFFFFF;--border:#E5E5E0;--border-soft:#EFEFEA;
+        --hero:#CB6B1E;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Serif SC','Inter',serif;background:var(--bg);color:var(--text);line-height:1.85;-webkit-font-smoothing:antialiased}
+    .container{max-width:820px;margin:0 auto;padding:40px 24px 100px}
+    .crumb{font-size:0.84rem;margin-bottom:28px;color:var(--text-tertiary)}
+    .crumb a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    .crumb a:hover{color:var(--accent)}
+    .phead{border-bottom:1px solid var(--border);padding-bottom:26px;margin-bottom:6px}
+    .kicker{display:inline-block;font-family:'Inter',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:999px;padding:4px 13px;margin-bottom:14px}
+    .phead h1{font-size:1.95rem;font-weight:700;margin-bottom:6px}
+    .phead .lead{color:var(--text-secondary);font-size:0.98rem;margin-top:12px;max-width:660px}
+    .toc{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin:28px 0 8px;font-size:0.92rem}
+    .toc ol{padding-left:22px;margin:6px 0}
+    .toc li{margin:4px 0}
+    .toc a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+    h2{font-size:1.28rem;font-weight:700;margin:50px 0 14px;display:flex;align-items:center;gap:12px;scroll-margin-top:20px}
+    h2 .num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:600;display:flex;align-items:center;justify-content:center}
+    h3{font-size:1.04rem;font-weight:700;color:var(--accent);margin:28px 0 8px;scroll-margin-top:20px}
+    p{margin:12px 0}
+    ul,ol{margin:12px 0 12px 4px;padding-left:22px}
+    li{margin:8px 0}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.88rem;background:var(--card-bg)}
+    th,td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top}
+    th{background:var(--accent-soft);color:var(--accent);font-weight:600}
+    td.k{font-weight:600;white-space:nowrap}
+    .tbl{overflow-x:auto}
+    .callout{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:0.92rem;color:var(--text-secondary)}
+    .warn{background:#fdf3e7;border-left:4px solid var(--hero);border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:0.92rem;color:#6b5630}
+    .eg{background:var(--card-bg);border:1px dashed var(--border);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:0.9rem;color:var(--text-secondary)}
+    .tag{display:inline-block;font-family:'Inter','Noto Serif SC',sans-serif;font-size:0.76rem;border-radius:6px;padding:1px 8px;white-space:nowrap}
+    .t-orange{background:#FDEBD8;color:#A4561A}.t-red{background:#FBE2E2;color:#A33}.t-grey{background:#EFEFEA;color:#5A5A58}.t-green{background:#E3F1E6;color:#2B7A4B}
+    code{font-family:'Inter',monospace;font-size:0.86rem;background:var(--border-soft);border-radius:4px;padding:1px 5px}
+    .disc{background:#fff8f0;border:1px solid #f0d9b5;border-radius:10px;padding:14px 18px;font-size:0.84rem;color:#6b5630;margin-top:44px}
+    footer{text-align:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--border);color:var(--text-tertiary);font-size:0.8rem}
+    footer a{color:var(--text-tertiary);text-decoration:none;border-bottom:1px dotted var(--text-tertiary)}
+    @media(max-width:620px){.phead h1{font-size:1.6rem}td.k{white-space:normal}}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46ed83a374df48dc91468350119d7d78"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<div class="container">
+
+    <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
+
+    <header class="phead">
+        <span class="kicker">读卡说明</span>
+        <h1>指数估值监控 · 读卡说明</h1>
+        <p class="lead">这一页是写给半年后的自己的。卡片上每个字段是什么意思、怎么算出来的、看到之后该做什么、什么时候可以不理它——忘了的时候来这里查。规则版本：宽基 v1.1（方案 D + ②b）+ 行业与策略 v1.1，2026-10 起执行。</p>
+    </header>
+
+    <div class="toc">
+        <strong>目录</strong>
+        <ol>
+            <li><a href="#s1">一分钟看懂这套系统</a></li>
+            <li><a href="#s2">卡片字段词典</a></li>
+            <li><a href="#s3">看到卡片之后怎么做</a></li>
+            <li><a href="#s4">系统日志群的提醒怎么处理</a></li>
+            <li><a href="#s5">容易犯的错</a></li>
+            <li><a href="#s6">常见问题</a></li>
+            <li><a href="#s7">规则变更记录</a></li>
+        </ol>
+    </div>
+
+    <!-- ===================== 1 ===================== -->
+    <h2 id="s1"><span class="num">1</span>一分钟看懂这套系统</h2>
+    <ul>
+        <li><strong>它只回答一个问题：</strong>这个指数现在比过去 10 年里的多数时候便宜还是贵？答案是一个 0~100 的数，叫<strong>综合便宜度</strong>，越大越便宜。</li>
+        <li><strong>数字决定档位，档位决定动作。</strong>动作是事先写死的，不靠当时的判断。</li>
+        <li><strong>每天算一次临时读数，每月末算一次正式读数。</strong>买卖以月末正式读数为准，月中临时读数只是让你知道大概在哪。</li>
+        <li><strong>它不预测涨跌。</strong>它告诉你“价格在历史上处于什么位置”，以及“历史上在这个位置买入，2 年后大致是什么结果”。</li>
+    </ul>
+    <div class="callout">这套规则能用，靠的是一项事先登记好的检验：在 4 个宽基指数上，综合便宜度越高，之后 2 年的收益越好，结论都成立。行业指数没有通过同样的检验，所以行业指数只给参考，不给买卖动作。</div>
+
+    <!-- ===================== 2 ===================== -->
+    <h2 id="s2"><span class="num">2</span>卡片字段词典</h2>
+
+    <h3 id="title">标题：「恒生指数 · 中性 53 → 不买入，持有」</h3>
+    <p>依次是：指数名 · 档位 综合便宜度 → 本月动作。标题栏颜色跟着档位走：便宜深绿、偏便宜浅绿、中性灰、偏贵橙、贵红。</p>
+
+    <h3 id="composite">综合便宜度</h3>
+    <p>三步算出来：</p>
+    <ol>
+        <li><strong>每把尺子各算一个“便宜分位”</strong>（见下一条）。</li>
+        <li><strong>几把尺子的便宜分位简单平均</strong>，不加权重。</li>
+        <li><strong>按分数定档：</strong></li>
+    </ol>
+    <div class="tbl"><table>
+        <tr><th>综合便宜度</th><th>档位</th></tr>
+        <tr><td>≥ 80</td><td><span class="tag t-green">便宜</span></td></tr>
+        <tr><td>60 ~ 80</td><td><span class="tag t-green">偏便宜</span></td></tr>
+        <tr><td>40 ~ 60</td><td><span class="tag t-grey">中性</span></td></tr>
+        <tr><td>20 ~ 40</td><td><span class="tag t-orange">偏贵</span></td></tr>
+        <tr><td>&lt; 20</td><td><span class="tag t-red">贵</span></td></tr>
+    </table></div>
+    <div class="tbl"><table>
+        <tr><th>指数</th><th>用哪几把尺子</th></tr>
+        <tr><td>沪深300、中证500 等 A 股宽基</td><td>PE-TTM、PB（MRQ）、股息率</td></tr>
+        <tr><td>中证红利</td><td>PE-TTM、PB（MRQ）、股息率（股债差只展示）</td></tr>
+        <tr><td>恒生指数、恒生国企</td><td>PE-TTM、PB（MRQ）、股息率、股债差</td></tr>
+    </table></div>
+    <div class="eg">验算例子（恒指，2026-10-09）：(PE 48 + PB 43 + 股息率 42 + 股债差 78) ÷ 4 = 52.7 → 中性。</div>
+    <p>为什么简单平均、不加权：权重一旦根据历史数据调过，就是在拟合过去。简单平均是最不容易骗自己的做法。</p>
+
+    <h3 id="pct">便宜分位</h3>
+    <p><strong>便宜分位 = 现在比过去 10 年（120 个月）里百分之多少的时间更便宜。</strong>越大越便宜，每把尺子的意思都一样。</p>
+    <ul>
+        <li>PE、PB 越低越便宜：PE 便宜分位 48 = 过去 10 年有 48% 的月份 PE 比现在高。</li>
+        <li>股息率、股债差越高越便宜：股债差便宜分位 78 = 过去 10 年有 78% 的月份股债差比现在低。</li>
+        <li>历史不足 36 个月的尺子不算分位；任何一把尺子缺数，当天就不出综合便宜度。</li>
+    </ul>
+    <div class="warn">这是<strong>相对过去 10 年</strong>的便宜，不是绝对便宜。如果整个 10 年都偏贵，“便宜”档也只是“这 10 年里相对便宜”。</div>
+
+    <h3 id="history">历史同档：「中位数 −5%，最差 1/10：亏 22% 以上，独立样本数 5」</h3>
+    <p>意思是：历史上综合便宜度落在<strong>同一档</strong>的月份买入、持有 2 年，结果的分布是什么样。</p>
+    <ul>
+        <li><strong>中位数：</strong>一半情况比它好，一半比它差。</li>
+        <li><strong>最差 1/10：</strong>最差的那十分之一情况，亏损都在这个数以上。用来问自己：这种情况我扛得住吗？</li>
+        <li><strong>独立样本数：</strong>同一档常连续出现好几个月，这几个月持有 2 年的结果几乎一样，只算一个样本。5 就是历史上真正独立的样本只有 5 个。</li>
+        <li><span class="tag t-orange">证据弱</span>：独立样本数少于 3。这时中位数和最差 1/10 基本没有参考价值。</li>
+    </ul>
+    <div class="callout"><strong>独立样本数天生就少。</strong>持有期 2 年，20 年历史最多也就 10 段互不重叠的行情，还要分到 5 个档位里。所以 5 已经算正常。<br><strong>怎么用这一行：</strong>不要拿中位数的正负做决定（样本这么少，真实值可能差十几个百分点）。只看两件事——最差情况你能不能承受，以及有没有被标“证据弱”。买卖由档位决定，不由这一行决定。</div>
+
+    <h3 id="dy">股息率、股债差、ERP</h3>
+    <div class="tbl"><table>
+        <tr><th>字段</th><th>怎么算</th><th>什么意思</th><th>参与判档？</th></tr>
+        <tr><td class="k">股息率</td><td>过去 12 个月的分红 ÷ 当前价格</td><td>只靠分红，每年拿回多少</td><td>是</td></tr>
+        <tr><td class="k">股债差</td><td>股息率 − 中国 10 年期国债收益率</td><td>光靠分红就比国债多拿多少</td><td>恒指、国企：是<br>红利：<span class="tag t-grey">仅展示</span></td></tr>
+        <tr><td class="k">ERP</td><td>(1 ÷ PE) − 中债 10 年</td><td>全部盈利回报比国债多多少</td><td><span class="tag t-grey">仅展示</span></td></tr>
+    </table></div>
+    <p>ERP 只展示的原因：它基本就是“PE 倒过来再减利率”，PE 已经是一把尺子，再算等于重复计分；多出来的利率部分，研究里没有验证出可靠作用。</p>
+
+    <h3 id="ust">美债 10Y：「5.24%，近 1 月 +29bp，近 6 月累计 +64bp」</h3>
+    <p>1bp = 0.01 个百分点。<strong>只做风险提示，不参与判档。</strong>研究发现美债急涨和恒指下跌往往<strong>同时</strong>发生，没法提前预判；美债急涨之后（这时恒指通常也在跌），恒指接下来是反弹还是继续跌，历史上也没有规律。它的用处是：知道为什么在跌，以及在利率冲击期，买入后价格可能还会再往下走一段。</p>
+
+    <h3 id="dq">分红质量 <span class="tag t-grey">仅风险提示</span></h3>
+    <p>恒指专用。看主要权重股的派息率、回购变化，标 绿 / 黄 / 红。黄、红只是提醒你“分红的底子可能在变薄”，不调整买卖。</p>
+
+    <h3 id="tags">标签一览</h3>
+    <div class="tbl"><table>
+        <tr><th>标签</th><th>什么意思</th><th>你要做什么</th></tr>
+        <tr><td><span class="tag t-orange">除息重叠标注</span></td><td>股息率因除息日挪动被重复计入，虚高了；判档改用折算股息率，原始值只展示。<a href="#q-overlap">详见常见问题</a></td><td>什么都不用做，系统已按折算值判档</td></tr>
+        <tr><td><span class="tag t-orange">证据弱</span></td><td>历史同档独立样本数 &lt; 3</td><td>忽略“历史同档”那一行</td></tr>
+        <tr><td><span class="tag t-grey">仅展示</span></td><td>显示出来给你看，不参与判档</td><td>不要拿它推翻动作</td></tr>
+        <tr><td><span class="tag t-grey">仅风险提示</span></td><td>同上，偏风险方向</td><td>同上</td></tr>
+        <tr><td><span class="tag t-red">数据缺失</span></td><td>主指数当天数据取不到（已重试 3 次），今日不判档、不写表</td><td>等下一次运行；连续几天都缺才需要排查</td></tr>
+        <tr><td><span class="tag t-red">仓位超上限</span></td><td>该类持仓占总资产的比例超过上限（单一行业 20%；宽基+红利合计 50%）</td><td>即使估值便宜也不买入</td></tr>
+    </table></div>
+
+    <h3 id="kind">临时读数 vs 正式读数</h3>
+    <ul>
+        <li><strong>月中临时读数：</strong>每个交易日算一次，用当天数据。只用来告诉你“大概在哪”。</li>
+        <li><strong>月末正式读数：</strong>每月最后一个交易日的数据，在下月 1~7 日入库。<strong>买卖动作以它为准。</strong></li>
+        <li>卡片底部灰字会写明是哪一种，以及数据日期和规则版本。</li>
+    </ul>
+
+    <!-- ===================== 3 ===================== -->
+    <h2 id="s3"><span class="num">3</span>看到卡片之后怎么做</h2>
+    <p><strong>原则只有一条：照卡片上的“本月动作”做。</strong>动作是规则事先算好的，不需要你再判断。</p>
+
+    <h3>宽基（沪深300 等）：方案 D + ②b</h3>
+    <div class="tbl"><table>
+        <tr><th>档位</th><th>动作</th></tr>
+        <tr><td>便宜（≥ 80）</td><td>从资金池投入 <strong>3 倍基数</strong>（池内不足则投完为止）</td></tr>
+        <tr><td>偏便宜 / 中性（40 ~ 80）</td><td>不买入，持有</td></tr>
+        <tr><td>偏贵（20 ~ 40）</td><td>不买入，持有</td></tr>
+        <tr><td>贵（&lt; 20）</td><td>不买入；<strong>每月卖出“进入贵档时持仓”的 1/12</strong>，连续 12 个月卖完；回到 ≥ 20 即停止，再次进入时按新的持仓重新计算（②b）。“进入贵档时持仓”指进入贵档那个月月末的持仓；卖出的钱回到资金池（现金类），只在便宜档按 3 倍基数买回</td></tr>
+    </table></div>
+    <p><strong>基数</strong> = 每月拨入资金池的那一份；没投出去的钱留在现金类资产里。3 倍要用之前攒下的钱，池里不够就投完为止。</p>
+
+    <h3>中证红利：只在便宜时买入</h3>
+    <div class="tbl"><table>
+        <tr><th>档位</th><th>动作</th></tr>
+        <tr><td>便宜（≥ 80）</td><td>与宽基方案 D 相同：从资金池投入 <strong>3 倍基数</strong>（池内不足则投完为止）</td></tr>
+        <tr><td>偏便宜 / 中性 / 偏贵（20 ~ 80）</td><td>不买入，持有</td></tr>
+        <tr><td>贵（&lt; 20）</td><td>与宽基相同（②b）：每月卖出“进入贵档时持仓”的 1/12，连续 12 个月卖完。红利历史上从未进入贵档，这一条是为了和宽基保持一致</td></tr>
+    </table></div>
+    <p>股债差在红利卡片上只展示，不参与判档。</p>
+
+    <h3>恒生指数、恒生国企</h3>
+    <p>恒生指数、恒生国企是港股宽基，<strong>规则与上面的宽基相同（方案 D + ②b）</strong>：综合便宜度 ≥ 80 从资金池投入 3 倍基数；20 ~ 80 不买入，持有；&lt; 20 每月卖出“进入贵档时持仓”的 1/12。和 A 股宽基的区别只在尺子：多一把股债差（股息率 − 中债 10 年），一共 4 把。</p>
+    <p>恒生国企在卡片上是灰色的“参考（未持有）”一行，只看读数，不按它操作。</p>
+
+    <h3>行业指数（如全指医药）</h3>
+    <p>行业指数的估值规则没有通过检验，<strong>卡片只给参考，不给买卖动作</strong>。行业的买卖看两样东西：仓位上限（单一行业不超过总资产的 20%），以及每季度做一次的 8 个方向检查——跨界替代、技术迭代、买方议价、政策、需求结构、竞争产能、一次性利润、财务结构。</p>
+
+    <div class="warn"><strong>什么时候不要推翻规则：</strong>“这次是外部冲击，只是短期的”“利率还在涨，再等等”“已经 70 了，差不多了”——这些都是在用自己的预测替换规则。下跌如果真的够深，综合便宜度会自己越过 80，规则会让你买。<a href="#s5">详见第 5 节</a>。</div>
+
+    <!-- ===================== 4 ===================== -->
+    <h2 id="s4"><span class="num">4</span>系统日志群的提醒怎么处理</h2>
+    <p>系统自己出问题、或数据看起来不对时，会往系统日志群发提醒。<strong>所有提醒都只提醒，不会改变判档。</strong></p>
+    <div class="tbl"><table>
+        <tr><th>提醒</th><th>什么时候发</th><th>你要做什么</th></tr>
+        <tr><td class="k">任务运行失败</td><td>日常或月度任务报错退出</td><td>让 CLI 看 GitHub Actions 日志</td></tr>
+        <tr><td class="k">数据缺失</td><td>主指数取数重试 3 次（每次隔 10 分钟）仍缺</td><td>偶尔一次不用管；连续 2~3 个交易日都缺，让 CLI 查</td></tr>
+        <tr><td class="k">口径漂移：同日对照</td><td>两种问法问 iFinD 同一天的 PE / PB / 股息率，相差超过 0.5%</td><td>很可能是 iFinD 换了口径，让 CLI 查返回的列名</td></tr>
+        <tr><td class="k">口径漂移：日变动</td><td>剔除股价影响后，隐含盈利或净资产单日变动超过 3%，或分红点数超过 8%</td><td>先看提醒里写的“可能原因”；都不是，再让 CLI 查</td></tr>
+        <tr><td class="k">中证交叉核对</td><td>A 股 4 个指数：iFinD 与中证官网的偏差，相对近 20 个交易日偏差的中位数，PE 偏离超过 3% 或股息率超过 0.3 个百分点。只在“开始偏离”和“已恢复”时各发一次</td><td>同上</td></tr>
+        <tr><td class="k">月度入库失败</td><td>月末 4 个指数没有全部取齐</td><td>每月 1~7 日会自动重试；到 7 日还失败，让 CLI 手动处理</td></tr>
+    </table></div>
+    <p><strong>“可能原因”从哪来：</strong>系统有一张事件日历，提醒时自动对照——A 股财报季（4 月、8 月下旬、10 月下旬）、港股财报季（3 月、8 月）、中证指数调样（6 月、12 月第二个星期五的下一个交易日）、恒指季度调样（按恒生公告，每年初更新）、除息重叠标注生效中。注明了原因也照样发，因为特殊时段里也可能真的出问题。</p>
+    <div class="callout"><strong>怎么判断系统还活着：</strong>没变化时群里是安静的——档位不变不发卡片，周报至少隔 7 天发一次，月末正式读数每月发一次。所以<strong>每个群每周至少应该收到一张卡片</strong>。如果超过一周什么都没收到，也没有失败提醒，就说明定时任务可能根本没运行，去 GitHub Actions 看一眼。</div>
+
+    <!-- ===================== 5 ===================== -->
+    <h2 id="s5"><span class="num">5</span>容易犯的错</h2>
+    <ol>
+        <li><strong>在 70 出手，因为“这次只是外部冲击”。</strong>“只是短期的”本身就是一个预测。2022 年利率持续上升了一整年；2023 年底利率回落了，恒指却又跌到 2024 年 1 月。身处其中时你无法知道冲击会持续多久。80 这条线就是要求下跌足够深、价格给出足够的安全垫。</li>
+        <li><strong>看历史同档的中位数正负做决定。</strong>样本太少，中位数的不确定性很大。见第 2 节“历史同档”。</li>
+        <li><strong>拿月中临时读数做买卖。</strong>以月末正式读数为准。</li>
+        <li><strong>把“仅展示”的指标当依据。</strong>ERP、红利的股债差、美债、分红质量都不参与判档，有它们的理由。</li>
+        <li><strong>iFinD 缺数时拿别的来源顶上。</strong>中证官网的 PE 和 iFinD 口径不同，偏差有 2~3%。分位是拿今天和同一来源的过去 10 年比，换来源等于换了一把刻度不同的尺子，分位会被凭空推高或压低。宁可当天不判档。</li>
+        <li><strong>看到“便宜”就在超限的品种上加仓。</strong>仓位上限优先于估值。</li>
+    </ol>
+
+    <!-- ===================== 6 ===================== -->
+    <h2 id="s6"><span class="num">6</span>常见问题</h2>
+
+    <h3 id="q-overlap">除息重叠是怎么回事？折算可信吗？</h3>
+    <p>股息率按“过去 12 个月除过几次息”来数分红。如果一家公司的中期分红除息日比去年提前了，那么在去年那次还没滑出 12 个月窗口时，<strong>今年和去年的中期分红会同时被算进去</strong>，股息率虚高，指数看起来比实际便宜。</p>
+    <div class="eg">例子：某银行每年中期、年末各分 0.15 元，全年 0.30 元，股价 5 元，真实股息率 6%。2025 年中期分红 12 月 3 日除息，2026 年中期提前到 10 月 9 日除息。站在 2026 年 10 月 15 日往回数 12 个月，算进了 0.15 + 0.15 + 0.15 = 0.45 元，股息率变成 9%。到 12 月 3 日去年那笔滑出窗口，才掉回 6%。<br>2026 年 10 月，四大行 H 股中期分红提前到 10 月 9 日除息，恒指股息率因此虚高约 6%，国企约 12%。</div>
+    <p><strong>系统怎么处理：</strong>用“股息率 × 指数点位”算出分红点数（数据商一共算进了多少点的分红），它和股价涨跌无关，正常时很平缓。</p>
+    <ul>
+        <li><strong>开启：</strong>分红点数比上月月末<strong>跳升</strong>超过 5%，且不在 4~9 月正常分红季（中证红利 12 月因调样也不开启）。只对跳升开启，因为重叠只会让分红变多；下跌是真实削减，要如实反映。</li>
+        <li><strong>期间：</strong>判档用折算股息率 = 跳升前的分红点数 ÷ 当前点位。按交易日逐日回放，开启后一直保持。</li>
+        <li><strong>关闭：</strong>分红点数回到跳升前 ±2% 以内，或满 3 个月。</li>
+    </ul>
+    <p><strong>可信度：</strong>折算假设这一两个月里公司真实的全年分红没变——公司一年才定一次分红，几个月尺度内基本成立；最多用 3 个月，误差不会累积。原始值肯定偏高，折算值是更好的估计，但不是精确值。</p>
+
+    <h3>指数股息率本身准吗？</h3>
+    <p>绝对值是模糊的——3.60% 还是 3.65% 说不准。但我们用的是分位，拿现在和同一来源的过去 10 年比。只要数据商每年用同一套方法，<strong>固定不变的偏差会在比较中抵消</strong>，排位依然可靠。真正会破坏排位的，只有突然出现的偏差，比如除息重叠，所以单独处理。</p>
+
+    <h3>为什么用过去 10 年？</h3>
+    <p>太短（如 3 年）会被单一牛熊周期带偏；太长（如 20 年）会把市场结构已经变了的年代也拿来比。10 年是折中，也是研究里检验通过的版本。</p>
+
+    <h3>PB 为什么特意写 MRQ？</h3>
+    <p>MRQ 是用最近一个季度的净资产算的 PB。2026-10-12，iFinD 对同一句问法突然理解成了另一种口径（LF），数值只差不到 1%，看起来完全合理，却和历史不在同一口径。现在系统只收 MRQ，其他口径一律当缺数处理，并用两种问法同时问来互相核对。</p>
+
+    <h3>为什么中证官网只核对、不替补？</h3>
+    <p>见第 5 节第 5 条。它的价值是发现 iFinD 的问题，而不是在 iFinD 缺数时顶替。另外中证文件里没有 PB，也不覆盖港股。</p>
+
+    <!-- ===================== 7 ===================== -->
+    <h2 id="s7"><span class="num">7</span>规则变更记录</h2>
+    <p>参数一旦冻结，再改就要走预注册：先写好要检验什么、怎样算通过，再跑数据。这一节记录每次改了什么、为什么改。</p>
+    <div class="tbl"><table>
+        <tr><th>日期</th><th>改了什么</th><th>为什么</th></tr>
+        <tr><td class="k">2026-10</td><td>三套监控切换到“滚动 10 年综合便宜度”规则 v1.1，旧的 PE 六档、股息率五档规则停用</td><td>旧规则的档位来自经验，新规则的档位有历史检验支持</td></tr>
+        <tr><td class="k">2026-10-11</td><td>除息重叠标注采用变体 D：只对跳升开启、4~9 月不开启、最长 3 个月；中证红利 12 月不开启</td><td>最初的规则误报太多，会把真实的分红变化当成假信号。<strong>参数是看过 2010~2026 回溯结果后选定的，两轮调整后冻结</strong>，再改并入 v1.2</td></tr>
+        <tr><td class="k">2026-10-12</td><td>PB 只收 MRQ 口径；缺数先重试、只影响缺数的那个指数；系统日志群提醒</td><td>iFinD 对问法的理解变了，返回 LF 口径，导致当天任务全部失败</td></tr>
+        <tr><td class="k">2026-10-13</td><td>新增口径漂移哨兵、中证官网交叉核对、事件日历；除息重叠改为按交易日逐日回放</td><td>多一道防线发现数据口径的变化；修复标注月中失效的问题。逐日回放比回溯时更早开启、保持更久，受 3 个月上限约束</td></tr>
+    </table></div>
+
+    <h3>待研究（v1.2 候选，未生效）</h3>
+    <ul>
+        <li>分红改按财年统计，从根本上消除除息重叠（需要重拉全部历史、重跑检验）。</li>
+        <li>按调样日区分分红点数的跳变来源。</li>
+        <li>美债急涨后的下跌是否恢复更快（样本很少，大概率无结论）。</li>
+    </ul>
+
+    <div class="disc">本页记录的是个人投资规则和它的来龙去脉，不构成任何投资建议。</div>
+
+    <footer>© 2026 · <a href="/invest/">做投资</a> · <a href="/">返回主页</a></footer>
+</div>
+</body>
+</html>

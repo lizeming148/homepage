@@ -58,7 +58,7 @@
 <body>
 <div class="container">
 
-    <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/">主页</a></nav>
+    <nav class="crumb"><a href="/invest/">← 做投资</a> · <a href="/invest/strategy/guide/">读卡说明</a> · <a href="/">主页</a></nav>
 
     <div class="rule-notice" style="background:#FFF8E6;border:1px solid #E8C872;border-radius:10px;padding:10px 14px;margin:14px 0 18px;font-size:0.92rem;color:#6B5313">本页策略已于 2026-10 更新为“滚动 10 年综合便宜度”规则（v1.1），下方方法说明为旧版，待更新。</div>
     <header class="phead">
@@ -191,7 +191,8 @@
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
                 summary+rulers+ov+extra+dqSignalLine(d)+
                 '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>'+
-                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益，独立样本数 = 互不重叠的行情段数，&lt;3 标“证据弱”。</div>';
+                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益，独立样本数 = 互不重叠的行情段数，&lt;3 标“证据弱”。</div>'+
+                '<div class="sig-foot">看不懂？读卡说明：<a href="/invest/strategy/guide/">lizeming.net/invest/strategy/guide/</a></div>';
             fillDqCallout(d);
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});

@@ -106,6 +106,24 @@ class TestOverlapAndPages(unittest.TestCase):
             self.assertIsNone(re.search(r"\d[\d.,]*\s*万元|\d[\d.,]*\s*元(?!/)|[¥￥]\s*\d", t), slug)
 
 
+class TestGuidePage(unittest.TestCase):
+    def test_guide_filled_and_linked(self):
+        import re
+        with open(os.path.join(ROOT, "invest", "strategy", "guide", "index.html"), encoding="utf-8") as f:
+            g = f.read()
+        self.assertNotIn("待填", g)
+        self.assertNotIn("todo", g)
+        self.assertIn("3 倍基数", g)
+        self.assertIn("1/12", g)
+        self.assertIn("cloudflareinsights", g)
+        # 第 3 节（动作规则）只写比例，不写绝对金额
+        s3 = g[g.index('id="s3"'):g.index('id="s4"')]
+        self.assertIsNone(re.search(r"\d[\d.,]*\s*(万|亿|元)|[¥￥]\s*\d", s3))
+        for page in ("index.html", "strategy/csi300/index.html", "strategy/hongli/index.html", "strategy/hsi/index.html"):
+            with open(os.path.join(ROOT, "invest", *page.split("/")), encoding="utf-8") as f:
+                self.assertIn("/invest/strategy/guide/", f.read(), page)
+
+
 class TestBeijingDates(unittest.TestCase):
     def test_ms_to_date_is_beijing_regardless_of_machine_tz(self):
         from datetime import timezone
