@@ -31,13 +31,14 @@ OUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # 引擎写入的公开信号字段（见 csi300-valuation-engine/index_rules/cards.py 的 PUBLIC_FIELDS）
 PUBLIC_FIELDS = ("composite", "action", "summary", "rulers", "reading_kind", "rule_version")
 
-# 档名 → 网页色（与飞书卡片模板色一致：便宜 red / 偏便宜 orange / 中性 green / 偏贵 blue / 贵 purple）
+# 档名 → 网页色：与飞书卡片标题栏同一套配色（cards.TIER_COLOR：green / lime / grey / orange / red），
+# 读卡说明第 2 节“便宜深绿、偏便宜浅绿、中性灰、偏贵橙、贵红”（2026-10-15 统一；此前网站是红 / 橙 / 绿 / 蓝 / 紫）
 TIER_HEX = {
-    "便宜":   "#C0392B",
-    "偏便宜": "#CB6B1E",
-    "中性":   "#2B7A4B",
-    "偏贵":   "#2F5FAE",
-    "贵":     "#7D3C98",
+    "便宜":   "#1E7A3E",   # 深绿
+    "偏便宜": "#6BA539",   # 浅绿
+    "中性":   "#8A8A88",   # 灰
+    "偏贵":   "#CB6B1E",   # 橙
+    "贵":     "#C0392B",   # 红
 }
 COLOR_HEX = {"red": "#C0392B", "orange": "#CB6B1E", "yellow": "#B8902A", "green": "#2B7A4B", "blue": "#2F5FAE"}
 

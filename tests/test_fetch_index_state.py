@@ -106,6 +106,13 @@ class TestOverlapAndPages(unittest.TestCase):
             self.assertIsNone(re.search(r"\d[\d.,]*\s*万元|\d[\d.,]*\s*元(?!/)|[¥￥]\s*\d", t), slug)
 
 
+class TestTierColors(unittest.TestCase):
+    def test_same_palette_as_feishu_cards(self):
+        # 便宜深绿、偏便宜浅绿、中性灰、偏贵橙、贵红（与飞书卡片 green / lime / grey / orange / red 一致）
+        self.assertEqual(fis.TIER_HEX, {"便宜": "#1E7A3E", "偏便宜": "#6BA539", "中性": "#8A8A88",
+                                        "偏贵": "#CB6B1E", "贵": "#C0392B"})
+
+
 class TestGuidePage(unittest.TestCase):
     def test_guide_filled_and_linked(self):
         import re
