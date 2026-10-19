@@ -138,7 +138,7 @@
                 '<span class="sig-action">📌 '+esc(d.action)+'</span>'+
                 summary+rulers+ov+extra+
                 '<div class="sig-foot">'+esc(d.reading_kind||'当前信号')+' · 规则 '+esc(d.rule_version||'')+' · 更新于 '+esc(d.date)+'</div>'+
-                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益，独立样本数 = 互不重叠的行情段数，&lt;3 标“证据弱”。</div>'+
+                '<div class="sig-foot">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益；独立样本数 = 互不重叠的行情段数，≤5 段时逐段列出每段的实际收益（该段首次进入该档的月份买入），≤2 段标“证据弱”。</div>'+
                 '<div class="sig-foot">看不懂？读卡说明：<a href="/invest/strategy/guide/">lizeming.net/invest/strategy/guide/</a></div>';
         })
         .catch(function(){document.getElementById('signal').innerHTML='<div class="sig-loading">当前信号暂时无法加载。</div>'});
