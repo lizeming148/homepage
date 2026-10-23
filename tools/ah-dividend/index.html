@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>AH 股息比价</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg: #FAFAF8;
+    --card: #FFFFFF;
+    --text: #1C1C1C;
+    --text-2: #5A5A58;
+    --text-3: #8A8A88;
+    --accent: #2B5B4B;
+    --accent-soft: #E8F0EC;
+    --border: #E5E5E0;
+    --border-soft: #EFEFEA;
+    --warm: #F5F2EC;
+    --pos: #2E7D4F;
+    --pos-soft: #E7F2EA;
+    --neg: #B5412F;
+    --neg-soft: #F8EAE6;
+    --warn: #A8731F;
+    --warn-soft: #F7F0E1;
+    --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    --sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161816;
+        --card: #1F221F;
+        --text: #E8E8E4;
+        --text-2: #B4B4AE;
+        --text-3: #85857F;
+        --accent: #7FBFA5;
+        --accent-soft: #23342D;
+        --border: #34372F;
+        --border-soft: #2A2D28;
+        --warm: #272824;
+        --pos: #74C493;
+        --pos-soft: #1E3326;
+        --neg: #E58B79;
+        --neg-soft: #3A2420;
+        --warn: #E0B05E;
+        --warn-soft: #362C19;
+    }
+}
+
+body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 64px; }
+
+.crumb { font-size: 13px; color: var(--text-3); margin-bottom: 18px; }
+.crumb a { color: var(--text-3); text-decoration: none; border-bottom: 1px dotted var(--text-3); }
+.crumb a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+h1 { font-family: var(--serif); font-size: 24px; font-weight: 700; letter-spacing: 0.01em; }
+.sub { color: var(--text-2); font-size: 14px; margin: 4px 0 20px; }
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+.card h2 { font-family: var(--serif); font-size: 16px; margin-bottom: 12px; }
+
+label.lbl, .lbl { display: block; font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+input[type=text], input[type=search] {
+    width: 100%;
+    font: inherit;
+    font-size: 17px;            /* ≥16px 防止 iOS 聚焦时放大 */
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.hint { font-size: 12px; color: var(--text-3); margin-top: 5px; }
+.hint.warn { color: var(--warn); }
+
+/* 搜索 */
+.search { position: relative; }
+.suggest {
+    position: absolute; left: 0; right: 0; top: calc(100% + 4px);
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    list-style: none; max-height: 300px; overflow-y: auto; z-index: 10;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.suggest[hidden] { display: none; }
+.suggest li { padding: 10px 12px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--border-soft); }
+.suggest li:last-child { border-bottom: none; }
+.suggest li.on, .suggest li:hover { background: var(--accent-soft); }
+.suggest .codes { color: var(--text-3); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.suggest .empty { color: var(--text-3); cursor: default; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+    font: inherit; font-size: 13px; color: var(--text-2); background: var(--warm);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; cursor: pointer;
+}
+.chip:hover { color: var(--accent); border-color: var(--accent); }
+
+.picked {
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    background: var(--accent-soft); border-radius: 10px; padding: 8px 12px; margin-top: 8px;
+}
+.picked[hidden] { display: none; }
+.picked .nm { font-weight: 600; color: var(--accent); }
+.picked .codes { font-size: 13px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.linkbtn { font: inherit; font-size: 13px; color: var(--text-3); background: none; border: none; cursor: pointer; text-decoration: underline; }
+
+/* 分段单选 */
+.seg { display: flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.seg label { flex: 1; text-align: center; position: relative; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: block; padding: 9px 4px; font-size: 14px; color: var(--text-2); cursor: pointer; border-left: 1px solid var(--border); }
+.seg label:first-child span { border-left: none; }
+.seg input:checked + span { background: var(--accent); color: #fff; }
+@media (prefers-color-scheme: dark) { .seg input:checked + span { color: #10140F; } }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: -2px; }
+.seg small { display: block; font-size: 11px; opacity: 0.8; }
+
+.alert {
+    background: var(--warn-soft); color: var(--warn); border-radius: 8px;
+    padding: 6px 10px; font-size: 13px; margin-top: 8px;
+}
+.alert[hidden] { display: none; }
+
+/* 结果 */
+.result { border-top: 3px solid var(--accent); }
+.big-lbl { font-size: 13px; color: var(--text-2); }
+.big { font-size: 34px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; line-height: 1.2; margin: 2px 0; }
+.big .unit { font-size: 15px; font-weight: 400; color: var(--text-3); margin-left: 4px; }
+.placeholder { color: var(--text-3); font-size: 14px; }
+.verdict { margin-top: 14px; padding: 10px 12px; border-radius: 10px; font-size: 15px; font-weight: 600; }
+.verdict.h { background: var(--pos-soft); color: var(--pos); }
+.verdict.a { background: var(--neg-soft); color: var(--neg); }
+.verdict.eq { background: var(--warm); color: var(--text-2); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin-top: 12px; font-size: 14px; }
+.kv dt { color: var(--text-2); }
+.kv dd { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+.kv dd.pos { color: var(--pos); }
+.kv dd.neg { color: var(--neg); }
+.kv dd.muted { color: var(--text-3); font-weight: 400; }
+
+/* 底部说明 */
+.notes { font-size: 13px; color: var(--text-2); }
+.notes h3 { font-family: var(--serif); font-size: 14px; color: var(--text); margin: 14px 0 6px; }
+.notes h3:first-child { margin-top: 0; }
+.notes p, .notes li { margin-bottom: 4px; }
+.notes ul { padding-left: 18px; }
+.notes code { font-family: ui-monospace, Consolas, monospace; font-size: 12px; background: var(--warm); border-radius: 4px; padding: 1px 5px; }
+.formula { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; background: var(--warm); border-radius: 8px; padding: 8px 10px; margin: 4px 0 8px; overflow-x: auto; white-space: nowrap; }
+.disclaimer { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); color: var(--text-3); font-size: 12px; }
+
+#selftest { font-family: ui-monospace, Consolas, monospace; font-size: 12px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <nav class="crumb"><a href="/">← 主页</a></nav>
+    <h1>AH 股税后股息率比价</h1>
+    <p class="sub">同一家公司的 A 股和 H 股，按税后股息率算哪边更划算。</p>
+
+    <section class="card">
+        <h2>选择股票</h2>
+        <div class="search">
+            <input type="search" id="q" placeholder="名称或代码，如 中国银行 / 601988 / 03988" autocomplete="off" enterkeyhint="search" aria-label="搜索 AH 股">
+            <ul class="suggest" id="suggest" role="listbox" hidden></ul>
+        </div>
+        <div class="hint" id="pairsHint">也可以不选股票，直接在下面手动填写。</div>
+        <div class="picked" id="picked" hidden>
+            <div><span class="nm" id="pickedName"></span> <span class="codes" id="pickedCodes"></span></div>
+            <button type="button" class="linkbtn" id="unpick">清除</button>
+        </div>
+        <div class="chips" id="recent"></div>
+    </section>
+
+    <section class="card">
+        <h2>参数</h2>
+        <div class="row field">
+            <div>
+                <label class="lbl" for="pA">A 股股价（人民币）</label>
+                <input type="text" id="pA" inputmode="decimal" placeholder="必填" autocomplete="off">
+            </div>
+            <div>
+                <label class="lbl" for="pH">H 股股价（港元）</label>
+                <input type="text" id="pH" inputmode="decimal" placeholder="可选" autocomplete="off">
+            </div>
+        </div>
+        <div class="field">
+            <label class="lbl" for="fx">汇率：1 港元 = ? 人民币</label>
+            <input type="text" id="fx" inputmode="decimal" autocomplete="off">
+            <div class="hint" id="fxHint">加载中…</div>
+        </div>
+        <div class="field">
+            <span class="lbl">H 股（港股通）红利税率</span>
+            <div class="seg" role="radiogroup" aria-label="H 股红利税率">
+                <label><input type="radio" name="tH" value="0.20" checked><span>20%</span></label>
+                <label><input type="radio" name="tH" value="0.28"><span>28%</span></label>
+            </div>
+            <div class="alert" id="taxAlert" hidden>⚠️ 税率待核实，可能为 28%</div>
+            <div class="hint" id="taxNote"></div>
+        </div>
+        <div class="field">
+            <span class="lbl">A 股持股期限（决定 A 股红利税率）</span>
+            <div class="seg" role="radiogroup" aria-label="A 股持股期限">
+                <label><input type="radio" name="hold" value="0.20"><span>≤1 个月<small>税 20%</small></span></label>
+                <label><input type="radio" name="hold" value="0.10"><span>1 个月至 1 年<small>税 10%</small></span></label>
+                <label><input type="radio" name="hold" value="0" checked><span>&gt;1 年<small>免税</small></span></label>
+            </div>
+        </div>
+    </section>
+
+    <section class="card result" aria-live="polite">
+        <h2>结果</h2>
+        <div id="resEmpty" class="placeholder">填入 A 股股价和汇率后显示结果。</div>
+        <div id="resBody" hidden>
+            <div class="big-lbl">H 股盈亏平衡价</div>
+            <div class="big"><span id="be"></span><span class="unit">港元</span></div>
+            <div class="hint">H 股价格低于这个数，H 股税后股息率更高。</div>
+            <div id="resH" hidden>
+                <div class="verdict" id="verdict"></div>
+                <dl class="kv">
+                    <dt>H 相对 A 的税后股息率优势</dt><dd id="adv"></dd>
+                    <dt>AH 溢价率（税前，仅供参考）</dt><dd id="prem" class="muted"></dd>
+                    <dt>H 股折合人民币</dt><dd id="pHcny" class="muted"></dd>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <section class="card notes">
+        <h3>计算公式</h3>
+        <p>记 A 股股价 P<sub>A</sub>（人民币）、H 股股价 P<sub>H</sub>（港元）、汇率 r（1 港元兑人民币）、A 股红利税率 t<sub>A</sub>、H 股红利税率 t<sub>H</sub>。两边每股分红 D 相同，比较时约掉。</p>
+        <div class="formula">A 股税后股息率 = D(1−t<sub>A</sub>) / P<sub>A</sub></div>
+        <div class="formula">H 股税后股息率 = D(1−t<sub>H</sub>) / (P<sub>H</sub>·r)</div>
+        <div class="formula">盈亏平衡价 P<sub>H</sub>* = P<sub>A</sub> × (1−t<sub>H</sub>) / ((1−t<sub>A</sub>) × r)</div>
+        <div class="formula">H 相对 A 优势 = [(1−t<sub>H</sub>)/(P<sub>H</sub>·r)] ÷ [(1−t<sub>A</sub>)/P<sub>A</sub>] − 1</div>
+        <div class="formula">AH 溢价率 = P<sub>A</sub> / (P<sub>H</sub>·r) − 1</div>
+
+        <h3>税率说明</h3>
+        <ul>
+            <li>A 股个人投资者红利税按持股期限差别化征收：≤1 个月 20%，1 个月至 1 年 10%，超过 1 年免征。</li>
+            <li>内地个人通过港股通持有境内注册的 H 股，一般由公司按 20% 代扣。</li>
+            <li>在境外注册的公司（红筹等）情况不同，常见为 28%，名单中标 ⚠️ 的公司待核实。</li>
+        </ul>
+
+        <h3>数据</h3>
+        <p>AH 名单更新：<span id="pairsDate">—</span>　汇率更新：<span id="fxDate">—</span></p>
+        <p>汇率取港股通参考汇率买卖价中值，接近实际结算汇率。</p>
+        <p>股价需手动输入，页面不自动获取行情。</p>
+
+        <p class="disclaimer">仅供个人参考，不构成投资建议；税率以公司分红公告为准。</p>
+    </section>
+
+    <div id="selftest" class="card" hidden></div>
+</div>
+
+<script>
+'use strict';
+
+/* ===== 计算（纯函数） ===== */
+
+// H 股盈亏平衡价（港元）：H 股低于此价时，H 股税后股息率更高
+function breakEvenH(pA, tA, tH, r) {
+    return pA * (1 - tH) / ((1 - tA) * r);
+}
+
+// H 相对 A 的税后股息率优势；为正则 H 股更划算
+function hAdvantage(pA, pH, tA, tH, r) {
+    return ((1 - tH) / (pH * r)) / ((1 - tA) / pA) - 1;
+}
+
+// 传统 AH 溢价率（税前）
+function ahPremium(pA, pH, r) {
+    return pA / (pH * r) - 1;
+}
+
+/* ===== 自测：URL 带 ?selftest=1 时运行 ===== */
+
+function runSelfTest() {
+    var cases = [
+        { r: 0.90, pA: 33.45, tH: 0.28, want: 26.76 },
+        { r: 0.92, pA: 42.88, tH: 0.20, want: 37.29 },
+        { r: 0.92, pA: 5.79,  tH: 0.20, want: 5.03 },
+        { r: 0.92, pA: 5.89,  tH: 0.20, want: 5.12 }
+    ];
+    var lines = [], pass = 0;
+    cases.forEach(function (c, i) {
+        var got = breakEvenH(c.pA, 0, c.tH, c.r).toFixed(2);
+        var ok = got === c.want.toFixed(2);
+        if (ok) pass++;
+        lines.push((ok ? 'PASS' : 'FAIL') + ' #' + (i + 1) + '  r=' + c.r + ' P_A=' + c.pA + ' t_H=' + c.tH +
+            '  期望 ' + c.want.toFixed(2) + '  实得 ' + got);
+    });
+    lines.push('自测 ' + pass + '/' + cases.length + ' 通过');
+    lines.forEach(function (l) { (l.indexOf('FAIL') === 0 ? console.error : console.log)('[selftest] ' + l); });
+    var box = document.getElementById('selftest');
+    box.textContent = lines.join('\n');
+    box.hidden = false;
+}
+
+/* ===== 本地偏好（读写失败不影响使用） ===== */
+
+var LS_HOLD = 'ahdiv.hold';
+var LS_RECENT = 'ahdiv.recent';
+
+function lsGet(key) {
+    try { return window.localStorage.getItem(key); } catch (e) { return null; }
+}
+function lsSet(key, val) {
+    try { window.localStorage.setItem(key, val); } catch (e) { /* 忽略 */ }
+}
+function loadRecent() {
+    try {
+        var arr = JSON.parse(lsGet(LS_RECENT) || '[]');
+        return Array.isArray(arr) ? arr.filter(function (x) { return typeof x === 'string'; }).slice(0, 5) : [];
+    } catch (e) { return []; }
+}
+
+/* ===== 页面 ===== */
+
+var $ = function (id) { return document.getElementById(id); };
+var pairs = [];
+var picked = null;
+var activeIdx = -1;
+
+function num(el) {
+    var s = el.value.trim().replace(/，/g, '.').replace(/,/g, '');
+    if (s === '') return NaN;
+    var v = Number(s);
+    return isFinite(v) ? v : NaN;
+}
+function radioVal(name) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? Number(el.value) : NaN;
+}
+function setRadio(name, value) {
+    var els = document.querySelectorAll('input[name="' + name + '"]');
+    for (var i = 0; i < els.length; i++) {
+        els[i].checked = Math.abs(Number(els[i].value) - value) < 1e-9;
+    }
+}
+function fmtPrice(v) { return v < 1 ? v.toFixed(3) : v.toFixed(2); }
+function fmtPct(v) { return (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%'; }
+
+function recalc() {
+    var pA = num($('pA')), pH = num($('pH')), r = num($('fx'));
+    var tA = radioVal('hold'), tH = radioVal('tH');
+    var ok = pA > 0 && r > 0 && tA >= 0 && tA < 1 && tH >= 0 && tH < 1;
+    $('resEmpty').hidden = ok;
+    $('resBody').hidden = !ok;
+    if (!ok) return;
+
+    $('be').textContent = fmtPrice(breakEvenH(pA, tA, tH, r));
+
+    var hasH = pH > 0;
+    $('resH').hidden = !hasH;
+    if (!hasH) return;
+
+    var adv = hAdvantage(pA, pH, tA, tH, r);
+    var prem = ahPremium(pA, pH, r);
+    var advEl = $('adv');
+    advEl.textContent = fmtPct(adv);
+    advEl.className = adv > 0.0005 ? 'pos' : (adv < -0.0005 ? 'neg' : '');
+    $('prem').textContent = fmtPct(prem);
+    $('pHcny').textContent = (pH * r).toFixed(2) + ' 元';
+
+    var v = $('verdict');
+    if (Math.abs(adv) < 0.0005) {
+        v.className = 'verdict eq';
+        v.textContent = '按税后股息算，A 股和 H 股基本持平';
+    } else if (adv > 0) {
+        v.className = 'verdict h';
+        v.textContent = '按税后股息算，H 股比 A 股高 ' + (adv * 100).toFixed(1) + '%';
+    } else {
+        // 换成以 H 为基准的 A 股优势，与 H 优势口径对称
+        var aAdv = 1 / (1 + adv) - 1;
+        v.className = 'verdict a';
+        v.textContent = '按税后股息算，A 股比 H 股高 ' + (aAdv * 100).toFixed(1) + '%';
+    }
+}
+
+/* --- 搜索 --- */
+
+function matchPairs(q) {
+    q = q.trim().toLowerCase();
+    if (!q) return [];
+    var starts = [], contains = [];
+    pairs.forEach(function (p) {
+        var name = (p.name || '').toLowerCase();
+        var hNoZero = (p.h_code || '').replace(/^0+/, '');
+        if (p.a_code.indexOf(q) === 0 || p.h_code.indexOf(q) === 0 || hNoZero.indexOf(q) === 0 || name.indexOf(q) === 0) {
+            starts.push(p);
+        } else if (name.indexOf(q) >= 0) {
+            contains.push(p);
+        }
+    });
+    return starts.concat(contains).slice(0, 8);
+}
+
+function renderSuggest() {
+    var list = $('suggest');
+    var q = $('q').value;
+    list.innerHTML = '';
+    activeIdx = -1;
+    if (!q.trim()) { list.hidden = true; return; }
+    var hits = matchPairs(q);
+    if (!hits.length) {
+        var li = document.createElement('li');
+        li.className = 'empty';
+        li.textContent = pairs.length ? '没有匹配的 AH 股，可直接手动填写' : 'AH 名单未加载，可直接手动填写';
+        list.appendChild(li);
+    }
+    hits.forEach(function (p) {
+        var li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        var nm = document.createElement('span');
+        nm.textContent = p.name + (p.h_tax_status === 'pending' ? ' ⚠️' : '');
+        var cd = document.createElement('span');
+        cd.className = 'codes';
+        cd.textContent = p.a_code + ' / ' + p.h_code;
+        li.appendChild(nm);
+        li.appendChild(cd);
+        li.addEventListener('mousedown', function (e) { e.preventDefault(); pick(p); });
+        list.appendChild(li);
+    });
+    list.hidden = false;
+}
+
+function moveActive(step) {
+    var items = $('suggest').querySelectorAll('li[role=option]');
+    if (!items.length) return;
+    activeIdx = (activeIdx + step + items.length) % items.length;
+    for (var i = 0; i < items.length; i++) items[i].classList.toggle('on', i === activeIdx);
+    items[activeIdx].scrollIntoView({ block: 'nearest' });
+}
+
+function pick(p) {
+    picked = p;
+    $('q').value = '';
+    $('suggest').hidden = true;
+    $('pickedName').textContent = p.name;
+    $('pickedCodes').textContent = 'A ' + p.a_code + ' · H ' + p.h_code;
+    $('picked').hidden = false;
+    setRadio('tH', Number(p.h_tax));
+    showTaxInfo();
+    pushRecent(p.a_code);
+    recalc();
+    $('pA').focus();
+}
+
+function unpick() {
+    picked = null;
+    $('picked').hidden = true;
+    showTaxInfo();
+}
+
+function showTaxInfo() {
+    var p = picked;
+    $('taxAlert').hidden = !(p && p.h_tax_status === 'pending');
+    var note = '';
+    if (p) {
+        if (p.h_tax_status === 'verified') {
+            note = '已核实' + (p.verified ? '（' + p.verified + '）' : '') + (p.note ? '：' + p.note : '');
+        } else if (p.note) {
+            note = p.note;
+        }
+        if (Math.abs(radioVal('tH') - Number(p.h_tax)) > 1e-9) {
+            note = (note ? note + '；' : '') + '已手动改为 ' + Math.round(radioVal('tH') * 100) + '%（名单默认 ' + Math.round(p.h_tax * 100) + '%）';
+        }
+    }
+    $('taxNote').textContent = note;
+}
+
+function pushRecent(aCode) {
+    var arr = loadRecent().filter(function (c) { return c !== aCode; });
+    arr.unshift(aCode);
+    lsSet(LS_RECENT, JSON.stringify(arr.slice(0, 5)));
+    renderRecent();
+}
+
+function renderRecent() {
+    var box = $('recent');
+    box.innerHTML = '';
+    loadRecent().forEach(function (code) {
+        var p = pairs.filter(function (x) { return x.a_code === code; })[0];
+        if (!p) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip';
+        b.textContent = p.name;
+        b.title = p.a_code + ' / ' + p.h_code;
+        b.addEventListener('click', function () { pick(p); });
+        box.appendChild(b);
+    });
+}
+
+/* --- 数据加载 --- */
+
+function fetchJson(url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        return res.json();
+    });
+}
+
+function loadFx() {
+    fetchJson('fx.json').then(function (d) {
+        var r = Number(d.hkd_cny);
+        if (!(r > 0)) throw new Error('bad fx');
+        $('fx').value = String(r);
+        $('fxHint').textContent = '数据日期：' + (d.updated || '未知') + (d.source ? '　来源：' + d.source : '') + '（可手动修改）';
+        $('fxDate').textContent = d.updated || '未知';
+        recalc();
+    }).catch(function () {
+        $('fx').value = '';
+        $('fxHint').textContent = '汇率数据加载失败，请手动填写（1 港元兑多少人民币，如 0.85）。';
+        $('fxHint').className = 'hint warn';
+        $('fxDate').textContent = '加载失败';
+        recalc();
+    });
+}
+
+function loadPairs() {
+    fetchJson('ah_pairs.json').then(function (d) {
+        if (!d || !Array.isArray(d.pairs)) throw new Error('bad pairs');
+        pairs = d.pairs.filter(function (p) { return p && p.a_code && p.h_code; });
+        $('pairsDate').textContent = d.updated || '未知';
+        $('pairsHint').textContent = '共 ' + pairs.length + ' 只 AH 股。也可以不选股票，直接手动填写。';
+        renderRecent();
+        if ($('q').value.trim()) renderSuggest();
+    }).catch(function () {
+        $('pairsDate').textContent = '加载失败';
+        $('pairsHint').textContent = 'AH 名单加载失败，请直接手动填写下面的参数。';
+        $('pairsHint').className = 'hint warn';
+    });
+}
+
+/* --- 绑定 --- */
+
+function init() {
+    var savedHold = lsGet(LS_HOLD);
+    if (savedHold !== null && /^(0|0\.1|0\.10|0\.2|0\.20)$/.test(savedHold)) setRadio('hold', Number(savedHold));
+
+    ['pA', 'pH', 'fx'].forEach(function (id) { $(id).addEventListener('input', recalc); });
+    document.querySelectorAll('input[name="hold"]').forEach(function (el) {
+        el.addEventListener('change', function () { lsSet(LS_HOLD, el.value); recalc(); });
+    });
+    document.querySelectorAll('input[name="tH"]').forEach(function (el) {
+        el.addEventListener('change', function () { showTaxInfo(); recalc(); });
+    });
+
+    var q = $('q');
+    q.addEventListener('input', renderSuggest);
+    q.addEventListener('focus', function () { if (q.value.trim()) renderSuggest(); });
+    q.addEventListener('blur', function () { $('suggest').hidden = true; });
+    q.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); moveActive(1); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); moveActive(-1); }
+        else if (e.key === 'Escape') { $('suggest').hidden = true; }
+        else if (e.key === 'Enter') {
+            e.preventDefault();
+            var hits = matchPairs(q.value);
+            if (hits.length) pick(hits[activeIdx >= 0 ? activeIdx : 0]);
+        }
+    });
+    $('unpick').addEventListener('click', unpick);
+
+    loadPairs();
+    loadFx();
+    recalc();
+
+    if (/[?&]selftest=1(&|$)/.test(location.search)) runSelfTest();
+}
+
+init();
+</script>
+</body>
+</html>

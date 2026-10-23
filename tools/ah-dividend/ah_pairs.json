@@ -1,0 +1,2106 @@
+{
+  "updated": "2026-10-23",
+  "default_h_tax": 0.2,
+  "pairs": [
+    {
+      "name": "万科A",
+      "a_code": "000002",
+      "h_code": "02202",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中集集团",
+      "a_code": "000039",
+      "h_code": "02039",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中兴通讯",
+      "a_code": "000063",
+      "h_code": "00763",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中联重科",
+      "a_code": "000157",
+      "h_code": "01157",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "申万宏源",
+      "a_code": "000166",
+      "h_code": "06806",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "美的集团",
+      "a_code": "000333",
+      "h_code": "00300",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "潍柴动力",
+      "a_code": "000338",
+      "h_code": "02338",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "ST晨鸣",
+      "a_code": "000488",
+      "h_code": "01812",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "丽珠集团",
+      "a_code": "000513",
+      "h_code": "01513",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "新华制药",
+      "a_code": "000756",
+      "h_code": "00719",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "广发证券",
+      "a_code": "000776",
+      "h_code": "01776",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "鞍钢股份",
+      "a_code": "000898",
+      "h_code": "00347",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "海信家电",
+      "a_code": "000921",
+      "h_code": "00921",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "弘业期货",
+      "a_code": "001236",
+      "h_code": "03678",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "力勤资源",
+      "a_code": "001246",
+      "h_code": "02245",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "龙源电力",
+      "a_code": "001289",
+      "h_code": "00916",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "广合科技",
+      "a_code": "001389",
+      "h_code": "01989",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "三花智控",
+      "a_code": "002050",
+      "h_code": "02050",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "沃尔核材",
+      "a_code": "002130",
+      "h_code": "09981",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "金风科技",
+      "a_code": "002202",
+      "h_code": "02208",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "顺丰控股",
+      "a_code": "002352",
+      "h_code": "06936",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "海普瑞",
+      "a_code": "002399",
+      "h_code": "09989",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "赣锋锂业",
+      "a_code": "002460",
+      "h_code": "01772",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "天齐锂业",
+      "a_code": "002466",
+      "h_code": "09696",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "立讯精密",
+      "a_code": "002475",
+      "h_code": "02475",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "大金重工",
+      "a_code": "002487",
+      "h_code": "01081",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "山东墨龙",
+      "a_code": "002490",
+      "h_code": "00568",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "比亚迪",
+      "a_code": "002594",
+      "h_code": "01211",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "领益智造",
+      "a_code": "002600",
+      "h_code": "01688",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "东江环保",
+      "a_code": "002672",
+      "h_code": "00895",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "浙江世宝",
+      "a_code": "002703",
+      "h_code": "01057",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "牧原股份",
+      "a_code": "002714",
+      "h_code": "02714",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "埃斯顿",
+      "a_code": "002747",
+      "h_code": "02715",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "国恩股份",
+      "a_code": "002768",
+      "h_code": "02768",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "吉宏股份",
+      "a_code": "002803",
+      "h_code": "02603",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "凯莱英",
+      "a_code": "002821",
+      "h_code": "06821",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "钧达股份",
+      "a_code": "002865",
+      "h_code": "02865",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "美格智能",
+      "a_code": "002881",
+      "h_code": "03268",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "郑州银行",
+      "a_code": "002936",
+      "h_code": "06196",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "青岛银行",
+      "a_code": "002948",
+      "h_code": "03866",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "兆威机电",
+      "a_code": "003021",
+      "h_code": "02692",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国广核",
+      "a_code": "003816",
+      "h_code": "01816",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "国民技术",
+      "a_code": "300077",
+      "h_code": "02701",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "君正股份",
+      "a_code": "300223",
+      "h_code": "03223",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中际旭创",
+      "a_code": "300308",
+      "h_code": "03308",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "泰格医药",
+      "a_code": "300347",
+      "h_code": "03347",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "三环集团",
+      "a_code": "300408",
+      "h_code": "06951",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "蓝思科技",
+      "a_code": "300433",
+      "h_code": "06613",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "先导智能",
+      "a_code": "300450",
+      "h_code": "00470",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "胜宏科技",
+      "a_code": "300476",
+      "h_code": "02476",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "星源材质",
+      "a_code": "300568",
+      "h_code": "06067",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "广和通",
+      "a_code": "300638",
+      "h_code": "00638",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "圣邦股份",
+      "a_code": "300661",
+      "h_code": "03661",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "金力永磁",
+      "a_code": "300748",
+      "h_code": "06680",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "宁德时代",
+      "a_code": "300750",
+      "h_code": "03750",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "罗博特科",
+      "a_code": "300757",
+      "h_code": "03757",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "康龙化成",
+      "a_code": "300759",
+      "h_code": "03759",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "安克创新",
+      "a_code": "300866",
+      "h_code": "00668",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中伟新材",
+      "a_code": "300919",
+      "h_code": "02579",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "可孚医疗",
+      "a_code": "301087",
+      "h_code": "01187",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "大族数控",
+      "a_code": "301200",
+      "h_code": "03200",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "江波龙",
+      "a_code": "301308",
+      "h_code": "09976",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "鼎泰高科",
+      "a_code": "301377",
+      "h_code": "01377",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华能国际",
+      "a_code": "600011",
+      "h_code": "00902",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "皖通高速",
+      "a_code": "600012",
+      "h_code": "00995",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "民生银行",
+      "a_code": "600016",
+      "h_code": "01988",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中远海能",
+      "a_code": "600026",
+      "h_code": "01138",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华电国际",
+      "a_code": "600027",
+      "h_code": "01071",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国石化",
+      "a_code": "600028",
+      "h_code": "00386",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "南方航空",
+      "a_code": "600029",
+      "h_code": "01055",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中信证券",
+      "a_code": "600030",
+      "h_code": "06030",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "三一重工",
+      "a_code": "600031",
+      "h_code": "06031",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "招商银行",
+      "a_code": "600036",
+      "h_code": "03968",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国东航",
+      "a_code": "600115",
+      "h_code": "00670",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "兖矿能源",
+      "a_code": "600188",
+      "h_code": "01171",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "复星医药",
+      "a_code": "600196",
+      "h_code": "02196",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "恒瑞医药",
+      "a_code": "600276",
+      "h_code": "01276",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "白云山",
+      "a_code": "600332",
+      "h_code": "00874",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "江西铜业",
+      "a_code": "600362",
+      "h_code": "00358",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "宁沪高速",
+      "a_code": "600377",
+      "h_code": "00177",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "山东黄金",
+      "a_code": "600547",
+      "h_code": "01787",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "深高速",
+      "a_code": "600548",
+      "h_code": "00548",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "海螺水泥",
+      "a_code": "600585",
+      "h_code": "00914",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "青岛啤酒",
+      "a_code": "600600",
+      "h_code": "00168",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "大众公用",
+      "a_code": "600635",
+      "h_code": "01635",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "福耀玻璃",
+      "a_code": "600660",
+      "h_code": "03606",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中船防务",
+      "a_code": "600685",
+      "h_code": "00317",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "上海石化",
+      "a_code": "600688",
+      "h_code": "00338",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "海尔智家",
+      "a_code": "600690",
+      "h_code": "06690",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "均胜电子",
+      "a_code": "600699",
+      "h_code": "00699",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "南京熊猫",
+      "a_code": "600775",
+      "h_code": "00553",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华新建材",
+      "a_code": "600801",
+      "h_code": "06655",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "马钢股份",
+      "a_code": "600808",
+      "h_code": "00323",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "京城股份",
+      "a_code": "600860",
+      "h_code": "00187",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "石化油服",
+      "a_code": "600871",
+      "h_code": "01033",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "创业环保",
+      "a_code": "600874",
+      "h_code": "01065",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "东方电气",
+      "a_code": "600875",
+      "h_code": "01072",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "凯盛新能",
+      "a_code": "600876",
+      "h_code": "01108",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国海油",
+      "a_code": "600938",
+      "h_code": "00883",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "中国香港特别行政区"
+    },
+    {
+      "name": "中国移动",
+      "a_code": "600941",
+      "h_code": "00941",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "中国香港特别行政区"
+    },
+    {
+      "name": "新天绿能",
+      "a_code": "600956",
+      "h_code": "00956",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "东方证券",
+      "a_code": "600958",
+      "h_code": "03958",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "赤峰黄金",
+      "a_code": "600988",
+      "h_code": "06693",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "招商证券",
+      "a_code": "600999",
+      "h_code": "06099",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "重庆钢铁",
+      "a_code": "601005",
+      "h_code": "01053",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "一拖股份",
+      "a_code": "601038",
+      "h_code": "00038",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中信建投",
+      "a_code": "601066",
+      "h_code": "06066",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中铝国际",
+      "a_code": "601068",
+      "h_code": "02068",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "渝农商行",
+      "a_code": "601077",
+      "h_code": "03618",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国神华",
+      "a_code": "601088",
+      "h_code": "01088",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "四川成渝",
+      "a_code": "601107",
+      "h_code": "00107",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国国航",
+      "a_code": "601111",
+      "h_code": "00753",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "赛力斯",
+      "a_code": "601127",
+      "h_code": "09927",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国铁建",
+      "a_code": "601186",
+      "h_code": "01186",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "国泰海通",
+      "a_code": "601211",
+      "h_code": "02611",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "广汽集团",
+      "a_code": "601238",
+      "h_code": "02238",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "农业银行",
+      "a_code": "601288",
+      "h_code": "01288",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "青岛港",
+      "a_code": "601298",
+      "h_code": "06198",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国平安",
+      "a_code": "601318",
+      "h_code": "02318",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国人保",
+      "a_code": "601319",
+      "h_code": "01339",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "秦港股份",
+      "a_code": "601326",
+      "h_code": "03369",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "交通银行",
+      "a_code": "601328",
+      "h_code": "03328",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "绿色动力",
+      "a_code": "601330",
+      "h_code": "01330",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "广深铁路",
+      "a_code": "601333",
+      "h_code": "00525",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "新华保险",
+      "a_code": "601336",
+      "h_code": "01336",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中原证券",
+      "a_code": "601375",
+      "h_code": "01375",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国中铁",
+      "a_code": "601390",
+      "h_code": "00390",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "工商银行",
+      "a_code": "601398",
+      "h_code": "01398",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "国联民生",
+      "a_code": "601456",
+      "h_code": "01456",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "北辰实业",
+      "a_code": "601588",
+      "h_code": "00588",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国外运",
+      "a_code": "601598",
+      "h_code": "00598",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国铝业",
+      "a_code": "601600",
+      "h_code": "02600",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国太保",
+      "a_code": "601601",
+      "h_code": "02601",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "上海医药",
+      "a_code": "601607",
+      "h_code": "02607",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国中冶",
+      "a_code": "601618",
+      "h_code": "01618",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国人寿",
+      "a_code": "601628",
+      "h_code": "02628",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "长城汽车",
+      "a_code": "601633",
+      "h_code": "02333",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "邮储银行",
+      "a_code": "601658",
+      "h_code": "01658",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "滨化股份",
+      "a_code": "601678",
+      "h_code": "06745",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华泰证券",
+      "a_code": "601688",
+      "h_code": "06886",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中创智领",
+      "a_code": "601717",
+      "h_code": "00564",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "上海电气",
+      "a_code": "601727",
+      "h_code": "02727",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国电信",
+      "a_code": "601728",
+      "h_code": "00728",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国中车",
+      "a_code": "601766",
+      "h_code": "01766",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "光大证券",
+      "a_code": "601788",
+      "h_code": "06178",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国交建",
+      "a_code": "601800",
+      "h_code": "01800",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中海油服",
+      "a_code": "601808",
+      "h_code": "02883",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "新华文轩",
+      "a_code": "601811",
+      "h_code": "00811",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "光大银行",
+      "a_code": "601818",
+      "h_code": "06818",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "美凯龙",
+      "a_code": "601828",
+      "h_code": "01528",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国石油",
+      "a_code": "601857",
+      "h_code": "00857",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "福莱特",
+      "a_code": "601865",
+      "h_code": "06865",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中远海发",
+      "a_code": "601866",
+      "h_code": "02866",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国能建",
+      "a_code": "601868",
+      "h_code": "03996",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "长飞光纤",
+      "a_code": "601869",
+      "h_code": "06869",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "辽港股份",
+      "a_code": "601880",
+      "h_code": "02880",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国银河",
+      "a_code": "601881",
+      "h_code": "06881",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国中免",
+      "a_code": "601888",
+      "h_code": "01880",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中煤能源",
+      "a_code": "601898",
+      "h_code": "01898",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "紫金矿业",
+      "a_code": "601899",
+      "h_code": "02899",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "浙商银行",
+      "a_code": "601916",
+      "h_code": "02016",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中远海控",
+      "a_code": "601919",
+      "h_code": "01919",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "建设银行",
+      "a_code": "601939",
+      "h_code": "00939",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "重庆银行",
+      "a_code": "601963",
+      "h_code": "01963",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国银行",
+      "a_code": "601988",
+      "h_code": "03988",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "大唐发电",
+      "a_code": "601991",
+      "h_code": "00991",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "金隅集团",
+      "a_code": "601992",
+      "h_code": "02009",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中金公司",
+      "a_code": "601995",
+      "h_code": "03908",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中信银行",
+      "a_code": "601998",
+      "h_code": "00998",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "剑桥科技",
+      "a_code": "603083",
+      "h_code": "06166",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "南华期货",
+      "a_code": "603093",
+      "h_code": "02691",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "昭衍新药",
+      "a_code": "603127",
+      "h_code": "06127",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "景旺电子",
+      "a_code": "603228",
+      "h_code": "03228",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "药明康德",
+      "a_code": "603259",
+      "h_code": "02359",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "海天味业",
+      "a_code": "603288",
+      "h_code": "03288",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华勤技术",
+      "a_code": "603296",
+      "h_code": "03296",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "龙旗科技",
+      "a_code": "603341",
+      "h_code": "09611",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "安井食品",
+      "a_code": "603345",
+      "h_code": "02648",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "豪威集团",
+      "a_code": "603501",
+      "h_code": "00501",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "彤程新材",
+      "a_code": "603650",
+      "h_code": "09607",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "龙蟠科技",
+      "a_code": "603906",
+      "h_code": "02465",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "兆易创新",
+      "a_code": "603986",
+      "h_code": "03986",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "洛阳钼业",
+      "a_code": "603993",
+      "h_code": "03993",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "安德利",
+      "a_code": "605198",
+      "h_code": "02218",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "东鹏饮料",
+      "a_code": "605499",
+      "h_code": "09980",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "澜起科技",
+      "a_code": "688008",
+      "h_code": "06809",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中国通号",
+      "a_code": "688009",
+      "h_code": "03969",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "星环科技",
+      "a_code": "688031",
+      "h_code": "06727",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "传音控股",
+      "a_code": "688036",
+      "h_code": "02636",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "纳芯微",
+      "a_code": "688052",
+      "h_code": "02676",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "迈威生物",
+      "a_code": "688062",
+      "h_code": "02493",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "君实生物",
+      "a_code": "688180",
+      "h_code": "01877",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "康希诺",
+      "a_code": "688185",
+      "h_code": "06185",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "时代电气",
+      "a_code": "688187",
+      "h_code": "03898",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "天岳先进",
+      "a_code": "688234",
+      "h_code": "02631",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "百济神州",
+      "a_code": "688235",
+      "h_code": "06160",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（Switzerland 瑞士），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "Switzerland 瑞士"
+    },
+    {
+      "name": "春立医疗",
+      "a_code": "688236",
+      "h_code": "01858",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "晶合集成",
+      "a_code": "688249",
+      "h_code": "02249",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "峰岹科技",
+      "a_code": "688279",
+      "h_code": "01304",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "荣昌生物",
+      "a_code": "688331",
+      "h_code": "09995",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "普源精电",
+      "a_code": "688337",
+      "h_code": "00537",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "亿华通",
+      "a_code": "688339",
+      "h_code": "02402",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "华虹宏力",
+      "a_code": "688347",
+      "h_code": "01347",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "中国香港特别行政区"
+    },
+    {
+      "name": "昊海生科",
+      "a_code": "688366",
+      "h_code": "06826",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "复旦微电",
+      "a_code": "688385",
+      "h_code": "01385",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "诺诚健华",
+      "a_code": "688428",
+      "h_code": "09969",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（Cayman Islands 开曼群岛（英属）），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "Cayman Islands 开曼群岛（英属）"
+    },
+    {
+      "name": "复旦张江",
+      "a_code": "688505",
+      "h_code": "01349",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "芯碁微装",
+      "a_code": "688630",
+      "h_code": "09630",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "百奥赛图",
+      "a_code": "688796",
+      "h_code": "02315",
+      "h_tax": 0.2,
+      "h_tax_status": "default",
+      "note": "",
+      "verified": "",
+      "domicile": "中国"
+    },
+    {
+      "name": "中芯国际",
+      "a_code": "688981",
+      "h_code": "00981",
+      "h_tax": 0.2,
+      "h_tax_status": "pending",
+      "note": "境外注册（Cayman Islands 开曼群岛（英属）），税率可能为 28%，待按最近分红公告核实",
+      "verified": "",
+      "domicile": "Cayman Islands 开曼群岛（英属）"
+    }
+  ]
+}
