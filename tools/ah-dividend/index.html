@@ -94,7 +94,7 @@ input[type=text], input[type=search] {
     appearance: none;
 }
 input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.hint { font-size: 12px; color: var(--text-3); margin-top: 5px; }
+.hint { font-size: 12px; color: var(--text-3); margin-top: 5px; overflow-wrap: anywhere; }
 .hint.warn { color: var(--warn); }
 
 /* 搜索 */
@@ -155,12 +155,23 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-so
 .verdict.h { background: var(--pos-soft); color: var(--pos); }
 .verdict.a { background: var(--neg-soft); color: var(--neg); }
 .verdict.eq { background: var(--warm); color: var(--text-2); }
-.kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin-top: 12px; font-size: 14px; }
-.kv dt { color: var(--text-2); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin-top: 12px; font-size: 14px; }
+.kv dt { color: var(--text-2); white-space: nowrap; }
 .kv dd { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
 .kv dd.pos { color: var(--pos); }
 .kv dd.neg { color: var(--neg); }
 .kv dd.muted { color: var(--text-3); font-weight: 400; }
+.kv dd .x { display: inline-block; font-weight: 400; font-size: 13px; color: var(--text-3); }
+.kv .sub-note { grid-column: 1 / -1; margin-top: -4px; font-size: 12px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+/* 绝对税后股息率 */
+.yields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.yields > div { background: var(--warm); border-radius: 10px; padding: 8px 12px; }
+.yields .y { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.25; }
+.yields .yl { font-size: 12px; color: var(--text-2); }
+.ydiff { margin-top: 6px; font-size: 13px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.ydiff b.pos { color: var(--pos); }
+.ydiff b.neg { color: var(--neg); }
 
 /* 底部说明 */
 .notes { font-size: 13px; color: var(--text-2); }
@@ -208,6 +219,11 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-so
             </div>
         </div>
         <div class="field">
+            <label class="lbl" for="yA">A 股 TTM 股息率（%，税前）</label>
+            <input type="text" id="yA" inputmode="decimal" placeholder="可选，需同时填 H 股股价" autocomplete="off">
+            <div class="hint">用于推算两边的绝对税后股息率。由 A 股 TTM 股息率推算，与港股行情软件显示的数值可能相差 1–3%（股息折算汇率不同）。</div>
+        </div>
+        <div class="field">
             <label class="lbl" for="fx">汇率：1 港元 = ? 人民币</label>
             <input type="text" id="fx" inputmode="decimal" autocomplete="off">
             <div class="hint" id="fxHint">加载中…</div>
@@ -238,14 +254,27 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-so
             <div class="big-lbl">H 股盈亏平衡价</div>
             <div class="big"><span id="be"></span><span class="unit">港元</span></div>
             <div class="hint">H 股价格低于这个数，H 股税后股息率更高。</div>
+            <dl class="kv">
+                <dt>盈亏平衡溢价率</dt><dd id="beP"></dd>
+                <dd class="sub-note" id="bePNote"></dd>
+            </dl>
             <div id="resH" hidden>
                 <div class="verdict" id="verdict"></div>
+                <div id="yieldBox" hidden>
+                    <div class="yields">
+                        <div><div class="yl">A 股税后</div><div class="y" id="yAnet"></div></div>
+                        <div><div class="yl">H 股税后</div><div class="y" id="yHnet"></div></div>
+                    </div>
+                    <div class="ydiff" id="yDiff"></div>
+                </div>
                 <dl class="kv">
-                    <dt>H 相对 A 的税后股息率优势</dt><dd id="adv"></dd>
-                    <dt>AH 溢价率（税前，仅供参考）</dt><dd id="prem" class="muted"></dd>
+                    <dt>H 相对 A 税后优势</dt><dd id="adv"></dd>
+                    <dd class="sub-note" id="advNote"></dd>
+                    <dt>AH 溢价率（税前）</dt><dd id="prem" class="muted"></dd>
                     <dt>H 股折合人民币</dt><dd id="pHcny" class="muted"></dd>
                 </dl>
             </div>
+            <div class="hint" id="yNeedH" hidden>已填 A 股股息率，再填 H 股股价即可显示两边的绝对税后股息率。</div>
         </div>
     </section>
 
@@ -255,8 +284,14 @@ input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-so
         <div class="formula">A 股税后股息率 = D(1−t<sub>A</sub>) / P<sub>A</sub></div>
         <div class="formula">H 股税后股息率 = D(1−t<sub>H</sub>) / (P<sub>H</sub>·r)</div>
         <div class="formula">盈亏平衡价 P<sub>H</sub>* = P<sub>A</sub> × (1−t<sub>H</sub>) / ((1−t<sub>A</sub>) × r)</div>
-        <div class="formula">H 相对 A 优势 = [(1−t<sub>H</sub>)/(P<sub>H</sub>·r)] ÷ [(1−t<sub>A</sub>)/P<sub>A</sub>] − 1</div>
-        <div class="formula">AH 溢价率 = P<sub>A</sub> / (P<sub>H</sub>·r) − 1</div>
+        <div class="formula">AH 溢价率 p = P<sub>A</sub> / (P<sub>H</sub>·r) − 1</div>
+        <p>A 股价是 H 股（折人民币）的 1+p 倍。</p>
+        <div class="formula">H 相对 A 优势 = (1+p) × (1−t<sub>H</sub>)/(1−t<sub>A</sub>) − 1</div>
+        <div class="formula">盈亏平衡溢价率 p* = (1−t<sub>A</sub>) / (1−t<sub>H</sub>) − 1</div>
+        <p>p* 只取决于两边税率、与股价无关：AH 溢价率高于 p* 时 H 股税后股息率更高，低于 p* 时 A 股更高。例如 t<sub>A</sub>=0、t<sub>H</sub>=20% 时 p*=25%；t<sub>H</sub>=28% 时 p*≈38.9%。</p>
+        <p>填了 A 股 TTM 股息率 y<sub>A</sub>（税前）时：</p>
+        <div class="formula">A 股税后 = y<sub>A</sub> × (1−t<sub>A</sub>)</div>
+        <div class="formula">H 股税后 = y<sub>A</sub> × (1+p) × (1−t<sub>H</sub>)</div>
 
         <h3>税率说明</h3>
         <ul>
@@ -296,6 +331,24 @@ function ahPremium(pA, pH, r) {
     return pA / (pH * r) - 1;
 }
 
+// 盈亏平衡溢价率：AH 溢价率高于此值时 H 股税后股息率更高，与股价无关
+function breakEvenPremium(tA, tH) {
+    return (1 - tA) / (1 - tH) - 1;
+}
+
+// 优势分解说明：每个数字只出现一次，名称放在数字后；A 股免税时不写分母
+function advBreakdown(p, tA, tH) {
+    var keep = tA === 0
+        ? (1 - tH).toFixed(2) + '（税后保留）'
+        : (1 - tH).toFixed(2) + '/' + (1 - tA).toFixed(2) + '（税后保留比）';
+    return '= ' + (1 + p).toFixed(3) + '（溢价倍数）× ' + keep + '− 1';
+}
+
+// 由 A 股 TTM 股息率 yA（税前）推算两边绝对税后股息率；p 为 AH 溢价率
+function netYields(yA, p, tA, tH) {
+    return { a: yA * (1 - tA), h: yA * (1 + p) * (1 - tH) };
+}
+
 /* ===== 自测：URL 带 ?selftest=1 时运行 ===== */
 
 function runSelfTest() {
@@ -313,7 +366,32 @@ function runSelfTest() {
         lines.push((ok ? 'PASS' : 'FAIL') + ' #' + (i + 1) + '  r=' + c.r + ' P_A=' + c.pA + ' t_H=' + c.tH +
             '  期望 ' + c.want.toFixed(2) + '  实得 ' + got);
     });
-    lines.push('自测 ' + pass + '/' + cases.length + ' 通过');
+
+    // 溢价率 / 倍数 / 盈亏平衡溢价率 / 绝对税后股息率（中海油 + 两组 p*）
+    var pct1 = function (v) { return (v * 100).toFixed(1) + '%'; };
+    var co = { tA: 0, tH: 0.28, r: 0.8508, pA: 33.72, pH: 23.12, yA: 3.83 };
+    var coP = ahPremium(co.pA, co.pH, co.r);
+    var coY = netYields(co.yA, coP, co.tA, co.tH);
+    var checks = [
+        ['中海油 AH 溢价率', pct1(coP), '71.4%'],
+        ['中海油 溢价倍数', (1 + coP).toFixed(2), '1.71'],
+        ['中海油 盈亏平衡溢价率', pct1(breakEvenPremium(co.tA, co.tH)), '38.9%'],
+        ['中海油 H 相对 A 优势', fmtPct(hAdvantage(co.pA, co.pH, co.tA, co.tH, co.r)), '+23.4%'],
+        ['中海油 A 股税后', coY.a.toFixed(2) + '%', '3.83%'],
+        ['中海油 H 股税后', coY.h.toFixed(2) + '%', '4.73%'],
+        ['中海油 相差', fmtPp(coY.h - coY.a), '+0.90'],
+        ['中海油 优势分解', advBreakdown(coP, co.tA, co.tH), '= 1.714（溢价倍数）× 0.72（税后保留）− 1'],
+        ['优势分解 t_A=0.10', advBreakdown(coP, 0.10, 0.28), '= 1.714（溢价倍数）× 0.72/0.90（税后保留比）− 1'],
+        ['p* t_A=0 t_H=0.20', pct1(breakEvenPremium(0, 0.20)), '25.0%'],
+        ['p* t_A=0.10 t_H=0.28', pct1(breakEvenPremium(0.10, 0.28)), '25.0%']
+    ];
+    var total = cases.length + checks.length;
+    checks.forEach(function (c, i) {
+        var ok = c[1] === c[2];
+        if (ok) pass++;
+        lines.push((ok ? 'PASS' : 'FAIL') + ' #' + (cases.length + i + 1) + '  ' + c[0] + '  期望 ' + c[2] + '  实得 ' + c[1]);
+    });
+    lines.push('自测 ' + pass + '/' + total + ' 通过');
     lines.forEach(function (l) { (l.indexOf('FAIL') === 0 ? console.error : console.log)('[selftest] ' + l); });
     var box = document.getElementById('selftest');
     box.textContent = lines.join('\n');
@@ -324,6 +402,20 @@ function runSelfTest() {
 
 var LS_HOLD = 'ahdiv.hold';
 var LS_RECENT = 'ahdiv.recent';
+var LS_YA = 'ahdiv.yA';   // {code, v}：A 股 TTM 股息率及其所属股票，换股时清空
+
+function loadYA() {
+    try {
+        var o = JSON.parse(lsGet(LS_YA) || 'null');
+        return o && typeof o.v === 'string' ? { code: typeof o.code === 'string' ? o.code : '', v: o.v } : null;
+    } catch (e) { return null; }
+}
+function saveYA(v) {
+    try {
+        if (v === '') window.localStorage.removeItem(LS_YA);
+        else window.localStorage.setItem(LS_YA, JSON.stringify({ code: picked ? picked.a_code : '', v: v }));
+    } catch (e) { /* 忽略 */ }
+}
 
 function lsGet(key) {
     try { return window.localStorage.getItem(key); } catch (e) { return null; }
@@ -346,7 +438,7 @@ var picked = null;
 var activeIdx = -1;
 
 function num(el) {
-    var s = el.value.trim().replace(/，/g, '.').replace(/,/g, '');
+    var s = el.value.trim().replace(/，/g, '.').replace(/,/g, '').replace(/\s*[%％]$/, '');
     if (s === '') return NaN;
     var v = Number(s);
     return isFinite(v) ? v : NaN;
@@ -363,6 +455,12 @@ function setRadio(name, value) {
 }
 function fmtPrice(v) { return v < 1 ? v.toFixed(3) : v.toFixed(2); }
 function fmtPct(v) { return (v > 0 ? '+' : '') + (v * 100).toFixed(1) + '%'; }
+// 百分点差（v 已是百分数单位），保留两位且带符号
+function fmtPp(v) {
+    var s = v.toFixed(2);
+    if (Number(s) === 0) return '0.00';
+    return (v > 0 ? '+' : '') + s;
+}
 
 function recalc() {
     var pA = num($('pA')), pH = num($('pH')), r = num($('fx'));
@@ -374,17 +472,53 @@ function recalc() {
 
     $('be').textContent = fmtPrice(breakEvenH(pA, tA, tH, r));
 
+    var beP = breakEvenPremium(tA, tH);
+    $('beP').textContent = fmtPct(beP);
+
+    var yA = num($('yA'));
+    var hasY = yA > 0;
     var hasH = pH > 0;
     $('resH').hidden = !hasH;
-    if (!hasH) return;
+    $('yNeedH').hidden = !(hasY && !hasH);
+    if (!hasH) {
+        $('bePNote').textContent = 'AH 溢价率高于此值时 H 股更划算（只取决于税率）';
+        return;
+    }
 
     var adv = hAdvantage(pA, pH, tA, tH, r);
     var prem = ahPremium(pA, pH, r);
     var advEl = $('adv');
     advEl.textContent = fmtPct(adv);
     advEl.className = adv > 0.0005 ? 'pos' : (adv < -0.0005 ? 'neg' : '');
-    $('prem').textContent = fmtPct(prem);
+    $('advNote').textContent = advBreakdown(prem, tA, tH);
+
+    var premEl = $('prem');
+    premEl.textContent = fmtPct(prem);
+    var x = document.createElement('span');
+    x.className = 'x';
+    x.textContent = '（A 股价是 H 股的 ' + (1 + prem).toFixed(2) + ' 倍）';
+    premEl.appendChild(x);
     $('pHcny').textContent = (pH * r).toFixed(2) + ' 元';
+
+    var gap = prem - beP;
+    $('bePNote').textContent = Math.abs(gap) < 0.0005
+        ? '当前溢价 ' + fmtPct(prem) + '，与之基本持平'
+        : '当前溢价 ' + fmtPct(prem) + '，' + (gap > 0 ? '高于' : '低于') + '它 ' +
+          Math.abs(gap * 100).toFixed(1) + ' 个百分点 → ' + (gap > 0 ? 'H 股更划算' : 'A 股更划算');
+
+    $('yieldBox').hidden = !hasY;
+    if (hasY) {
+        var ny = netYields(yA, prem, tA, tH);
+        var d = ny.h - ny.a;
+        $('yAnet').textContent = ny.a.toFixed(2) + '%';
+        $('yHnet').textContent = ny.h.toFixed(2) + '%';
+        var dEl = $('yDiff');
+        dEl.textContent = 'H 股减 A 股：';
+        var b = document.createElement('b');
+        b.className = d > 0.005 ? 'pos' : (d < -0.005 ? 'neg' : '');
+        b.textContent = fmtPp(d) + ' 个百分点';
+        dEl.appendChild(b);
+    }
 
     var v = $('verdict');
     if (Math.abs(adv) < 0.0005) {
@@ -457,6 +591,12 @@ function moveActive(step) {
 }
 
 function pick(p) {
+    // 股息率是个股数据，换成另一只股票时清空
+    var savedY = loadYA();
+    if (!savedY || savedY.code !== p.a_code) {
+        $('yA').value = '';
+        saveYA('');
+    }
     picked = p;
     $('q').value = '';
     $('suggest').hidden = true;
@@ -569,7 +709,11 @@ function init() {
     var savedHold = lsGet(LS_HOLD);
     if (savedHold !== null && /^(0|0\.1|0\.10|0\.2|0\.20)$/.test(savedHold)) setRadio('hold', Number(savedHold));
 
+    var savedY = loadYA();
+    if (savedY) $('yA').value = savedY.v;
+
     ['pA', 'pH', 'fx'].forEach(function (id) { $(id).addEventListener('input', recalc); });
+    $('yA').addEventListener('input', function () { saveYA($('yA').value.trim()); recalc(); });
     document.querySelectorAll('input[name="hold"]').forEach(function (el) {
         el.addEventListener('change', function () { lsSet(LS_HOLD, el.value); recalc(); });
     });
