@@ -531,6 +531,12 @@ function loadFx() {
         if (!(r > 0)) throw new Error('bad fx');
         $('fx').value = String(r);
         $('fxHint').textContent = '数据日期：' + (d.updated || '未知') + (d.source ? '　来源：' + d.source : '') + '（可手动修改）';
+        // 每周一自动更新；超过 14 天说明自动更新可能坏了
+        var t = /^\d{4}-\d{2}-\d{2}$/.test(d.updated || '') ? new Date(d.updated + 'T00:00:00') : null;
+        if (!t || (Date.now() - t.getTime()) / 864e5 > 14) {
+            $('fxHint').textContent += '　汇率可能已过期，请手动核对';
+            $('fxHint').className = 'hint warn';
+        }
         $('fxDate').textContent = d.updated || '未知';
         recalc();
     }).catch(function () {

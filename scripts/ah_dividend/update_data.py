@@ -12,7 +12,9 @@
   （AkShare 的 stock_zh_ah_spot_em 虽然自带两边代码，但它的 push2 域名本机直连被封、走代理 502。）
 - 注册地：stock_hk_company_profile_em（东方财富港股公司资料的「注册地」），用来找境外注册公司。
 - 汇率：优先港股通参考汇率（上交所 → 深交所，取买入价/卖出价中值），
-  都取不到时用人民币汇率中间价 currency_boc_safe（外管局，港元列为每 100 港元）。
+  都取不到时（如 GitHub Actions 海外服务器访问不了）用欧洲央行参考汇率（Frankfurter 接口，市场汇率），
+  最后才用人民币汇率中间价 currency_boc_safe（外管局，港元列为每 100 港元；官方中间价与市场价可能有偏离）。
+  fx.json 的 updated 是汇率本身的适用日期，不是运行日期。
 
 规则：
 - 已有公司的人工字段 h_tax / h_tax_status / note / verified 永不覆盖，只更新名称等基础信息。
@@ -71,6 +73,21 @@ class DataError(Exception):
 
 def log(msg=""):
     print(msg, flush=True)
+
+
+def set_default_http_timeout(seconds=30):
+    """AkShare 的很多接口调 requests 时不带 timeout，海外服务器连国内站点可能一直挂着，
+    这里给没指定 timeout 的请求补一个默认值，让它按时失败、轮到下一个数据源。"""
+    import requests
+
+    orig = requests.Session.request
+
+    def request(self, method, url, **kw):
+        if kw.get("timeout") is None:
+            kw["timeout"] = seconds
+        return orig(self, method, url, **kw)
+
+    requests.Session.request = request
 
 
 def with_proxy_fallback(label, fn):
@@ -248,6 +265,12 @@ def fetch_fx():
     import akshare as ak
 
     errors = []
+
+    def failed(label, e):
+        # 逐个打印，方便在 GitHub Actions 日志里看出哪个源访问不了
+        log(f"  ✗ {label} 失败：{str(e)[:300]}")
+        errors.append(f"{label}：{e}")
+
     for label, fn in (
         ("上交所港股通参考汇率", ak.stock_sgt_reference_exchange_rate_sse),
         ("深交所港股通参考汇率", ak.stock_sgt_reference_exchange_rate_szse),
@@ -262,27 +285,55 @@ def fetch_fx():
                 raise DataError(f"{latest['适用日期'].iloc[0]} 有多条不一致的记录：\n{latest.to_string()}")
             row = latest.iloc[-1]
             rate = round((float(row["参考汇率买入价"]) + float(row["参考汇率卖出价"])) / 2, 4)
+            log(f"  ✓ 使用{label}")
             return {
                 "rate": rate,
                 "date": row["适用日期"][:10],
                 "source": f"{label}（买入价 {row['参考汇率买入价']} / 卖出价 {row['参考汇率卖出价']} 的中值）",
             }
         except Exception as e:  # noqa: BLE001
-            errors.append(f"{label}：{e}")
+            failed(label, e)
+
+    # 交易所站点在 GitHub Actions（海外服务器）上可能访问不了，接着用海外可稳定访问的市场汇率。
+    # 港股通结算跟随市场价，市场汇率比官方中间价更接近（2026-10-23：欧洲央行差 0.05%，中间价差 0.7%）
+    try:
+        fx = fetch_fx_ecb()
+        log("  ✓ 使用欧洲央行参考汇率（Frankfurter）")
+        return fx
+    except Exception as e:  # noqa: BLE001
+        failed("欧洲央行参考汇率（Frankfurter）", e)
 
     try:
         df = with_proxy_fallback("人民币汇率中间价", ak.currency_boc_safe)
         df = df.dropna(subset=["港元"])
         df["日期"] = df["日期"].astype(str)
         row = df.sort_values("日期").iloc[-1]
+        log("  ✓ 使用外汇管理局人民币汇率中间价")
         return {
             "rate": round(float(row["港元"]) / 100, 5),
             "date": row["日期"][:10],
-            "source": "外汇管理局人民币汇率中间价（港股通参考汇率取不到时的备用源）",
+            "source": "外汇管理局人民币汇率中间价（港股通参考汇率和市场汇率都取不到时的最后备用源）",
         }
     except Exception as e:  # noqa: BLE001
-        errors.append(f"人民币汇率中间价：{e}")
+        failed("人民币汇率中间价", e)
     raise DataError("汇率全部数据源失败\n  " + "\n  ".join(str(x) for x in errors))
+
+
+def fetch_fx_ecb():
+    """Frankfurter 公开接口（免密钥）：欧洲央行每个工作日公布的参考汇率，港元兑人民币经欧元交叉换算。"""
+    import requests
+
+    r = requests.get("https://api.frankfurter.dev/v1/latest", params={"base": "HKD", "symbols": "CNY"}, timeout=30)
+    r.raise_for_status()
+    js = r.json()
+    rate = js.get("rates", {}).get("CNY")
+    if not isinstance(rate, (int, float)) or not js.get("date"):
+        raise DataError(f"返回内容不对：{str(js)[:200]}")
+    return {
+        "rate": round(float(rate), 4),
+        "date": str(js["date"])[:10],
+        "source": "欧洲央行参考汇率（市场汇率，经 Frankfurter 获取；港股通参考汇率取不到时的备用源）",
+    }
 
 
 # ---------- 合并 ----------
@@ -444,6 +495,7 @@ def main():
     args = ap.parse_args()
 
     today = dt.date.today().isoformat()
+    set_default_http_timeout()
     try:
         old_fx = load_json(FX_FILE)
         old_pairs = None if args.fx_only else load_old_pairs()

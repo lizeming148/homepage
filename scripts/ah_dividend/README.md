@@ -46,7 +46,7 @@ python scripts/ah_dividend/update_data.py
 
 - **AH 名单**：腾讯的 AH 股列表（AkShare `stock_zh_ah_name`）。它只给 H 股代码，所以脚本再用东方财富 F10 的"A 股—H 股代码对照"补上 A 股代码，并用沪深北交易所的在市 A 股列表过滤掉 B 股、新三板和旧代码。
 - **注册地**：东方财富港股公司资料。只对新出现的公司查一次，用来自动发现境外注册（红筹等）公司。
-- **汇率**：优先使用上交所**港股通参考汇率**，取买入价和卖出价的中值。取不到时依次改用深交所参考汇率、外汇管理局人民币汇率中间价。实际用了哪个来源，会写进 `fx.json` 的 `source` 字段，网页上也会显示。
+- **汇率**：优先使用上交所**港股通参考汇率**，取买入价和卖出价的中值。取不到时改用深交所参考汇率；两个交易所都访问不了时（GitHub 自动运行时可能遇到），改用欧洲央行参考汇率（市场汇率，经 Frankfurter 公开接口获取）；最后才用外汇管理局人民币汇率中间价（官方定价，和港股通实际结算跟随的市场价可能有偏离）。`fx.json` 里的日期是汇率本身的适用日期，不是脚本运行的日期，所以长假期间数据没更新时，网页会照常提示过期。实际用了哪个来源，会写进 `fx.json` 的 `source` 字段，网页上也会显示。
 
 ### 看懂变化报告
 
@@ -105,7 +105,7 @@ python scripts/ah_dividend/update_data.py
 
 ## 四、提交并发布（commit 和 push）
 
-> **push 前必须先 `git pull --rebase origin main`。** `main` 分支每天都有 GitHub Actions 自动提交的指数数据，你本地的 `main` 几乎总是落后于远端。不先拉取的话，push 会被拒绝（non-fast-forward）。
+> **push 前必须先 `git pull --rebase origin main`。** `main` 分支每天都有 GitHub Actions 自动提交的指数数据（每周一还有汇率），你本地的 `main` 几乎总是落后于远端。不先拉取的话，push 会被拒绝（non-fast-forward）。
 
 顺序是：先 commit，再 pull --rebase，最后 push。如果还有没 commit 的改动，`git pull --rebase` 会拒绝执行。
 
@@ -116,7 +116,7 @@ git pull --rebase origin main
 git push origin main
 ```
 
-自动提交只改 `invest/strategy/data/` 下的文件，和这个工具的文件不重叠，所以 rebase 一般不会冲突。
+自动提交只改 `invest/strategy/data/` 下的文件和 `tools/ah-dividend/fx.json`。只要你没在同一时间手改 fx.json，rebase 一般不会冲突。
 
 push 之后等一两分钟，GitHub Pages 发布完成，再打开线上地址检查。浏览器如果还显示旧数据，按 Ctrl+F5 强制刷新。
 
@@ -138,17 +138,29 @@ push 之后等一两分钟，GitHub Pages 发布完成，再打开线上地址�
 
 ---
 
-## 六、建议的更新频率
+## 六、汇率自动更新（GitHub Actions）
+
+汇率不用自己跑：工作流 `.github/workflows/update_ah_fx.yml` 每周一北京时间约 10:13 在 GitHub 服务器上运行 `update_data.py --fx-only`。`fx.json` 有变化时，它会自动提交（提交信息为 `auto: 更新港股通汇率 YYYY-MM-DD`）并推送，GitHub Pages 随后自动重新发布。GitHub 的定时任务偶尔会延迟几十分钟，属于正常现象。
+
+- **在哪里看**：打开 <https://github.com/lizeming148/homepage/actions>，左侧选「更新 AH 股息工具汇率」。点进某一次运行，再展开「获取汇率 → 写 fx.json」这一步，就能看到每个数据源成功还是失败、最后用了哪个。
+- **手动触发**：在上面那个页面右侧点 **Run workflow** → **Run workflow**。命令行也可以：`gh workflow run update_ah_fx.yml`
+- **暂停**：同一页面右上角「⋯」→ **Disable workflow**；要恢复就点 **Enable workflow**。命令行：`gh workflow disable update_ah_fx.yml` / `gh workflow enable update_ah_fx.yml`
+- **失败时**：所有数据源都失败时，`fx.json` 不会改动，这次运行显示为失败，GitHub 会给你发邮件（前提是 GitHub 设置 → Notifications → Actions 里开着失败通知）。网页上的汇率数据日期超过 14 天时，汇率旁会提示「汇率可能已过期，请手动核对」。
+- 自动提交只改 `tools/ah-dividend/fx.json`。你本地修改了这个工具，推送前照例 `git pull --rebase origin main`。
+
+---
+
+## 七、建议的更新频率
 
 | 内容 | 频率 | 命令 |
 |---|---|---|
-| 汇率 | 每周一次 | `--fx-only` 即可，也可以直接跑完整脚本 |
+| 汇率 | 每周一次（已自动，见第六节） | 想立刻更新：本地跑 `--fx-only`，或在 GitHub 上手动触发 |
 | AH 名单 | 每月一次 | 完整运行脚本 |
 | H 股税率 | 每年分红季前（大约 3–5 月）核实一次 | 对照各公司最近一次派息公告，按第三节修改 |
 
 ---
 
-## 七、网页本身
+## 八、网页本身
 
 - 股价需要手动输入，网页不会自动获取行情。
 - 自测：打开 `…/tools/ah-dividend/?selftest=1`，页面底部会显示 4 个测试用例的结果，浏览器控制台里也会打印。

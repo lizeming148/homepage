@@ -1,0 +1,48 @@
+name: 更新 AH 股息工具汇率
+
+on:
+  schedule:
+    # 每周一北京时间 10:13（UTC 02:13）——避开整点高峰，GitHub 定时任务在整点前后容易延迟
+    - cron: '13 2 * * 1'
+  workflow_dispatch: {}   # 支持手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04   # 与 update_index_data.yml 一致，固定版本
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install -r scripts/ah_dividend/requirements.txt
+
+      # 全部数据源失败时脚本退出码为 1，fx.json 不变，工作流以失败结束（GitHub 会发邮件）
+      - name: 获取汇率 → 写 fx.json
+        run: python scripts/ah_dividend/update_data.py --fx-only
+
+      - name: 提交变更（仅在 fx.json 有变化时）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tools/ah-dividend/fx.json
+          if git diff --staged --quiet; then
+            echo "无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "auto: 更新港股通汇率 $(TZ=Asia/Shanghai date +%Y-%m-%d)"
+          # 每天的指数数据工作流也往 main 推，先 rebase 再推，失败重试一次
+          for i in 1 2; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "第 $i 次推送失败"
+            sleep 15
+          done
+          exit 1
