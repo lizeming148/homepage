@@ -986,20 +986,20 @@
       "name": "中国海油",
       "a_code": "600938",
       "h_code": "00883",
-      "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax": 0.28,
+      "h_tax_status": "verified",
+      "note": "公告披露已认定为中国居民企业，对港股通（经HKSCC）代扣10%企业所得税，叠加中登20%=28%。依据：2025-05-12派息税务公告 https://www.hkexnews.hk/listedco/listconews/sehk/2025/0512/2025051200474_c.pdf ；待交割单核对",
+      "verified": "2026-10",
       "domicile": "中国香港特别行政区"
     },
     {
       "name": "中国移动",
       "a_code": "600941",
       "h_code": "00941",
-      "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax": 0.28,
+      "h_tax_status": "verified",
+      "note": "公告披露为中国居民企业，向非居民企业股东（含HKSCC）派息代扣10%企业所得税，自2008年度起执行，叠加中登20%=28%。依据：公司历年派息税务公告；待交割单核对",
+      "verified": "2026-10",
       "domicile": "中国香港特别行政区"
     },
     {
@@ -1957,9 +1957,9 @@
       "a_code": "688235",
       "h_code": "06160",
       "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（Switzerland 瑞士），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax_status": "verified",
+      "note": "暂不分红，税率暂无实际意义；如开始派息需重新核实",
+      "verified": "2026-10",
       "domicile": "Switzerland 瑞士"
     },
     {
@@ -2027,9 +2027,9 @@
       "a_code": "688347",
       "h_code": "01347",
       "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（中国香港特别行政区），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax_status": "verified",
+      "note": "香港注册，未发现被认定为中国居民企业的公告，按中登20%处理；待交割单核对",
+      "verified": "2026-10",
       "domicile": "中国香港特别行政区"
     },
     {
@@ -2057,9 +2057,9 @@
       "a_code": "688428",
       "h_code": "09969",
       "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（Cayman Islands 开曼群岛（英属）），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax_status": "verified",
+      "note": "暂不分红，税率暂无实际意义；如开始派息需重新核实",
+      "verified": "2026-10",
       "domicile": "Cayman Islands 开曼群岛（英属）"
     },
     {
@@ -2097,9 +2097,9 @@
       "a_code": "688981",
       "h_code": "00981",
       "h_tax": 0.2,
-      "h_tax_status": "pending",
-      "note": "境外注册（Cayman Islands 开曼群岛（英属）），税率可能为 28%，待按最近分红公告核实",
-      "verified": "",
+      "h_tax_status": "verified",
+      "note": "暂不分红，税率暂无实际意义；如开始派息需重新核实",
+      "verified": "2026-10",
       "domicile": "Cayman Islands 开曼群岛（英属）"
     }
   ]
