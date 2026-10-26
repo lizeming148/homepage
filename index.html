@@ -276,6 +276,65 @@
             background: currentColor;
         }
 
+        /* ===== Tool Cards ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 24px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            transition: box-shadow 0.25s ease, transform 0.15s ease, border-color 0.2s ease;
+        }
+
+        a.tool-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .tool-icon {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #FAFAF6 0%, #F2F0E9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-body { min-width: 0; }
+
+        .tool-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.02rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tool-card .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .tool-card .go {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
         /* ===== Footer ===== */
         .footer {
             margin-top: 96px;
@@ -300,7 +359,7 @@
             .header { gap: 16px; margin-bottom: 56px; }
             .avatar { width: 64px; height: 64px; }
             .header-text h1 { font-size: 1.55rem; }
-            .ai-grid, .projects-grid { grid-template-columns: 1fr; }
+            .ai-grid, .projects-grid, .tools-grid { grid-template-columns: 1fr; }
             .section { margin-bottom: 56px; }
             .footer {
                 flex-direction: column;
@@ -492,6 +551,39 @@
                     <div class="status status-live">
                         <span class="status-dot"></span>
                         <span>进入做投资 →</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 工具 -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">小工具</h2>
+                <span class="section-subtitle">Tools</span>
+            </div>
+
+            <div class="tools-grid">
+
+                <!-- AH 股息比价 -->
+                <a class="tool-card" href="/tools/ah-dividend/">
+                    <div class="tool-icon">
+                        <!-- Balance scale: A vs H -->
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="18" y1="6" x2="18" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                            <line x1="12" y1="30" x2="24" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                            <line x1="6" y1="11" x2="30" y2="9" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                            <path d="M3 20 L6 11 L9 20 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+                            <path d="M27 18 L30 9 L33 18 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+                            <text x="6" y="27" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">A</text>
+                            <text x="30" y="25" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">H</text>
+                        </svg>
+                    </div>
+                    <div class="tool-body">
+                        <h3>AH 股税后股息率比价</h3>
+                        <p class="desc">同一家公司的 A 股和 H 股，扣掉股息税、换算汇率后，哪边的股息率更划算。</p>
+                        <p class="go">打开工具 →</p>
                     </div>
                 </a>
 
