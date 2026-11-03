@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>白电三巨头 · 三季报横向对比</title>
+<meta name="description" content="格力、美的、海尔 2026 年三季报同口径横向对比：先分清行业共性，再找三家的显著差异，并复核第 1 期（2026H1）结论。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--page-width:1000px;--row-hover:#FAFAF6}
+.page{max-width:var(--page-width);margin:0 auto;padding:0 24px 40px}
+.page-head{padding:30px 0 26px;border-bottom:1px solid var(--site-border);margin-bottom:40px}
+.page-head h1{font-family:var(--site-serif);font-size:2rem;font-weight:700;line-height:1.35;margin-bottom:10px;color:var(--site-text)}
+.page-head .sub{font-size:.92rem;color:var(--site-text-2);line-height:1.75}
+.badges{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;font-family:var(--site-sans);font-size:.8rem;font-weight:600;padding:4px 13px;border-radius:999px;font-variant-numeric:tabular-nums}
+.badge-g{background:var(--site-gree-soft);color:var(--site-gree)}
+.badge-m{background:var(--site-midea-soft);color:var(--site-midea)}
+.badge-h{background:var(--site-haier-soft);color:var(--site-haier)}
+section{margin-bottom:52px}
+h2,h3{font-family:var(--site-serif);font-weight:700;color:var(--site-text)}
+h2{font-size:1.28rem;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--site-border)}
+h3{font-size:1.02rem;margin:26px 0 10px}
+p,li{font-size:.92rem;color:var(--site-text-2);line-height:1.85}
+p{margin-bottom:.7rem}
+ul,ol{padding-left:1.3rem;margin:.4rem 0 .8rem}
+strong{color:var(--site-text)}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0 18px;background:var(--site-card);border:1px solid var(--site-border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:.84rem;font-variant-numeric:tabular-nums}
+th{background:var(--site-accent-soft);color:var(--site-accent);font-weight:600;padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--site-border)}
+td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--site-border-soft);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td:first-child{font-weight:600;color:var(--site-text)}
+td.wrap,th.wrap{white-space:normal;text-align:left;min-width:220px}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--row-hover)}
+.hi{background:var(--site-warn-soft)}
+.neg{color:var(--site-neg);font-weight:600}.pos{color:var(--site-pos);font-weight:600}
+.box{background:var(--site-card);border:1px solid var(--site-border);border-left:3px solid var(--site-accent);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0}
+.box p{margin:0;font-size:.9rem;line-height:1.9}
+.box.note{background:var(--site-warn-soft);border-color:transparent;border-left-color:var(--site-warn)}
+.box.warn{background:var(--site-neg-soft);border-color:transparent;border-left-color:var(--site-neg)}
+.keys{list-style:none;padding:0;counter-reset:k}
+.keys li{counter-increment:k;position:relative;padding:10px 0 10px 40px;border-bottom:1px solid var(--site-border-soft)}
+.keys li::before{content:counter(k);position:absolute;left:0;top:10px;width:26px;height:26px;border-radius:50%;background:var(--site-accent-soft);color:var(--site-accent);font-family:var(--site-sans);font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-family:var(--site-sans);font-size:.72rem;font-weight:600;padding:1px 9px;border-radius:999px;margin-right:6px;vertical-align:1px}
+.t-ok{background:var(--site-pos-soft);color:var(--site-pos)}
+.t-part{background:var(--site-warn-soft);color:var(--site-warn)}
+.t-no{background:var(--site-neg-soft);color:var(--site-neg)}
+.t-wait{background:var(--site-border-soft);color:var(--site-text-2)}
+.hx{font-family:var(--site-sans);font-size:.76rem;font-weight:700;color:var(--site-accent);background:var(--site-accent-soft);padding:1px 7px;border-radius:6px;margin-right:4px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}
+.card{background:var(--site-card);border:1px solid var(--site-border);border-radius:14px;padding:18px 18px 16px;border-top:3px solid var(--c)}
+.card .n{font-family:var(--site-serif);font-weight:700;color:var(--c);margin-bottom:6px}
+.card p{font-size:.86rem;margin:.3rem 0}
+.c-g{--c:var(--site-gree)}.c-m{--c:var(--site-midea)}.c-h{--c:var(--site-haier)}
+.src-note{margin-top:10px;font-size:.78rem;color:var(--site-text-3);line-height:1.8}
+@media (max-width:760px){
+  .page{padding:0 16px 32px}
+  .page-head h1{font-size:1.55rem}
+  .grid3{grid-template-columns:1fr}
+}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46ed83a374df48dc91468350119d7d78"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="site-report">
+<div class="site-topbar">
+  <div class="site-crumb"><a href="/">主页</a><span class="sep">/</span><a href="/invest/">做投资</a><span class="sep">/</span><a href="/invest/#baidian">白电投资</a><span class="sep">/</span><span class="here">横向对比 · 第 2 期 · 2026 三季报</span></div>
+  <nav class="site-nav"><span class="kind">横向对比系列</span><a href="/invest/baidian/2026h1/">第 1 期 · 2026H1</a><a href="/invest/baidian/2026q3/" class="on">第 2 期 · 2026Q3</a><a href="/invest/baidian/ledger/">结论台账</a></nav>
+</div>
+
+<div class="page">
+
+<div class="page-head">
+  <span class="site-kicker">白电投资 · 横向对比系列 · 第 2 期</span>
+  <h1>白电三巨头 · 三季报横向对比<br>同一个背景下，谁在不一样</h1>
+  <p class="sub">格力电器 · 美的集团 · 海尔智家｜数据截至 2026 年三季报｜发布 2026-11-03<br>先分清三家<strong>共同</strong>的变化（行业共性），再找<strong>只发生在某一家</strong>的差异；每条结论编号进入<a href="/invest/baidian/ledger/">结论台账</a>，下一期回头核对。</p>
+  <div class="badges">
+    <span class="badge badge-g">格力 000651 ¥38.52</span>
+    <span class="badge badge-m">美的 000333 ¥87.66</span>
+    <span class="badge badge-h">海尔 600690 ¥20.55</span>
+  </div>
+</div>
+
+<section>
+<h2>本期要点</h2>
+<ol class="keys">
+  <li><strong>三家同步变化的是行业共性。</strong>应收、存货、应付占营收的比例三家同时上升，与行业"出货降幅远大于零售降幅"（渠道去库存）一致。美的、海尔在三季报出现的应收、存货"不利信号"，相当部分来自行业共性，不全是公司自身的问题。<span class="hx">HX-13</span></li>
+  <li><strong>只有格力的"蓄水池"在缩。</strong>合同负债（经销商提前打款）占营收：格力 9.99% → <span class="neg">6.18%</span>（2021 年以来最低），美的 10.06% → 11.24%，海尔 1.78% → 3.44%。<span class="hx">HX-14</span></li>
+  <li><strong>只有格力的毛利率断崖。</strong>同样的铜价和需求下，Q3 单季毛利率格力 <span class="neg">−5.62pp</span>，美的 −0.47pp，海尔 −0.81pp；核心经营利润格力 −45.3%，美的 −5.0%，海尔持平（剔除一笔疑似一次性收益后约 −25%）。<span class="hx">HX-15</span></li>
+  <li><strong>现金含量偏离最大的是海尔。</strong>前三季度自由现金流 ÷ 归母：格力 1.34、美的 0.86、海尔 <span class="neg">0.23</span>。<span class="hx">HX-17</span></li>
+  <li><strong>下一轮估值的机械变化方向相反。</strong>估值起点（自由现金流五年均值）明年换窗口：格力因 2021 年那笔 −38.18 亿移出而上升（每股约 +8.1 元），美的基本不变，海尔下降（约 −1.1 元）。<span class="hx">HX-18</span></li>
+  <li><strong>第 1 期 12 条结论复核：</strong>证实 4、部分成立 3、推翻 1、待验证 3、不检验 1。被推翻的是"格力利润率逆势攀升"。</li>
+</ol>
+</section>
+
+<section>
+<h2>一、同一个背景</h2>
+<div class="tw"><table>
+<thead><tr><th>项</th><th class="wrap">数据</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>家用空调销量</td><td class="wrap">前三季度 −8.4%；Q1 −2.8% / Q2 −9.3% / <strong>Q3 −15.1%</strong></td><td>产业在线（格力三季报引用）</td></tr>
+<tr><td>空调零售（奥维）</td><td class="wrap">Q3 零售量 −9.4%、零售额 −15.9%；<strong>内销出货 −25.5%</strong>；Q4 预计零售额 −19.2%</td><td>奥维 Q3 季报（转载）</td></tr>
+<tr><td>家电零售额</td><td class="wrap">Q3 1,791 亿元，−10%</td><td>奥维（海尔三季报引用）</td></tr>
+<tr><td>汇率</td><td class="wrap">人民币升值：美的前三季度汇兑及其他财务费用 −81.91 亿（上年 +17.87 亿）；海尔 Q3 对冲后汇兑 −3.64 亿（上年 +1.34 亿）；格力外销占比低，影响小</td><td>三季报</td></tr>
+<tr><td>原材料</td><td class="wrap">铜价高位（三家管理层均提及）；格力"产品销售价格相对稳定"</td><td>三季报</td></tr>
+</tbody></table></div>
+<p>出货降幅（−25.5%）远大于零售降幅（−9.4%），全行业渠道在去库存。厂家的存货、应收、发货节奏都会受影响——这是读下面所有数字的前提。</p>
+</section>
+
+<section>
+<h2>二、同口径数字</h2>
+<div class="box note"><p><strong>口径。</strong>核心经营利润 = 营业收入 − 营业成本 − 税金及附加 − 销售 − 管理 − 研发费用（不含汇兑、投资收益、公允价值变动、减值）；单季 = 1–9 月 − 1–6 月；比率 = 9 月末余额 ÷ 1–9 月营收；自由现金流 = 经营现金流 − 资本开支净额。三家用同一把尺子。</p></div>
+
+<h3>2.1 收入与主业利润（亿元）</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th>格力</th><th>美的</th><th>海尔</th></tr></thead>
+<tbody>
+<tr><td>Q3 营收同比</td><td>−7.97%</td><td>−4.12%</td><td>−10.13%</td></tr>
+<tr><td>前三季度营收同比</td><td>−8.10%</td><td class="pos">+1.19%</td><td>−5.23%</td></tr>
+<tr class="hi"><td>Q3 毛利率（同比）</td><td class="neg">22.69%（−5.62pp）</td><td>25.97%（−0.47pp）</td><td>27.07%（−0.81pp）</td></tr>
+<tr class="hi"><td>Q3 销售费用同比</td><td class="neg">+14.86%</td><td>−10.70%</td><td>−20.97%</td></tr>
+<tr class="hi"><td>Q3 核心经营利润</td><td class="neg">36.02（−45.3%）</td><td>107.73（−5.0%）</td><td>59.26（−0.2%）<br>剔除 14.93 亿：44.33（约 −25%）</td></tr>
+<tr><td>前三季度核心经营利润</td><td>169.96（−15.4%）</td><td class="pos">376.39（+6.15%）</td><td>191.31（−3.4%）</td></tr>
+<tr><td>Q3 归母（同比）</td><td>39.96（−43.31%）</td><td>149.47（+25.93%）</td><td>46.82（−12.31%）</td></tr>
+<tr><td>Q3 扣非（同比）</td><td>36.96（−44.32%）</td><td>91.93（−15.70%）</td><td>35.20（−32.17%）</td></tr>
+</tbody></table></div>
+<p>美的扣非下降，主要是汇兑损失（计入经常性）与对冲收益（计入非经常性）分类错配；核心经营利润前三季度仍在增长。海尔三季报列有 14.93 亿"因税收、会计等法规调整产生的一次性影响"，性质未披露；按排除法推测它计在成本费用行，会抬高"经营利润"和"销售费用下降"的读数，待年报确认。</p>
+
+<h3>2.2 渠道与占款（三季度末余额 ÷ 1–9 月营收）</h3>
+<div class="tw"><table>
+<thead><tr><th>指标</th><th>公司</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026</th></tr></thead>
+<tbody>
+<tr class="hi"><td>合同负债（蓄水池）</td><td>格力</td><td>8.51%</td><td>11.63%</td><td>15.29%</td><td>7.41%</td><td>9.99%</td><td class="neg">6.18%</td></tr>
+<tr class="hi"><td></td><td>美的</td><td>7.78%</td><td>8.94%</td><td>9.98%</td><td>11.76%</td><td>10.06%</td><td class="pos">11.24%</td></tr>
+<tr class="hi"><td></td><td>海尔</td><td>5.49%</td><td>3.32%</td><td>2.83%</td><td>1.74%</td><td>1.78%</td><td class="pos">3.44%</td></tr>
+<tr><td>应收账款</td><td>格力</td><td>7.39%</td><td>9.28%</td><td>10.75%</td><td>12.67%</td><td>10.95%</td><td>11.97%</td></tr>
+<tr><td></td><td>美的</td><td>9.94%</td><td>11.63%</td><td>12.28%</td><td>11.58%</td><td>12.80%</td><td>14.16%</td></tr>
+<tr><td></td><td>海尔</td><td>10.66%</td><td>9.81%</td><td>10.57%</td><td>10.48%</td><td>12.76%</td><td>14.65%</td></tr>
+<tr><td>存货</td><td>格力</td><td>28.72%</td><td>27.49%</td><td>21.67%</td><td>17.27%</td><td>18.47%</td><td>20.92%</td></tr>
+<tr><td></td><td>美的</td><td>12.70%</td><td>13.52%</td><td>11.47%</td><td>13.41%</td><td>13.23%</td><td>15.41%</td></tr>
+<tr><td></td><td>海尔</td><td>21.22%</td><td>21.24%</td><td>20.06%</td><td>18.95%</td><td>18.09%</td><td>20.77%</td></tr>
+<tr><td>应付账款 + 应付票据</td><td>格力</td><td>52.52%</td><td>50.15%</td><td>45.09%</td><td>40.57%</td><td>47.82%</td><td>53.58%</td></tr>
+<tr><td></td><td>美的</td><td>35.85%</td><td>33.25%</td><td>30.94%</td><td>34.35%</td><td>36.33%</td><td>38.44%</td></tr>
+<tr><td></td><td>海尔</td><td>38.71%</td><td>35.24%</td><td>35.40%</td><td>33.00%</td><td>32.08%</td><td>35.85%</td></tr>
+</tbody></table></div>
+<p>应收、存货、应付三项，三家 2026 年都比 2025 年高——这是共性。只有合同负债一项，三家方向分化。</p>
+
+<h3>2.3 现金与下一轮估值起点（亿元）</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th>格力</th><th>美的</th><th>海尔</th></tr></thead>
+<tbody>
+<tr><td>前三季度自由现金流（上年）</td><td>231.92（445.51）</td><td>356.08（509.50）</td><td class="neg">35.08（109.90）</td></tr>
+<tr class="hi"><td>自由现金流 ÷ 归母</td><td class="pos">1.34</td><td>0.86</td><td class="neg">0.23</td></tr>
+<tr><td>下一轮窗口移出的 2021 年</td><td>−38.18</td><td>286.03</td><td>160.47</td></tr>
+<tr><td>2026 年自由现金流估计</td><td>240.64</td><td>273.38</td><td>97.87</td></tr>
+<tr><td>五年均值：当前 → 下一轮</td><td>286.83 → 342.60</td><td>408.88 → 406.35</td><td>155.06 → 142.54</td></tr>
+<tr class="hi"><td>经营部分每股影响</td><td class="pos">+8.08 元</td><td>−0.26 元</td><td class="neg">−1.06 元</td></tr>
+</tbody></table></div>
+<p>2026 年四季度按 2025 年四季度估算，实际以年报为准。格力的上升主要来自 2021 年那笔负数移出窗口，是规则下的机械效应，<strong>不代表经营变好</strong>。</p>
+
+<h3>2.4 估值位置（同一把尺子：零增长、折现率 12%、自由现金流五年均值）</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th>格力</th><th>美的</th><th>海尔</th></tr></thead>
+<tbody>
+<tr><td>净现金 A（不扣运营负债）</td><td>73.47</td><td>73.85</td><td>18.99</td></tr>
+<tr><td>净现金 B（A 打五折）</td><td>57.52</td><td>58.10</td><td>16.04</td></tr>
+<tr><td>净现金 C（全额扣运营负债）</td><td>47.79</td><td>36.90</td><td>6.59</td></tr>
+<tr><td>主方案选用的算法</td><td>C（另含毛利率情景，期望 40.44）</td><td>A</td><td>B</td></tr>
+<tr class="hi"><td>股价（2026-11-02）</td><td>38.52</td><td>87.66</td><td>20.55</td></tr>
+<tr><td>隐含折现率（A / B / C）</td><td>75.3% / 22.1% / 15.5%</td><td>9.05% / 7.07% / 5.46%</td><td>10.72% / 8.92% / 5.81%</td></tr>
+</tbody></table></div>
+<div class="box"><p>同一把尺子下，格力的股价低于三种算法的价值，美的、海尔高于三种算法的价值。<strong>这只说明市场与"零增长、12%"假设之间的距离，不是买卖结论。</strong>市场可能在定价美的的增长、海尔的海外与效率改善，或格力的毛利率下行。每期重算，看这个距离怎么变。<span class="hx">HX-19</span></p></div>
+
+<h3>2.5 股东回报</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th class="wrap">格力</th><th class="wrap">美的</th><th class="wrap">海尔</th></tr></thead>
+<tbody>
+<tr><td>最近一年每股分红</td><td class="wrap">3.0 元；2026 中期 1 元预案待 11-25 股东会</td><td class="wrap">4.3 元（2026 中期 0.5 元已获批）</td><td class="wrap">约 1.16 元（按 2025 年分红率 55.0% 推算）</td></tr>
+<tr><td>股息率</td><td>7.79%</td><td>4.91%</td><td>约 5.6%</td></tr>
+<tr><td>书面分红下限</td><td class="wrap">无比例承诺</td><td class="wrap">下限低（≥ 三年均可分配利润 30%），2025 年实际 73.6%</td><td class="wrap"><strong>2026 年 ≥ 58%，2027–28 年 ≥ 60%</strong></td></tr>
+<tr><td>2026 年回购</td><td class="wrap">50–100 亿，≥ 70% 注销；至 10-28 23.25 亿</td><td class="wrap">65–130 亿，全部注销；至 10-22 112.26 亿</td><td class="wrap">A 股 30–60 亿用于<strong>激励，不注销</strong>（至 10-31 23.36 亿）；D 股 7,939 万股待注销</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>三、相同的反应：行业共性</h2>
+<p><span class="hx">HX-13</span><strong>应收、存货、应付占营收三家同步上升，主要是行业共同因素</strong>（渠道去库存、票据结算增多）。证据：三家方向一致；行业出货 −25.5% 而零售 −9.4%；三家应付票据同比大增（格力 +49.6%、美的 +43.2%、海尔 +19.7%）。</p>
+<p><strong>对单家判断的含义：</strong>美的三季报的两项不利信号（应收、存货，触发了"上下游地位稳固"这条判断的复核）和海尔的应收不利信号，都应先扣除行业共性再看。下一期的看法：<strong>某一家的比率是否比同行恶化得更多</strong>。</p>
+<p class="src-note">检验点：2026 年报三家同口径比率。若某一家继续上升而另两家回落，说明是该公司自身的问题。状态：待验证【推测】。</p>
+</section>
+
+<section>
+<h2>四、显著差异：发现、分析与判断</h2>
+
+<h3><span class="hx">HX-14</span>只有格力的蓄水池在缩</h3>
+<div class="tw"><table>
+<thead><tr><th></th><th>合同负债同比</th><th>占营收（2025 → 2026）</th></tr></thead>
+<tbody>
+<tr><td>格力</td><td class="neg">−43.18%</td><td>9.99% → 6.18%（2021 年以来最低）</td></tr>
+<tr><td>美的</td><td>+13.05%</td><td>10.06% → 11.24%（三季度末历史最高余额）</td></tr>
+<tr><td>海尔</td><td>+83.71%（基数为低点）</td><td>1.78% → 3.44%</td></tr>
+</tbody></table></div>
+<div class="tw"><table>
+<thead><tr><th class="wrap">竞争性假设</th><th class="wrap">支持</th><th class="wrap">不支持</th></tr></thead>
+<tbody>
+<tr><td class="wrap">① 经销商对格力的打款意愿下降</td><td class="wrap">同行同期蓄水池扩大；格力 Q3 单季收现比 97.78%（上年 115.35%）</td><td class="wrap">格力应收同比仅 +0.46%，没有用赊账换出货</td></tr>
+<tr><td class="wrap">② 格力主动不向渠道压货</td><td class="wrap">应收、存货同比变化小（三季报判定 3:1 支持"份额提升"）</td><td class="wrap">美的取消冷年开盘、也不压货，蓄水池却在扩大</td></tr>
+<tr><td class="wrap">③ 行业结算方式变化</td><td class="wrap">—</td><td class="wrap">美的、海尔同期上升，不是全行业现象</td></tr>
+</tbody></table></div>
+<p><strong>判断【推测】：</strong>这是格力特有的现象。假设②能解释"格力没有压货"，但解释不了"为什么同行不压货，蓄水池也能变大"。按"合同负债 = 销售蓄水池"的读法，这指向格力未来的销售储备弱于同行。</p>
+<p class="src-note">检验点：2026 年报格力合同负债同比 ≤ −20%，而美的、海尔 ≥ 0 → 成立。</p>
+
+<h3><span class="hx">HX-15</span>只有格力的毛利率断崖</h3>
+<p>Q3 单季毛利率：格力 −5.62pp，美的 −0.47pp，海尔 −0.81pp。成本上涨三家都有，<strong>单靠成本解释不了格力的幅度</strong>。格力管理层的说法是"坚持'卷品质不卷价格'……产品销售价格相对稳定，对公司利润产生了一定影响"。竞争性假设：价格不跟涨、成本转嫁不出去；营收下滑时固定成本摊不薄；产品与渠道结构变化（季报无分部，无法拆分）。</p>
+<p><strong>判断【推测】：</strong>本季检验的是"成本上涨时向下游转嫁的能力"，格力明显弱于同行。这正压在格力最关键的变量——内销毛利率最终稳在哪里——上。</p>
+<p class="src-note">检验点：2026 年报格力内销毛利率（低于 33% 视为让价长期化）；2027 年一季度单季毛利率回到 25% 以上则偏阶段性。</p>
+
+<h3><span class="hx">HX-16</span>费用弹性方向相反</h3>
+<p>Q3 销售费用：格力 +14.86%（营收 −7.97%），美的 −10.70%，海尔 −20.97%（可能含一次性收益）。格力收入下滑时费用反升，可能是加大渠道投放或补贴——"不降价"之外的另一种让利方式，也可能是确认时点。季报无附注。</p>
+<p class="src-note">检验点：2026 年报格力销售费用附注明细。</p>
+
+<h3><span class="hx">HX-17</span>海尔的现金含量显著偏离</h3>
+<p>前三季度自由现金流 ÷ 归母：海尔 0.23，远低于格力 1.34、美的 0.86。经营现金流 −39%，资本开支反增（国内 36 亿、海外 38 亿，美国、泰国建厂）。管理层归因于"回款减少、海外保理节奏调整"，但上半年保理余额只降了 5.21 亿，同期应收增加 58.89 亿——保理最多解释约 9%。</p>
+<p class="src-note">检验点：2026 年海尔自由现金流 ≥ 160.47 亿（否则估值起点下降）；年报应收附注。</p>
+
+<h3>多元化缓冲：美的的收入没有跟着行业降</h3>
+<p>前三季度营收：美的 +1.19%，海尔 −5.23%，格力 −8.10%。美的的支撑来自楼宇科技 +10%、机器人与自动化 +10%（管理层），以及海外自有品牌 Q3 +20% 以上（管理层，经媒体转述）；工业技术 −13% 跟着整机需求下降。这证实了第 1 期"空调需求走弱时美的受影响最小"的判断。</p>
+</section>
+
+<section>
+<h2>五、抽象一层：三家价值的支点，本季各被测出了什么</h2>
+<p>同一冲击（需求下滑、成本上升、汇率升值）下，三家的价值分别立在不同的支点上。下表是给复盘用的框架【推测，需验证】，不是结论。<span class="hx">HX-20</span></p>
+<div class="grid3">
+  <div class="card c-g"><div class="n">格力</div><p><strong>支点：</strong>空调定价权 + 现金回报</p><p><strong>本季：</strong>现金回报端成立（自由现金流 ÷ 归母 1.34，中期分红维持）；定价权端受压（毛利率 −5.62pp，蓄水池独缩）</p><p><strong>下一步：</strong>年报内销毛利率；合同负债是否继续独降</p></div>
+  <div class="card c-m"><div class="n">美的</div><p><strong>支点：</strong>多元化 + 资本回报</p><p><strong>本季：</strong>两端都成立（核心经营利润前三季度 +6.15%，注销式回购 112 亿）；但价格里的预期较高（隐含折现率 9.05%）</p><p><strong>下一步：</strong>全年核心经营利润增速；年报"运营负债 ÷ 营收"是否守住 60%</p></div>
+  <div class="card c-h"><div class="n">海尔</div><p><strong>支点：</strong>海外布局 + 效率提升</p><p><strong>本季：</strong>收入与现金端偏弱（Q3 营收 −10.13%，现金含量 0.23）；利润端读数待澄清（14.93 亿一次性收益的位置）</p><p><strong>下一步：</strong>14.93 亿的性质；全年自由现金流；应收与蓄水池</p></div>
+</div>
+</section>
+
+<section>
+<h2>六、第 1 期（2026H1）结论复核</h2>
+<p>第 1 期于 2026-09-12 发布。以下按三季报逐条核对，完整记录见<a href="/invest/baidian/ledger/">结论台账</a>。</p>
+<div class="tw"><table>
+<thead><tr><th>编号</th><th class="wrap">第 1 期结论</th><th>状态</th><th class="wrap">依据</th></tr></thead>
+<tbody>
+<tr><td>HX-01</td><td class="wrap">格力"印钞机在减速，但没坏"</td><td><span class="tag t-part">部分成立</span></td><td class="wrap">现金最厚成立；"没坏"不成立（Q3 核心经营利润 −45.3%）</td></tr>
+<tr><td>HX-02</td><td class="wrap">格力"利润率逆势攀升"（净利率 12% → 17%）</td><td><span class="tag t-no">推翻</span></td><td class="wrap">Q3 单季归母净利率 10.9%（上年 17.7%）。之前的判断错了</td></tr>
+<tr><td>HX-03</td><td class="wrap">格力 7.7% 股息率是"安全垫"</td><td><span class="tag t-part">部分成立</span></td><td class="wrap">中期分红维持；滚动利润降至 248 亿，覆盖收窄</td></tr>
+<tr><td>HX-04</td><td class="wrap">美的"唯一 10 年净利润不降"</td><td><span class="tag t-ok">证实</span></td><td class="wrap">前三季度归母 +9.27%，核心经营利润 +6.15%</td></tr>
+<tr><td>HX-05</td><td class="wrap">美的 B 端第二曲线成型（占 27%）</td><td><span class="tag t-part">部分成立</span></td><td class="wrap">楼宇、机器人 +10%，工业技术 −13%；占比未提升</td></tr>
+<tr><td>HX-06</td><td class="wrap">美的海外占比 40%+</td><td><span class="tag t-ok">证实</span></td><td class="wrap">中报 43.50%</td></tr>
+<tr><td>HX-07</td><td class="wrap">海尔"底部反转候选"</td><td><span class="tag t-wait">待验证</span></td><td class="wrap">偏不利：Q3 营收 −10.13%，年内最差</td></tr>
+<tr><td>HX-08</td><td class="wrap">人民币走强时美的、海尔利润承压</td><td><span class="tag t-ok">证实</span></td><td class="wrap">扣非层面证实；美的归母被对冲收益抵消</td></tr>
+<tr><td>HX-09</td><td class="wrap">空调需求走弱时格力首当其冲、美的受影响最小</td><td><span class="tag t-ok">证实</span></td><td class="wrap">格力 Q3 归母 −43.31%；美的营收唯一正增长</td></tr>
+<tr><td>HX-10</td><td class="wrap">商誉减值风险</td><td><span class="tag t-wait">待验证</span></td><td class="wrap">美的前三季度资产减值 18.82 亿；年报判定</td></tr>
+<tr><td>HX-11</td><td class="wrap">格力中高端与行业降级错配，可能流失份额</td><td><span class="tag t-wait">待验证</span></td><td class="wrap">份额数据缺；HX-14、HX-15 为间接线索</td></tr>
+<tr><td>HX-12</td><td class="wrap">买卖倾向表述（"首选""更佳买点"等）</td><td><span class="tag t-wait">不检验</span></td><td class="wrap">不属于本系列的研究边界，本期起不再给出</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>七、对旧结论的更正</h2>
+<div class="box warn"><p>10 月 30 日的三季度节点分析称美的"主业利润连续两个季度下滑"，依据是扣非利润，受汇兑分类错配影响。按本系列的同口径核心经营利润：<strong>上半年 +11.40%（268.66 vs 241.16 亿），Q3 −5.02%</strong>——只有三季度下滑。</p></div>
+</section>
+
+<div class="src-note">
+  数据：三家 2026 年三季报、半年报原文；Power BI 模型三季度末余额；iFinD（股价 2026-11-02 收盘）；巨潮资讯网公告原文。行业数据为公司三季报引用的产业在线、奥维云网数据。<br>
+  证据等级：未标注的为财报数字或其算术；【推测】为需验证的判断，均有检验点。<br>
+  本页是个人研究笔记，只做事实对照与带检验点的推测，不给买卖建议，不下"低估 / 高估"结论。
+</div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="disc"><b>免责声明</b>：本页为个人研究笔记，基于公开财报与第三方数据整理，不构成任何投资建议。数据截至 2026 年三季度报告，口径说明见正文。</div>
+  <div class="row"><span><a href="/invest/#baidian">← 返回 白电投资</a><span class="dot">·</span><a href="/invest/baidian/ledger/">结论台账</a><span class="dot">·</span><a href="/invest/">做投资</a><span class="dot">·</span><a href="/">主页</a></span><span>白电投资 · 横向对比第 2 期 ｜ 2026-11-03</span></div>
+</footer>
+</body>
+</html>
