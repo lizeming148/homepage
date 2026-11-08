@@ -41,6 +41,8 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
 .card:target{border-color:var(--accent)}
 .ch{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .ch h3{font-family:var(--serif);font-size:1.08rem;margin:0;text-wrap:balance}
+.dates a{color:inherit;border-bottom:1px dotted var(--text3)}
+.dates a:hover{color:var(--accent);border-color:var(--accent);text-decoration:none}
 .dates{font-size:.74rem;color:var(--text3);font-variant-numeric:tabular-nums;margin-top:2px}
 .claim{font-family:var(--serif);font-size:1.02rem;line-height:1.95;margin:12px 0 14px}
 .blk{font-size:.86rem;color:var(--text2);margin-top:10px}
@@ -68,6 +70,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
 <div class="wrap">
 <h1>只言片语</h1>
 <p class="lede">2020 年到 2025 年，我在投资笔记里断断续续写下了很多东西。2026 年 10 月，我把其中反复出现的念头一条条拎出来复盘。每一条都写着证据，也写着它站不住的地方。有些被反复印证，有些只出现过一次，还有几条彼此打架。状态会变，今天印证的，明天也许就被推翻。</p>
+<p class="lede" style="font-size:.9rem;margin-top:-8px">每条标题下的日期可以点开，看当时<a href="/invest/journal/">投资日记</a>里的原话。</p>
 
 <div class="legend">
   <span><span class="pill ok">多次印证</span>不止一次出现，方向一致</span>
@@ -81,7 +84,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   <div class="gh"><h2>市场认知</h2><span>14 条 · 关于市场和资产</span></div>
 
   <article class="card" id="concentrated-days">
-    <div class="ch"><div><h3>收益集中在极少数交易日</h3><div class="dates">2020.11 · 2021.5.14 · 2024.9.24</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>收益集中在极少数交易日</h3><div class="dates"><a href="/invest/journal/#d-2020-11-24">2020.11</a> · <a href="/invest/journal/#d-2021-05-14">2021.5.14</a> · <a href="/invest/journal/#d-2024-10-02">2024.9.24</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">一年的大部分涨幅集中在极少数交易日。那几天不在场，就会错过主升浪。</p>
     <div class="blk"><h4>证据</h4><ul>
       <li>2020.11 我读到的研究：错过最大涨幅的 10 天，长期回报会大幅缩水。</li>
@@ -92,7 +95,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="mean-reversion">
-    <div class="ch"><div><h3>均值回归的前提是盈利能力稳定</h3><div class="dates">2022.8.25 · 2023.2.14 · 2024.7</div></div><span class="pill conf">存在冲突</span></div>
+    <div class="ch"><div><h3>均值回归的前提是盈利能力稳定</h3><div class="dates"><a href="/invest/journal/#d-2022-08-25">2022.8.25</a> · <a href="/invest/journal/#d-2023-02-14">2023.2.14</a> · <a href="/invest/journal/#d-2024-07-01">2024.7</a></div></div><span class="pill conf">存在冲突</span></div>
     <p class="claim">估值低，可能是因为市场在提前定价 ROE 的下行。均值回归只在底层盈利稳定时才可靠。</p>
     <div class="blk"><h4>证据</h4><ul>
       <li>2022.8.25 银行 ETF：ROE 持续下行，浮亏约 10%。</li>
@@ -103,7 +106,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="value-trap">
-    <div class="ch"><div><h3>行业指数与单一企业的价值陷阱不同</h3><div class="dates">2025.8 · 2025.8.25</div></div><span class="pill conf">存在冲突</span></div>
+    <div class="ch"><div><h3>行业指数与单一企业的价值陷阱不同</h3><div class="dates"><a href="/invest/journal/#d-2025-08-02">2025.8</a> · <a href="/invest/journal/#d-2025-08-25">2025.8.25</a></div></div><span class="pill conf">存在冲突</span></div>
     <p class="claim">行业指数的成分股会新陈代谢，只要行业本身不消亡，周期低谷就不算死陷阱。单一企业如果盈利不可逆地崩塌，可能就是真陷阱。</p>
     <div class="blk"><h4>证据</h4><p>2025.8.25 回看银行、医药的定投；2025.8 医药持仓基本回本。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>这个结论是在医药回本之后形成的，结果有可能影响了结论。和「均值回归的前提是盈利能力稳定」的冲突还没调和：如果行业确实在衰退，指数也照样救不了。</p></div>
@@ -111,7 +114,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="pe-before-roe">
-    <div class="ch"><div><h3>PE 见底早于 ROE 改善</h3><div class="dates">2025.8.25</div></div><span class="pill single">单样本待验证</span></div>
+    <div class="ch"><div><h3>PE 见底早于 ROE 改善</h3><div class="dates"><a href="/invest/journal/#d-2025-08-25">2025.8.25</a></div></div><span class="pill single">单样本待验证</span></div>
     <p class="claim">市场对盈利恢复的预期，总是先于财报上的实际改善。估值回升会比 ROE 回升来得早。</p>
     <div class="blk"><h4>证据</h4><p>2025.8.25 回看白酒：2012–2014 年 PE 在 20 倍以内；2014–2016 年 ROE 降到 20% 左右；五粮液 2013 年利润降 19%、2014 年再降 27%；行业到 2015 年才企稳。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>只有白酒一个行业案例，还没有在其他行业上检验过。</p></div>
@@ -119,7 +122,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="dividend-illusion">
-    <div class="ch"><div><h3>红利价格指数有除权假象</h3><div class="dates">2021.9 · 2022.4 · 2024.7 · 2025.8</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>红利价格指数有除权假象</h3><div class="dates"><a href="/invest/journal/#d-2021-09">2021.9</a> · <a href="/invest/journal/#d-2022-04-21">2022.4</a> · <a href="/invest/journal/#d-2024-07-01">2024.7</a> · <a href="/invest/journal/#d-2025-08-02">2025.8</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">高分红指数的价格点位每年都会因除权被拉低，看起来像多年横盘。评估真实回报必须用全收益指数。</p>
     <div class="blk"><h4>证据</h4><p>2021.9 第一次意识到；2025.8 正式落实为"必须用全收益指数"，中间隔了约 4 年。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>用点位作为定投触发条件同样受这个影响（见 2022.4 用点位设阈值、2024.7 的补记）。</p></div>
@@ -131,7 +134,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="smart-beta-pe">
-    <div class="ch"><div><h3>策略型指数的 PE 口径</h3><div class="dates">2021.9.15 · 2024.7</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>策略型指数的 PE 口径</h3><div class="dates"><a href="/invest/journal/#d-2021-09-15">2021.9.15</a> · <a href="/invest/journal/#d-2024-07-01">2024.7</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">中证红利这类策略指数（Smart Beta），不能直接用市值加权的 PE。要先确认数据源的计算口径。</p>
     <div class="blk"><h4>证据</h4><p>2021.9.15 改用理杏仁或中证官网的 PE2；2024.7 又补充了投资数据网作为参照。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>口径换了之后，历史分位要用同一口径重新算一遍，不能和旧口径混着比。</p></div>
@@ -139,7 +142,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="broad-bottom">
-    <div class="ch"><div><h3>宽基大底罕见，窗口短</h3><div class="dates">2024.7 · 2024.10 · 2024.12</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>宽基大底罕见，窗口短</h3><div class="dates"><a href="/invest/journal/#d-2024-07-01">2024.7</a> · <a href="/invest/journal/#d-2024-10-02">2024.10</a> · <a href="/invest/journal/#d-2024-12-15">2024.12</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">宽基指数的历史级底部很少见，可操作的窗口往往不到 6 个月，出现时应该重仓把握。对普通投资者来说，在极度悲观时抓宽基，比挑个股更符合能力圈。</p>
     <div class="blk"><h4>证据</h4><ul>
       <li>2024.7：2020–2024 年沪深300 PE&lt;11.5、银行 PE&lt;4.7 这样的窗口只出现过 1 次。</li>
@@ -150,7 +153,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="graham">
-    <div class="ch"><div><h3>格指大于 2 时买平时贵的资产</h3><div class="dates">2022.4 · 2022.10 · 2023.1 · 2024.4–7</div></div><span class="pill ok">多次印证 · 执行待验证</span></div>
+    <div class="ch"><div><h3>格指大于 2 时买平时贵的资产</h3><div class="dates"><a href="/invest/journal/#d-2022-04-21">2022.4</a> · <a href="/invest/journal/#d-2022-10-11">2022.10</a> · <a href="/invest/journal/#d-2023-01-30">2023.1</a> · 2024.4–7</div></div><span class="pill ok">多次印证 · 执行待验证</span></div>
     <p class="claim">格指 = 全 A 盈利收益率 ÷ 10 年期国债收益率。格指突破 2.0 代表全市场极端低估，这时候除了常规的低估品种，还应该去买平时很少便宜的"贵指数"。</p>
     <div class="blk"><h4>证据</h4><p>2022.4 和 2022.10 格指两次突破 2.0；2024.4–7 连续 3 个月大于 2.0。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>规则 2023.1 建立以后，笔记里没有看到按"买贵指数"执行的记录。</p></div>
@@ -166,7 +169,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="window">
-    <div class="ch"><div><h3>估值参考窗口约 10 年</h3><div class="dates">2025.8.2</div></div><span class="pill single">单样本待验证</span></div>
+    <div class="ch"><div><h3>估值参考窗口约 10 年</h3><div class="dates"><a href="/invest/journal/#d-2025-08-02">2025.8.2</a></div></div><span class="pill single">单样本待验证</span></div>
     <p class="claim">沪深 300 的历史估值参考窗口取 10 年左右比较合理。用 20 年高增长期的数据，会抬高基准 PE，让买入阈值偏高。</p>
     <div class="blk"><h4>证据</h4><p>2025.8.2，吸收葫芦军师的观点后修正。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>窗口长度本身是一个参数，取 10 年的依据还没有用历史数据检验过。</p></div>
@@ -177,7 +180,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="gold">
-    <div class="ch"><div><h3>黄金只在特定条件下配置</h3><div class="dates">2021.1.6 · 2023.7.4 · 2024.7 · 2024.12</div></div><span class="pill single">单样本待验证</span></div>
+    <div class="ch"><div><h3>黄金只在特定条件下配置</h3><div class="dates"><a href="/invest/journal/#d-2021-01-13">2021.1.6</a> · <a href="/invest/journal/#d-2023-07-04">2023.7.4</a> · <a href="/invest/journal/#d-2024-07-01">2024.7</a> · <a href="/invest/journal/#d-2024-12-15">2024.12</a></div></div><span class="pill single">单样本待验证</span></div>
     <p class="claim">黄金不生息，长期回报有限，但和股票负相关。只有同时满足"金价在绝对低位"和"股市估值风险巨大"时才适合配置。</p>
     <div class="blk"><h4>证据</h4><p>2021.1.6 买入，2023.7.4 卖出，持有 909 天，收益约 10%，年化 4.24%；如果没卖，到 2024.7 浮盈约 41%。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>2024.12 我自己写下："特殊配置时点"究竟怎么界定，至今没有答案。用卖出后的涨幅来评价这次卖出，属于用结果评价决策。</p></div>
@@ -185,21 +188,21 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="buy-logic-sell">
-    <div class="ch"><div><h3>买入逻辑就是卖出理由</h3><div class="dates">2024.10</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>买入逻辑就是卖出理由</h3><div class="dates"><a href="/invest/journal/#d-2024-10-02">2024.10</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">一笔投资因为什么买入，就在那个逻辑失效时卖出。</p>
     <div class="blk"><h4>证据</h4><p>2024.10 中国银行因股息率而买，规则是股息率跌破 4% 就卖；沪深300 的规则是 PE 14.5 卖出。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>中证红利只写了"分位过高"，卖出阈值还没有量化。</p></div>
   </article>
 
   <article class="card" id="sunk-cost">
-    <div class="ch"><div><h3>持仓成本是沉没成本</h3><div class="dates">2023.2.3</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>持仓成本是沉没成本</h3><div class="dates"><a href="/invest/journal/#d-2023-02-03">2023.2.3</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">持仓成本对资产未来的价值没有任何指导意义。浮盈 30% 不敢加、套牢 30% 也不敢加，都是被成本锚定了。</p>
     <div class="blk"><h4>边界 / 反例</h4><p>这条和"用卖出后的价格评价卖出"属于同一类问题，都是被价格本身绑架。</p></div>
     <div class="rel">关联：<a href="#single-result">用单次结果下结论</a></div>
   </article>
 
   <article class="card" id="real-bad-news">
-    <div class="ch"><div><h3>低估买入必然伴随实质利空</h3><div class="dates">2025.8.25</div></div><span class="pill ok">多次印证 · 原则层面</span></div>
+    <div class="ch"><div><h3>低估买入必然伴随实质利空</h3><div class="dates"><a href="/invest/journal/#d-2025-08-25">2025.8.25</a></div></div><span class="pill ok">多次印证 · 原则层面</span></div>
     <p class="claim">逆向买入的标的，短期内一定是出了真问题。唯一需要反复核实的是：问题是暂时的还是永久的。真正要防的风险有两个：自己资金的久期，以及商业模式是否被不可逆地破坏。</p>
     <div class="blk"><h4>证据</h4><p>2025.8.25；白酒 2012–2016 年的案例。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>笔记里没有写"暂时还是永久"具体怎么判断，目前只有原则。</p></div>
@@ -207,7 +210,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="circle">
-    <div class="ch"><div><h3>能力圈与观察仓</h3><div class="dates">2020.10.23 · 2024.12 · 2025.4</div></div><span class="pill single">单样本待验证</span></div>
+    <div class="ch"><div><h3>能力圈与观察仓</h3><div class="dates"><a href="/invest/journal/#d-2020-10-23">2020.10.23</a> · <a href="/invest/journal/#d-2024-12-15">2024.12</a> · <a href="/invest/journal/#d-2025-04">2025.4</a></div></div><span class="pill single">单样本待验证</span></div>
     <p class="claim">看不懂的不投，但可以用小额观察仓逼自己持续跟踪，在实践中扩展认知。</p>
     <div class="blk"><h4>证据</h4><p>2020.10.23 能源"看不懂不投"，之后两年涨了约 100%；2024.12 修正为"先少量建仓保持跟踪"；2025.4 提出观察仓，标的包括中国海油、牧原转债。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>这次修正主要是被能源事后的涨幅推动的，触发它的是结果。观察仓需要写清楚开仓条件和规模上限，否则可能变成新的规模漂移入口。</p></div>
@@ -221,32 +224,32 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   <p class="gintro">这一组最难写。市场的规律可以从别人身上看到，自己的毛病只能从自己的笔记里一条条翻出来。</p>
 
   <article class="card" id="inertia">
-    <div class="ch"><div><h3>延续强，启动弱</h3><div class="dates">2022.4 · 2025.1.7 · 2025.4.7</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>延续强，启动弱</h3><div class="dates"><a href="/invest/journal/#d-2022-04-21">2022.4</a> · <a href="/invest/journal/#d-2025-04-14">2025.4.7</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">我执行已经在跑的计划很有力，开新仓位却很难。我的逆向主要是靠"一次决定之后的长期惯性定投"实现的。</p>
     <div class="blk"><h4>证据</h4><p>医药定投从 2022.4 一直持续到 2024 年；恒指 18000、腾讯 10 倍、证券 PB 1.40、沪深300 PE&lt;11 这些条件都出现过，都没有执行或只执行了很少。</p></div>
-    <div class="blk"><h4>边界 / 反例</h4><p>2025.1.7 和 2025.4.7 两次恐慌日加仓都很果断，那两次是在有余裕的状态下（见「逆向能力取决于余裕」）。</p></div>
+    <div class="blk"><h4>边界 / 反例</h4><p>2025.4.7 关税暴跌日的加仓很果断，那次是在有余裕的状态下（见「逆向能力取决于余裕」）。</p></div>
     <div class="rel">关联：<a href="#slack">逆向能力取决于余裕</a><a href="#drift">规模漂移</a></div>
   </article>
 
   <article class="card" id="slack">
-    <div class="ch"><div><h3>逆向能力取决于余裕</h3><div class="dates">2022.10 · 2024.9.20 · 2025.1.7 · 2025.4.7</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>逆向能力取决于余裕</h3><div class="dates"><a href="/invest/journal/#d-2022-10-11">2022.10</a> · <a href="/invest/journal/#d-2024-10-02">2024.9.20</a> · <a href="/invest/journal/#d-2025-04-14">2025.4.7</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">手里有子弹、有利润垫的时候，我是好的逆向者；有资金约束的时候，我会和大众一样收缩。</p>
     <div class="blk"><h4>证据</h4><ul>
-      <li>果断的两次：2025.1.7、2025.4.7 两次恐慌日都加了仓，后一次力度更大，都在 924 浮盈之后。</li>
+      <li>果断的一次：2025.4.7 关税暴跌日大笔加仓，在 924 浮盈之后，手里也还有子弹。</li>
       <li>退缩的两次：2022.10 只按部就班；2024.9.20 断投医药，我自己归因为资金约束 50%、策略修正 30%、情绪 20%。</li></ul></div>
-    <div class="blk"><h4>边界 / 反例</h4><p>样本只有 4 次，但方向一致。</p></div>
+    <div class="blk"><h4>边界 / 反例</h4><p>样本只有 3 次，方向一致，但"果断"的一侧只有一次。</p></div>
     <div class="rel">关联：<a href="#inertia">延续强，启动弱</a><a href="#calm">平静的自述不完整</a></div>
   </article>
 
   <article class="card" id="regret">
-    <div class="ch"><div><h3>遗憾偏向错过上涨</h3><div class="dates">2022.10</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>遗憾偏向错过上涨</h3><div class="dates"><a href="/invest/journal/#d-2022-10-11">2022.10</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">我的复盘大多在懊悔"错过了上涨"，很少反思"押得太重"。我眼中的自己比实际行为更保守。</p>
     <div class="blk"><h4>证据</h4><p>能源、黄金、恒指、腾讯、沪深300 未止盈、红利停投、2022.10、924，至少 8 处是懊悔踏空；质疑医药仓位规模的地方是 0 处。</p></div>
     <div class="rel">关联：<a href="#drift">规模漂移</a></div>
   </article>
 
   <article class="card" id="drift">
-    <div class="ch"><div><h3>规模漂移</h3><div class="dates">2022.4.21 · 2022.10 · 2024.7 · 2024.10</div></div><span class="pill chk">待核实</span></div>
+    <div class="ch"><div><h3>规模漂移</h3><div class="dates"><a href="/invest/journal/#d-2022-04-21">2022.4.21</a> · <a href="/invest/journal/#d-2022-10-11">2022.10</a> · <a href="/invest/journal/#d-2024-07-01">2024.7</a> · <a href="/invest/journal/#d-2024-10-02">2024.10</a></div></div><span class="pill chk">待核实</span></div>
     <p class="claim">计划启动之后，规模会远远超出最初的设定，而且过程中没有任何节点要求我重新论证。</p>
     <div class="blk"><h4>证据</h4><p>2022.4.21 医药定投写的是"为期 3 个月"；2022.10 已经持续 7 个月，规模早已超出计划；按 2024.10 的盈亏除以收益率推算，医药约占权益投入的六成。同一时期沪深300 加红利合计约 12%，而我在 2024.7 认定只有它俩真正有效。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>推算的前提是收益率按持仓成本计算，还要用实际持仓明细核对。</p></div>
@@ -254,7 +257,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="buy-lower">
-    <div class="ch"><div><h3>想买更低导致错过</h3><div class="dates">2020.11 · 2021.5 · 2022.3 · 2024 · 2024.10</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>想买更低导致错过</h3><div class="dates"><a href="/invest/journal/#d-2020-11-24">2020.11</a> · <a href="/invest/journal/#d-2021-05-14">2021.5</a> · <a href="/invest/journal/#d-2022-03-09">2022.3</a> · 2024 · <a href="/invest/journal/#d-2024-10-02">2024.10</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">在已经低估的区间里还想抄得更低，这个模式反复让我错过。</p>
     <div class="blk"><h4>证据</h4><p>2020.11 挂单价太低没成交；2021.5 等证券 PB 1.5；2022.3 给自己设"PB 1.40 再试"；2024 等沪深300 的 PE"向 11 靠拢"。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>2021.5 和 2024.10 我两次都写下了"涨幅集中在少数几天"，但这个认知一直没有变成规则。</p></div>
@@ -262,7 +265,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="single-result">
-    <div class="ch"><div><h3>用单次结果下结论</h3><div class="dates">2020.12</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>用单次结果下结论</h3><div class="dates"><a href="/invest/journal/#d-2020-12-26">2020.12</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">我常用一次结果去评价决策，并据此改写规则。</p>
     <div class="blk"><h4>证据</h4><p>大跌加投只看了 2020.12 一次就否定；黄金用卖出后涨了 41% 来复盘；能源用之后涨了 100% 来修正能力圈；「行业指数与单一企业的价值陷阱不同」的结论形成在医药回本之后。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>结果确实包含信息，问题出在"只有一个样本"和"决策质量与结果混在一起"。</p></div>
@@ -270,14 +273,14 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
   </article>
 
   <article class="card" id="calm">
-    <div class="ch"><div><h3>平静的自述不完整</h3><div class="dates">2020.7.6 · 2022.4 · 2024.9.20</div></div><span class="pill ok">多次印证</span></div>
+    <div class="ch"><div><h3>平静的自述不完整</h3><div class="dates"><a href="/invest/journal/#d-2020-07-06">2020.7.6</a> · <a href="/invest/journal/#d-2022-04-21">2022.4</a> · <a href="/invest/journal/#d-2024-10-02">2024.9.20</a></div></div><span class="pill ok">多次印证</span></div>
     <p class="claim">我持有时确实平静，但下单那一刻会紧张；有压力时，我和大众的反应是一样的。我习惯拿"别人慌、我不慌"来确认自己与众不同，这会让我低估自己和大众相同的那一面。</p>
     <div class="blk"><h4>证据</h4><p>2020.7.6 写"毫无波澜"；2022.4 写下单时"心跳加速"，于是设计了泡茶缓冲；2024.9.20 断投。</p></div>
     <div class="rel">关联：<a href="#slack">逆向能力取决于余裕</a></div>
   </article>
 
   <article class="card" id="others">
-    <div class="ch"><div><h3>关于别人的规律与关于自己的规律</h3><div class="dates">2025.8.26</div></div><span class="pill single">单样本待验证</span></div>
+    <div class="ch"><div><h3>关于别人的规律与关于自己的规律</h3><div class="dates"><a href="/invest/journal/#d-2025-08-26">2025.8.26</a></div></div><span class="pill single">单样本待验证</span></div>
     <p class="claim">我擅长从自己的经历中提炼关于别人的规律，比较少提炼关于自己的规律。</p>
     <div class="blk"><h4>证据</h4><p>2025.8.26 摆摊：卖水一次成功后，买保温桶、扩张到冰棍，结果冰棍一支没卖出去。我提炼的教训是"上市公司管理层的资本开支陷阱"，但这个过程和我的医药规模漂移在结构上是同一件事：顺利之后，扩张得比验证快。</p></div>
     <div class="blk"><h4>边界 / 反例</h4><p>投资之外的领域是否也有这个模式，还需要我自己检验。</p></div>
@@ -291,8 +294,8 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(1.8rem,5vw,2.4rem);m
 <footer class="site-footer">
   <div class="disc"><b>免责声明</b>：本页为个人投资笔记的复盘，记录的是我自己的认知和错误，不构成任何投资建议。</div>
   <div class="row">
-    <span><a href="/#thoughts">← 返回 投资思考</a><span class="dot">·</span><a href="/">首页</a></span>
-    <span>只言片语 ｜ 2026-11-08</span>
+    <span><a href="/#thoughts">← 返回 投资思考</a><span class="dot">·</span><a href="/invest/journal/">投资日记</a><span class="dot">·</span><a href="/">首页</a></span>
+    <span>只言片语 ｜ 2026-11-08 · 2025.4.7 更正</span>
   </div>
 </footer>
 </body>
