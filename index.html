@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>李泽民 · 个人投资网站</title>
-    <meta name="description" content="李泽民的个人投资网站：投资思考、个股研究、指数估值跟踪与自用小工具。价值投资的路是孤独的，我在这里点一盏灯。">
+    <meta name="description" content="李泽民的个人投资网站：亲笔投资手记与回望、个股研究、指数估值跟踪与自用小工具。价值投资的路是孤独的，我在这里点一盏灯。">
     <link rel="icon" type="image/svg+xml" href="/assets/seal.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,6 +179,33 @@
         .qmore a { color: var(--accent); font-weight: 500; }
         .qmore a:hover { text-decoration: underline; }
 
+
+        /* 手记：纸页式主卡（横格线 + 页边批注） */
+        .nb {
+            background-color: var(--card);
+            background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 31px, var(--border-soft) 31px, var(--border-soft) 32px);
+            border: 1px solid var(--border); border-radius: 14px;
+            padding: 22px 28px 18px; margin-bottom: 30px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .nb-k { display: flex; align-items: center; font-size: 0.78rem; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; }
+        .nb-entry { display: block; }
+        .nb-date { display: block; font-family: var(--serif); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+        .nb-q { display: block; font-family: var(--serif); font-size: clamp(1.05rem, 2.4vw, 1.22rem); line-height: 1.9; margin-top: 4px; }
+        .nb-entry:hover .nb-q { color: var(--accent); }
+        .nb-later {
+            display: block; max-width: 34em; margin-left: 1.2em; padding: 6px 0 6px 14px;
+            border-left: 2px dashed var(--accent); font-size: 0.88rem; color: var(--text-2); line-height: 1.75;
+        }
+        .nb-later b { font-size: 0.72rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 99px; padding: 0 8px; margin-right: 8px; font-weight: 600; }
+        .nb-later:hover { color: var(--text); }
+        .nb-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+        .nb-years { display: flex; flex-wrap: wrap; gap: 6px; }
+        .nb-years a { font-size: 0.78rem; font-variant-numeric: tabular-nums; border: 1px solid var(--border); border-radius: 99px; padding: 1px 10px; color: var(--text-2); background: var(--card); }
+        .nb-years a:hover { border-color: var(--accent); color: var(--accent); }
+        .nb-go { font-size: 0.92rem; font-weight: 600; color: var(--accent); }
+        .nb-go:hover { text-decoration: underline; }
+
         /* 工具 */
         .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .tool { display: flex; gap: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; transition: border-color 0.2s, transform 0.15s, box-shadow 0.25s; }
@@ -204,6 +231,8 @@
             .dir { grid-template-columns: 1fr 1fr; }
             .dir a:last-child { grid-column: 1 / -1; }
             .quotes, .tools { grid-template-columns: 1fr; }
+            .nb { padding: 18px 18px 14px; }
+            .nb-later { margin-left: 0; }
             .topic { padding: 18px 16px; }
             .row { grid-template-columns: 1fr auto; gap: 2px 12px; }
             .row time { grid-column: 1 / -1; }
@@ -232,12 +261,12 @@
 
     <!-- ===== 这里有什么 / 目录 ===== -->
     <section class="whatis" aria-label="这里有什么">
-        <p class="lead">这里有我的投资思考与研究，个股和指数的持续跟踪，几件自己在用的小工具。也会有一些废话，和一些日后被证明是错的判断，我都留着，它们也是旅程的一部分。愿其中某一页，对你有一点用。</p>
+        <p class="lead">这里有我亲笔写下的投资手记和回头读出来的道理，个股和指数的持续跟踪，几件自己在用的小工具。也会有一些废话，和一些日后被证明是错的判断，我都留着，它们也是旅程的一部分。愿其中某一页，对你有一点用。</p>
         <nav class="dir">
+            <a href="#notebook"><span class="t">手记与回望</span><span class="s">亲笔写下的，和回头读懂的</span><span class="n" data-count="notebook">→</span></a>
             <a href="#watch"><span class="t">指数跟踪</span><span class="s">每日自动更新的估值信号</span><span class="n" data-count="watch">3 个指数 →</span></a>
             <a href="#research"><span class="t">个股研究</span><span class="s">按公司专题的深度分析</span><span class="n" data-count="research">→</span></a>
             <a href="#market"><span class="t">市场观察</span><span class="s">行业结构与市场层面的分析</span><span class="n" data-count="market">→</span></a>
-            <a href="#thoughts"><span class="t">投资思考</span><span class="s">日记、只言片语与复盘</span><span class="n" data-count="thoughts">→</span></a>
             <a href="#tools"><span class="t">小工具</span><span class="s">自己在用的计算器</span><span class="n" data-count="tools">→</span></a>
         </nav>
         <p class="disclaim">最后一句废话：本站内容不构成任何投资建议。投资有风险，请谨慎，再谨慎。</p>
@@ -245,6 +274,34 @@
 
     <!-- 最近更新：脚本自动取全页 data-date 最新的 3 条（新增内容时给条目写上 data-date 即可） -->
     <div class="recent" id="recent" hidden><span class="lab">最近更新</span></div>
+
+    <!-- ===== 手记与回望 ===== -->
+    <section class="section" id="notebook">
+        <div class="sh"><h2>手记与回望</h2><span class="en">Notebook &amp; Hindsight</span></div>
+        <p class="intro">手记是我从 2020 年起亲笔写下的投资笔记，原样保留，连同后来回看时补在旁边的批注。回望是重读这些笔记时读出来的道理，每一条都能点回它出自的那一天。</p>
+
+        <div class="nb">
+            <div class="nb-k"><span class="seal sm" aria-hidden="true">李</span>手记 · 2020–2025 · 37 篇</div>
+            <a class="nb-entry" href="/invest/journal/#d-2020-07-06">
+                <span class="nb-date">2020.7.6</span>
+                <span class="nb-q">今日股市整体大涨。身边的人都开始兴奋高呼"赚钱啦"……但我内心毫无波澜，继续坚守低估品种。</span>
+            </a>
+            <a class="nb-later" href="/invest/notes/#calm"><b>后来回看</b>我持有时确实平静，但下单那一刻会紧张；有压力时，我和大众的反应是一样的。</a>
+            <div class="nb-foot">
+                <nav class="nb-years" aria-label="按年份翻看"><a href="/invest/journal/#y2020">2020</a><a href="/invest/journal/#y2021">2021</a><a href="/invest/journal/#y2022">2022</a><a href="/invest/journal/#y2023">2023</a><a href="/invest/journal/#y2024">2024</a><a href="/invest/journal/#y2025">2025</a></nav>
+                <a class="nb-go" href="/invest/journal/" data-date="2026-11-08" data-title="投资手记 · 2020–2025 亲笔笔记">翻开手记 →</a>
+            </div>
+        </div>
+
+        <div class="quotes-h">回望 · 只言片语 22 条</div>
+        <div class="quotes">
+            <a class="qt" href="/invest/notes/#concentrated-days"><p>一年的大部分涨幅集中在极少数交易日。那几天不在场，就会错过主升浪。</p><span class="ft"><span>市场认知</span><span class="pill ok">多次印证</span></span></a>
+            <a class="qt" href="/invest/notes/#slack"><p>手里有子弹、有利润垫的时候，我是好的逆向者；有资金约束的时候，我会和大众一样收缩。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
+            <a class="qt" href="/invest/notes/#mean-reversion"><p>估值低，可能是因为市场在提前定价 ROE 的下行。均值回归只在底层盈利稳定时才可靠。</p><span class="ft"><span>市场认知</span><span class="pill conf">存在冲突</span></span></a>
+            <a class="qt" href="/invest/notes/#regret"><p>我的复盘大多在懊悔"错过了上涨"，很少反思"押得太重"。我眼中的自己比实际行为更保守。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
+        </div>
+        <div class="qmore"><span>每条都标着它现在的状态：多次印证、单样本待验证，或者和别的认知打架。</span><a href="/invest/notes/" data-date="2026-11-07" data-title="只言片语 · 22 条投资笔记复盘">读全部 22 条 →</a></div>
+    </section>
 
     <!-- ===== 指数跟踪 ===== -->
     <section class="section" id="watch">
@@ -281,8 +338,8 @@
                 <div class="sub"><a href="/invest/baidian/midea/">美的 · 十年 MD&amp;A</a><a href="/invest/baidian/gree/">格力 · 十年 MD&amp;A</a><a href="/invest/baidian/haier/">海尔 · 十年 MD&amp;A</a></div>
             </div>
 
-            <div class="series" data-xref><h4>相关</h4>
-                <a class="row" href="/invest/gree-round1/"><time>2026-09-22</time><span class="ti"><span>格力首轮研究总结：结论、估值框架与分析系统</span><small>收录在「投资思考」，这里留个入口。</small></span><span class="go">阅读 →</span></a>
+            <div class="series"><h4>首轮研究总结</h4>
+                <a class="row" href="/invest/gree-round1/" data-date="2026-09-22" data-title="格力首轮研究总结"><time>2026-09-22</time><span class="ti"><span>格力首轮研究总结：结论、估值框架与分析系统</span><small>走完一轮完整流程之后的复盘：经营判断、估值计算，以及分析系统自己出过的错。</small></span><span class="go">阅读 →</span></a>
             </div>
         </div>
         <div class="empty">下一个专题还在路上。</div>
@@ -298,27 +355,6 @@
         </div>
     </section>
 
-    <!-- ===== 投资思考 ===== -->
-    <section class="section" id="thoughts">
-        <div class="sh"><h2>投资思考</h2><span class="en">Notes &amp; Reflections</span></div>
-        <p class="intro">方法论、投资规律、复盘与认错。不针对单家公司，讲的是"怎么想"。</p>
-
-        <div class="quotes-h"><span class="seal sm" aria-hidden="true">李</span>只言片语 · 2020–2025 投资笔记复盘</div>
-        <div class="quotes">
-            <a class="qt" href="/invest/notes/#concentrated-days"><p>一年的大部分涨幅集中在极少数交易日。那几天不在场，就会错过主升浪。</p><span class="ft"><span>市场认知</span><span class="pill ok">多次印证</span></span></a>
-            <a class="qt" href="/invest/notes/#slack"><p>手里有子弹、有利润垫的时候，我是好的逆向者；有资金约束的时候，我会和大众一样收缩。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
-            <a class="qt" href="/invest/notes/#mean-reversion"><p>估值低，可能是因为市场在提前定价 ROE 的下行。均值回归只在底层盈利稳定时才可靠。</p><span class="ft"><span>市场认知</span><span class="pill conf">存在冲突</span></span></a>
-            <a class="qt" href="/invest/notes/#regret"><p>我的复盘大多在懊悔"错过了上涨"，很少反思"押得太重"。我眼中的自己比实际行为更保守。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
-        </div>
-        <div class="qmore"><span>每条都标着它现在的状态：多次印证、单样本待验证，或者和别的认知打架。</span><a href="/invest/notes/" data-date="2026-11-07" data-title="只言片语 · 22 条投资笔记复盘">读全部 22 条 →</a></div>
-
-        <div class="topic">
-            <div class="series"><h4>文章</h4>
-                <a class="row" href="/invest/journal/" data-date="2026-11-08" data-title="投资日记 · 2020–2025 手写笔记原样整理"><time>2020–2025</time><span class="ti"><span>投资日记</span><small>手写本里的 37 篇笔记，按时间原样整理，连同后来回看时写下的补记。只言片语就是从这里提炼出来的。</small></span><span class="go">阅读 →</span></a>
-                <a class="row" href="/invest/gree-round1/" data-date="2026-09-22" data-title="格力首轮研究总结"><time>2026-09-22</time><span class="ti"><span>格力首轮研究总结：结论、估值框架与分析系统</span><small>走完一轮完整流程之后的复盘：经营判断、估值计算，以及分析系统自己出过的错。</small></span><span class="go">阅读 →</span></a>
-            </div>
-        </div>
-    </section>
 
     <!-- ===== 小工具 ===== -->
     <section class="section" id="tools">
@@ -351,7 +387,7 @@
 <script>
     // ── 旧链接兼容：/invest/#valuation 等旧锚点经跳转页带过来时，映射到新分区 ──
     (function () {
-        var map = { valuation: 'watch', baidian: 'research', structure: 'market' };
+        var map = { valuation: 'watch', baidian: 'research', structure: 'market', thoughts: 'notebook' };
         var h = location.hash.replace('#', '');
         if (map[h]) { history.replaceState(null, '', '#' + map[h]); document.getElementById(map[h]).scrollIntoView(); }
     })();
@@ -359,7 +395,7 @@
     // ── 目录格子里的数量：按页面上实际的条目自动数 ──
     (function () {
         function n(sel) { return document.querySelectorAll(sel).length; }
-        // 篇数 = 分区内不重复的链接数；"相关"一组是跨分区的入口，不计入
+        // 篇数 = 分区内不重复的链接数（带 data-xref 的系列是跨分区入口，不计入）
         function pages(sec) {
             var seen = {};
             document.querySelectorAll('#' + sec + ' a.row, #' + sec + ' .sub a').forEach(function (a) {
@@ -372,7 +408,7 @@
         var counts = {
             research: n('#research .topic') + ' 个专题 · ' + pages('research') + ' 篇 →',
             market: pages('market') + ' 篇 →',
-            thoughts: '只言片语 22 条 · ' + pages('thoughts') + ' 篇 →',
+            notebook: '手记 37 篇 · 回望 22 条 →',
             tools: n('#tools a.tool') + ' 个 →'
         };
         document.querySelectorAll('[data-count]').forEach(function (el) {
