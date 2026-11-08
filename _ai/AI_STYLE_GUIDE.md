@@ -20,7 +20,7 @@
 3. `<body class="site-report">`。
 4. **不要**使用 Tailwind、Bootstrap 或任何 CSS 框架；**不要**用 React/Vue 等需要构建的框架。原生 HTML + CSS + 少量原生 JS。
 5. 图表优先用**纯 CSS 条形图 / HTML 表格 / 内联 SVG**；确实需要复杂交互图表时可用 ECharts 或 Chart.js 的 CDN，但配色必须用第 3 节的令牌色。
-6. 站内链接一律用**根绝对路径**（如 `/invest/`、`/english/`），不要写 `../` 相对路径。
+6. 站内链接一律用**根绝对路径**（如 `/#research`、`/invest/baidian/`），不要写 `../` 相对路径。
 7. 图片如需使用，用相对文件名（如 `chart1.png`）并在回复里告诉我需要一起上传哪些图片；小图标用内联 SVG，**不要用 emoji 当图标**。
 8. 回复里告诉我：**建议放在哪个 URL 路径**（见第 8 节），以及页面标题。
 
@@ -139,8 +139,8 @@
 <!-- ① 顶栏：面包屑 + （可选）同专题篇目导航 -->
 <div class="site-topbar">
   <div class="site-crumb">
-    <a href="/">主页</a><span class="sep">/</span>
-    <a href="/invest/">做投资</a><span class="sep">/</span>
+    <a href="/">首页</a><span class="sep">/</span>
+    <a href="/#research">个股研究</a><span class="sep">/</span>  <!-- 换成所属分区，见第 8 节 -->
     <span class="here">当前页面名</span>
   </div>
   <!-- 同一专题有多篇时才加；当前篇加 class="on" -->
@@ -206,7 +206,7 @@
   <!-- 投资类页面必须带免责声明；其他板块可省略 .disc -->
   <div class="disc"><b>免责声明</b>：本页为个人研究笔记，基于公开资料整理，不构成任何投资建议。</div>
   <div class="row">
-    <span><a href="/invest/">← 返回 做投资</a><span class="dot">·</span><a href="/">主页</a></span>
+    <span><a href="/#research">← 返回 个股研究</a><span class="dot">·</span><a href="/">首页</a></span>
     <span>专题名 ｜ YYYY-MM-DD</span>
   </div>
 </footer>
@@ -326,18 +326,19 @@ blockquote{font-family:var(--site-serif);background:var(--site-warm);border-radi
 
 ## 8. 站点结构与放置位置
 
-网站 `www.lizeming.net` 目前的板块：
+网站 `www.lizeming.net` 是「李泽民 · 个人投资网站」（2026-11 改版，只保留投资和工具）。首页 `/` 就是全站目录，分五个分区，内页的面包屑写「首页 / 分区名 / …」，分区名链接到首页锚点：
 
-| 路径 | 板块 | 面包屑写法 |
-|---|---|---|
-| `/` | 主页 | — |
-| `/invest/` | 做投资 | `主页 / 做投资 / …` |
-| `/invest/<专题>/` | 投资专题（如 `/invest/baidian/` 白电三巨头） | `主页 / 做投资 / 专题名 / 当前页` |
-| `/invest/strategy/<指数>/` | 指数估值策略详解 | `主页 / 做投资 / 估值策略 / 当前页` |
-| `/english/` | 学英语 | `主页 / 学英语 / …` |
-| `/english/<作品>/` | 电影/剧集逐幕学习 | `主页 / 学英语 / 作品名` |
+| 分区（首页锚点） | 放什么 | 页面路径 | 面包屑写法 |
+|---|---|---|---|
+| 指数跟踪 `/#watch` | 指数估值信号与策略详解 | `/invest/strategy/<指数>/` | `首页 / 指数跟踪 / 当前页` |
+| 个股研究 `/#research` | 一家公司或一组同行一个专题 | `/invest/<专题>/…`（如 `/invest/baidian/`） | `首页 / 个股研究 · 专题名 / 当前页` |
+| 市场观察 `/#market` | 市场或指数内部结构，不针对单家公司 | `/invest/<短名>/` | `首页 / 市场观察 / 当前页` |
+| 投资思考 `/#thoughts` | 方法论、规律、复盘（含只言片语 `/invest/notes/`） | `/invest/<短名>/` | `首页 / 投资思考 / 当前页` |
+| 小工具 `/#tools` | 自用计算器 | `/tools/<短名>/` | `首页 / 小工具 / 当前页` |
 
-命名约定：**每个页面一个文件夹 + `index.html`**；文件夹名用**英文小写短名、连字符分隔**（如 `the-west-wing`、`midea`），**不要用中文文件名**。
+旧的 `/invest/` 只是跳转页，会转到首页，不要再往里加内容。新页面上线后，要在首页对应分区加一行，并写上 `data-date`，「最近更新」会自动显示最新的 3 条。
+
+命名约定：**每个页面一个文件夹 + `index.html`**；文件夹名用**英文小写短名、连字符分隔**（如 `csi300-gap`、`midea`），**不要用中文文件名**。
 
 ---
 

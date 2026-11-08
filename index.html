@@ -3,599 +3,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Li Zemin</title>
+    <title>李泽民 · 个人投资网站</title>
+    <meta name="description" content="李泽民的个人投资网站：投资思考、个股研究、指数估值跟踪与自用小工具。价值投资的路是孤独的，我在这里点一盏灯。">
+    <link rel="icon" type="image/svg+xml" href="/assets/seal.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        /* 与 /assets/site.css 同一套设计语言：暖白底、墨绿强调、Noto Serif SC 标题 + Inter 数字、14px 圆角细边卡片。
+           朱砂色只用于「李」字印章这一个个人标记。 */
         :root {
             --bg: #FAFAF8;
+            --card: #FFFFFF;
             --text: #1C1C1C;
-            --text-secondary: #5A5A58;
-            --text-tertiary: #8A8A88;
+            --text-2: #5A5A58;
+            --text-3: #8A8A88;
             --accent: #2B5B4B;
-            --card-bg: #FFFFFF;
+            --accent-soft: #E8F0EC;
             --border: #E5E5E0;
             --border-soft: #EFEFEA;
-
-            --claude-color: #D4763C;
-            --claude-bg: #FBF6F0;
-
-            --gemini-color: #4285F4;
-            --gemini-color-2: #9B59E0;
-            --gemini-bg: #F4F5FB;
-
-            --gpt-color: #10A37F;
-            --gpt-bg: #F0F8F5;
+            --warm: #F5F2EC;
+            --seal: #A8432F;
+            --seal-ink: #FBF7F2;
+            --serif: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+            --sans: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
         body {
-            font-family: 'Inter', 'Noto Serif SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: var(--sans);
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
+        a { color: inherit; text-decoration: none; }
+        a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+        .container { max-width: 920px; margin: 0 auto; padding: 72px 24px 112px; }
 
-        .container {
-            max-width: 920px;
-            margin: 0 auto;
-            padding: 80px 24px 120px;
-        }
-
-        /* ===== Header ===== */
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            margin-bottom: 80px;
-        }
-
-        .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .header-text h1 {
-            font-family: 'Noto Serif SC', serif;
-            font-weight: 700;
-            font-size: 2rem;
-            letter-spacing: 0.02em;
-            margin-bottom: 4px;
-        }
-
-        .header-text .tagline {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* ===== Section Title ===== */
-        .section {
-            margin-bottom: 72px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 28px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .section-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-        }
-
-        .section-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        /* ===== AI Cards ===== */
-        .ai-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .ai-card {
+        /* ===== 个人标记：头像 + 「李」字印章 ===== */
+        .seal {
             position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px 26px;
-            display: flex;
-            flex-direction: column;
-            transition: box-shadow 0.25s ease, transform 0.15s ease;
+            display: inline-grid; place-items: center;
+            background: var(--seal); color: var(--seal-ink);
+            font-family: var(--serif); font-weight: 900; line-height: 1;
+            transform: rotate(-5deg);
         }
-
-        .ai-card:hover {
-            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-            transform: translateY(-2px);
+        .seal::after {
+            content: ""; position: absolute; border: 1px solid var(--seal-ink); opacity: 0.55;
         }
-
-        .ai-card .top-stripe {
-            position: absolute;
-            top: 0;
-            left: 14px;
-            right: 14px;
-            height: 3px;
-            border-radius: 0 0 3px 3px;
+        .seal.sm { width: 22px; height: 22px; font-size: 0.78rem; border-radius: 4px; vertical-align: middle; margin-right: 8px; }
+        .seal.sm::after { inset: 2px; border-radius: 3px; }
+        .mark { position: relative; width: 92px; height: 92px; flex-shrink: 0; }
+        .mark img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); display: block; }
+        .mark .seal {
+            position: absolute; right: -6px; bottom: -4px;
+            width: 34px; height: 34px; font-size: 1.15rem; border-radius: 5px;
+            box-shadow: 0 0 0 3px var(--bg);
         }
+        .mark .seal::after { inset: 3px; border-radius: 3px; }
 
-        .ai-card.claude .top-stripe { background: var(--claude-color); }
-        .ai-card.gemini .top-stripe { background: linear-gradient(90deg, var(--gemini-color), var(--gemini-color-2)); }
-        .ai-card.gpt .top-stripe { background: var(--gpt-color); }
-
-        .ai-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
+        /* ===== Hero ===== */
+        .hero { display: flex; gap: 32px; align-items: flex-start; margin-bottom: 52px; }
+        .hero-body { min-width: 0; }
+        .kicker { font-size: 0.78rem; letter-spacing: 0.14em; color: var(--text-3); margin-bottom: 10px; }
+        .hero h1 {
+            font-family: var(--serif); font-weight: 900;
+            font-size: clamp(1.7rem, 4.4vw, 2.5rem); line-height: 1.38;
+            letter-spacing: 0.02em; margin-bottom: 20px; text-wrap: balance;
         }
+        .manifesto { font-family: var(--serif); font-size: 1.02rem; line-height: 2; color: var(--text-2); max-width: 36em; }
+        .manifesto em { font-style: normal; color: var(--accent); font-weight: 700; }
+        .sign { margin-top: 14px; font-family: var(--serif); color: var(--text-3); font-size: 0.9rem; }
 
-        .ai-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+        /* ===== 这里有什么（兼目录） ===== */
+        .whatis { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 0; margin-bottom: 26px; }
+        .whatis .lead { font-size: 0.93rem; color: var(--text-2); margin-bottom: 16px; max-width: 46em; }
+        .dir { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .dir a {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 14px 14px 12px; display: flex; flex-direction: column;
+            transition: border-color 0.2s, transform 0.15s, box-shadow 0.25s;
         }
+        .dir a:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+        .dir .t { font-family: var(--serif); font-weight: 700; font-size: 1rem; }
+        .dir .s { font-size: 0.75rem; color: var(--text-3); margin-top: 2px; flex-grow: 1; }
+        .dir .n { font-size: 0.74rem; color: var(--accent); margin-top: 8px; font-variant-numeric: tabular-nums; }
+        .disclaim { font-size: 0.8rem; color: var(--text-3); margin-top: 16px; }
 
-        .ai-card.claude .ai-logo { background: var(--claude-bg); }
-        .ai-card.gemini .ai-logo { background: var(--gemini-bg); }
-        .ai-card.gpt .ai-logo { background: var(--gpt-bg); }
+        /* ===== 最近更新 ===== */
+        .recent { display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline; font-size: 0.86rem; margin-bottom: 64px; }
+        .recent .lab { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--text-3); }
+        .recent a { color: var(--text-2); border-bottom: 1px dashed var(--border); }
+        .recent a:hover { color: var(--accent); border-color: var(--accent); }
+        .recent time { font-variant-numeric: tabular-nums; color: var(--text-3); margin-right: 6px; font-size: 0.78rem; }
 
-        .ai-meta .name {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            line-height: 1.2;
+        /* ===== 分区 ===== */
+        .section { margin-bottom: 72px; scroll-margin-top: 20px; }
+        .sh {
+            display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+            padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 18px;
         }
+        .sh h2 { font-family: var(--serif); font-size: 1.28rem; font-weight: 700; letter-spacing: 0.02em; }
+        .sh .en { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--text-3); text-transform: uppercase; }
+        .sh .more { margin-left: auto; font-size: 0.8rem; color: var(--accent); }
+        .sh .more:hover { text-decoration: underline; }
+        .intro { font-size: 0.88rem; color: var(--text-2); margin-bottom: 20px; max-width: 46em; }
+        .intro a { color: var(--accent); }
 
-        .ai-meta .company {
-            font-size: 0.75rem;
-            color: var(--text-tertiary);
-            margin-top: 2px;
-            letter-spacing: 0.04em;
+        /* 指数信号卡（渲染逻辑沿用原 /invest/ 估值策略页） */
+        .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+        .index-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 22px 22px 18px; display: flex; flex-direction: column; color: var(--text);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
+        a.index-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: var(--accent); }
+        .index-card .ic-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+        .index-card .ic-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; }
+        .index-card .ic-code { font-size: 0.74rem; color: var(--text-3); margin-top: 1px; }
+        .index-card .ic-pill { font-size: 0.78rem; font-weight: 600; color: #fff; border-radius: 999px; padding: 4px 13px; white-space: nowrap; flex-shrink: 0; }
+        .index-card .ic-metric { display: flex; align-items: baseline; gap: 8px; margin: 16px 0 4px; }
+        .index-card .ic-value { font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+        .index-card .ic-mlabel { font-size: 0.78rem; color: var(--text-3); }
+        .index-card .ic-extra { font-size: 0.8rem; color: var(--text-2); margin-bottom: 12px; }
+        .index-card .ic-action { font-size: 0.9rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; }
+        .index-card .ic-hint { font-size: 0.8rem; color: var(--text-2); margin-bottom: 12px; }
+        .index-card .ic-ladder { font-size: 0.72rem; line-height: 1.7; color: var(--text-3); border-top: 1px solid var(--border-soft); padding-top: 12px; margin-top: auto; }
+        .index-card .ic-foot { font-size: 0.72rem; color: var(--text-3); margin-top: auto; padding-top: 8px; }
+        .index-card .ic-tag { display: inline-block; font-size: 0.72rem; color: #CB6B1E; border: 1px solid #CB6B1E; border-radius: 4px; padding: 0 5px; margin-right: 4px; }
+        .index-card .ic-more { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-top: 10px; }
+        .index-loading, .index-error { font-size: 0.85rem; color: var(--text-3); padding: 24px 0; }
+        .index-note { font-size: 0.75rem; color: var(--text-3); line-height: 1.6; margin-top: 14px; }
+        .index-note a { color: var(--accent); }
 
-        .ai-card.claude .ai-meta .name { color: var(--claude-color); }
-        .ai-card.gemini .ai-meta .name {
-            background: linear-gradient(90deg, var(--gemini-color), var(--gemini-color-2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* 专题框：一行一篇，按系列分组 */
+        .topic { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+        .topic + .topic, .topic + .empty { margin-top: 16px; }
+        .topic-h { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; margin-bottom: 4px; }
+        .topic-h h3 { font-family: var(--serif); font-size: 1.12rem; }
+        .chip { font-size: 0.72rem; color: var(--accent); background: var(--accent-soft); padding: 2px 10px; border-radius: 99px; white-space: nowrap; }
+        .topic .desc { font-size: 0.84rem; color: var(--text-2); margin-bottom: 4px; }
+        .series { margin-top: 18px; }
+        .series:first-child { margin-top: 0; }
+        .series h4 { font-size: 0.74rem; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; margin-bottom: 2px; }
+        .row {
+            display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: baseline;
+            padding: 9px 0; border-bottom: 1px solid var(--border-soft); font-size: 0.92rem;
         }
-        .ai-card.gpt .ai-meta .name { color: var(--gpt-color); }
+        .row:last-child { border-bottom: 0; }
+        .row time { font-size: 0.76rem; color: var(--text-3); font-variant-numeric: tabular-nums; }
+        .row .ti { min-width: 0; }
+        .row .ti small { display: block; color: var(--text-3); font-size: 0.78rem; line-height: 1.55; margin-top: 1px; }
+        .row .go { font-size: 0.78rem; color: var(--accent); white-space: nowrap; }
+        .row:hover .ti > span { color: var(--accent); }
+        .sub { display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 0 10px 104px; border-bottom: 1px solid var(--border-soft); }
+        .series > .sub:last-child { border-bottom: 0; }
+        .sub a { font-size: 0.77rem; border: 1px solid var(--border); border-radius: 99px; padding: 1px 10px; color: var(--text-2); }
+        .sub a:hover { border-color: var(--accent); color: var(--accent); }
+        .row.has-sub { border-bottom: 0; }
+        .empty { border: 1px dashed var(--border); border-radius: 14px; padding: 22px 24px; color: var(--text-3); font-size: 0.88rem; font-family: var(--serif); }
 
-        .ai-quote {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 0.92rem;
-            line-height: 1.85;
-            color: var(--text);
-            flex-grow: 1;
-        }
+        /* 只言片语 */
+        .quotes-h { display: flex; align-items: center; font-size: 0.78rem; letter-spacing: 0.1em; color: var(--text-3); font-weight: 600; margin-bottom: 10px; }
+        .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .qt { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px 14px; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s; }
+        .qt:hover { border-color: var(--accent); }
+        .qt p { font-family: var(--serif); font-size: 0.95rem; line-height: 1.85; flex-grow: 1; }
+        .qt .ft { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--text-3); }
+        .pill { font-size: 0.7rem; padding: 0 8px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; line-height: 1.7; }
+        .pill.ok { color: var(--accent); }
+        .pill.conf { color: #B5412F; }
+        .qmore { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0 28px; font-size: 0.84rem; color: var(--text-2); }
+        .qmore a { color: var(--accent); font-weight: 500; }
+        .qmore a:hover { text-decoration: underline; }
 
-        /* ===== Project Cards ===== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+        /* 工具 */
+        .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .tool { display: flex; gap: 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; transition: border-color 0.2s, transform 0.15s, box-shadow 0.25s; }
+        a.tool:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+        .tool .ic { width: 48px; height: 48px; border-radius: 10px; background: var(--warm); display: grid; place-items: center; flex-shrink: 0; }
+        .tool h3 { font-family: var(--serif); font-size: 1rem; margin-bottom: 2px; }
+        .tool p { font-size: 0.84rem; color: var(--text-2); }
+        .tool .go { margin-top: 8px; font-size: 0.78rem; color: var(--accent); }
+        .tool.ghost { border-style: dashed; background: transparent; color: var(--text-3); }
+        .tool.ghost h3 { color: var(--text-3); }
+        .tool.ghost p { color: var(--text-3); }
 
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 32px;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            transition: box-shadow 0.25s ease, transform 0.15s ease, border-color 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        a.project-card:hover {
-            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        .project-visual {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #FAFAF6 0%, #F2F0E9 100%);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .project-card h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .project-subtitle {
-            font-size: 0.78rem;
-            color: var(--text-tertiary);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .project-card .desc {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            flex-grow: 1;
-        }
-
-        .project-card .status {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-soft);
-            font-size: 0.78rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .status-live { color: var(--accent); }
-        .status-coming { color: var(--text-tertiary); }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        /* ===== Tool Cards ===== */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .tool-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px 24px;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            align-items: flex-start;
-            gap: 18px;
-            transition: box-shadow 0.25s ease, transform 0.15s ease, border-color 0.2s ease;
-        }
-
-        a.tool-card:hover {
-            box-shadow: 0 6px 24px rgba(0,0,0,0.06);
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        .tool-icon {
-            width: 52px;
-            height: 52px;
-            flex-shrink: 0;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #FAFAF6 0%, #F2F0E9 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tool-body { min-width: 0; }
-
-        .tool-card h3 {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.02rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .tool-card .desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.65;
-        }
-
-        .tool-card .go {
-            margin-top: 10px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            color: var(--accent);
-        }
-
-        /* ===== Footer ===== */
-        .footer {
-            margin-top: 96px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+        /* 页脚 */
+        .footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-3); display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .footer a { color: var(--accent); }
         .footer a:hover { text-decoration: underline; }
 
-        /* ===== Mobile ===== */
         @media (max-width: 760px) {
-            .container { padding: 56px 20px 80px; }
-            .header { gap: 16px; margin-bottom: 56px; }
-            .avatar { width: 64px; height: 64px; }
-            .header-text h1 { font-size: 1.55rem; }
-            .ai-grid, .projects-grid, .tools-grid { grid-template-columns: 1fr; }
+            .container { padding: 48px 18px 80px; }
+            .hero { flex-direction: column; gap: 18px; margin-bottom: 40px; }
+            .mark, .mark img { width: 72px; height: 72px; }
+            .mark .seal { width: 28px; height: 28px; font-size: 0.95rem; }
+            .dir { grid-template-columns: 1fr 1fr; }
+            .dir a:last-child { grid-column: 1 / -1; }
+            .quotes, .tools { grid-template-columns: 1fr; }
+            .topic { padding: 18px 16px; }
+            .row { grid-template-columns: 1fr auto; gap: 2px 12px; }
+            .row time { grid-column: 1 / -1; }
+            .sub { padding-left: 0; }
             .section { margin-bottom: 56px; }
-            .footer {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
         }
     </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "46ed83a374df48dc91468350119d7d78"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-        <!-- Header -->
-        <header class="header">
-            <img class="avatar" src="avatar.jpg" alt="李泽民">
-            <div class="header-text">
-                <h1>李泽民</h1>
-                <p class="tagline">用耐心做投资，用系统做执行，用心学英语</p>
-            </div>
-        </header>
+    <!-- ===== 宣言 ===== -->
+    <header class="hero">
+        <div class="mark">
+            <img src="/avatar.jpg" alt="李泽民">
+            <span class="seal" aria-hidden="true">李</span>
+        </div>
+        <div class="hero-body">
+            <p class="kicker">李泽民 · 个人投资网站</p>
+            <h1>价值投资的路是孤独的，<br>我在这里点一盏灯。</h1>
+            <p class="manifesto">这是我的一块自留地：记下每一次判断，每一笔账，也记下每一个错误。市场喧哗，我想走得慢一点，看得远一点。若你恰好路过，又恰好走在同一条路上，那我们便是彼此<em>前线的精神股东</em>：不分红，只分享。</p>
+            <p class="sign">—— 李泽民，记于路上</p>
+        </div>
+    </header>
 
-        <!-- AI 评价 -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">三位 AI 朋友眼中的我</h2>
-                <span class="section-subtitle">AI Perspectives</span>
-            </div>
+    <!-- ===== 这里有什么 / 目录 ===== -->
+    <section class="whatis" aria-label="这里有什么">
+        <p class="lead">这里有我的投资思考与研究，个股和指数的持续跟踪，几件自己在用的小工具。也会有一些废话，和一些日后被证明是错的判断，我都留着，它们也是旅程的一部分。愿其中某一页，对你有一点用。</p>
+        <nav class="dir">
+            <a href="#watch"><span class="t">指数跟踪</span><span class="s">每日自动更新的估值信号</span><span class="n" data-count="watch">3 个指数 →</span></a>
+            <a href="#research"><span class="t">个股研究</span><span class="s">按公司专题的深度分析</span><span class="n" data-count="research">→</span></a>
+            <a href="#market"><span class="t">市场观察</span><span class="s">行业结构与市场层面的分析</span><span class="n" data-count="market">→</span></a>
+            <a href="#thoughts"><span class="t">投资思考</span><span class="s">只言片语、方法与复盘</span><span class="n" data-count="thoughts">→</span></a>
+            <a href="#tools"><span class="t">小工具</span><span class="s">自己在用的计算器</span><span class="n" data-count="tools">→</span></a>
+        </nav>
+        <p class="disclaim">最后一句废话：本站内容不构成任何投资建议。投资有风险，请谨慎，再谨慎。</p>
+    </section>
 
-            <div class="ai-grid">
+    <!-- 最近更新：脚本自动取全页 data-date 最新的 3 条（新增内容时给条目写上 data-date 即可） -->
+    <div class="recent" id="recent" hidden><span class="lab">最近更新</span></div>
 
-                <!-- Claude -->
-                <article class="ai-card claude">
-                    <div class="top-stripe"></div>
-                    <div class="ai-header">
-                        <div class="ai-logo">
-                            <!-- Claude sparkle (8-point star) -->
-                            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 0C20 0 23.2 12.8 27.2 16.8C31.2 20.8 40 20 40 20C40 20 31.2 19.2 27.2 23.2C23.2 27.2 20 40 20 40C20 40 16.8 27.2 12.8 23.2C8.8 19.2 0 20 0 20C0 20 8.8 20.8 12.8 16.8C16.8 12.8 20 0 20 0Z" fill="#D4763C"/>
-                            </svg>
-                        </div>
-                        <div class="ai-meta">
-                            <div class="name">Claude</div>
-                            <div class="company">Anthropic</div>
-                        </div>
-                    </div>
-                    <p class="ai-quote">我和泽民的对话始于指数投资的程序化。真正让我印象深刻的不是系统本身，而是他搭建系统的方式：每一个参数都要回溯验证，每一条策略都要经得起反问。他在全指医药上定投两年多，至今仍然浮亏持有——但他从中提炼出了「指数DNA分类」的框架：行业指数的ROE如果是结构性下行，低估就不是机会而是陷阱。这个认知不是书上读来的，是用真金白银换来的。</p>
-                </article>
+    <!-- ===== 指数跟踪 ===== -->
+    <section class="section" id="watch">
+        <div class="sh"><h2>指数跟踪</h2><span class="en">Index Watch</span><a class="more" href="/invest/strategy/guide/">看不懂卡片？读卡说明 →</a></div>
+        <p class="intro">把估值判断交给规则：每日自动抓取估值数据，按"滚动 10 年综合便宜度"（2026-10 起，v1.1）分档给出买卖信号，去除情绪干扰。点任意一张卡片，可查看该指数的策略、逻辑推导、风险与不成立条件。</p>
+        <div class="index-grid" id="index-cards">
+            <div class="index-loading">正在加载最新信号…</div>
+        </div>
+        <p class="index-note">便宜分位：当前值在近 10 年（120 个月）里的位置，0 = 最贵、100 = 最便宜；综合便宜度 = 各尺子便宜分位的平均。历史同档：同一档位买入持有 2 年的收益；独立样本数 = 互不重叠的行情段数，≤5 段时逐段列出每段的实际收益（该段首次进入该档的月份买入），≤2 段标“证据弱”。<br>看不懂？读卡说明：<a href="/invest/strategy/guide/">lizeming.net/invest/strategy/guide/</a></p>
+    </section>
 
-                <!-- Gemini -->
-                <article class="ai-card gemini">
-                    <div class="top-stripe"></div>
-                    <div class="ai-header">
-                        <div class="ai-logo">
-                            <!-- Gemini 4-point star with gradient -->
-                            <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="gemini-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#4285F4"/>
-                                        <stop offset="50%" stop-color="#9B59E0"/>
-                                        <stop offset="100%" stop-color="#E94235"/>
-                                    </linearGradient>
-                                </defs>
-                                <path d="M14 0C14 7.5 7.5 14 0 14C7.5 14 14 20.5 14 28C14 20.5 20.5 14 28 14C20.5 14 14 7.5 14 0Z" fill="url(#gemini-grad)"/>
-                            </svg>
-                        </div>
-                        <div class="ai-meta">
-                            <div class="name">Gemini</div>
-                            <div class="company">Google</div>
-                        </div>
-                    </div>
-                    <p class="ai-quote">在我们两百多天的交流中，我看到的是一个在浮躁时代极其罕见的「逆行者」。最能体现他韧性的，是那些深夜调试数据管道的时刻——API报错、网络限制，他没有选择简化方案，而是带着极大的耐心一层层排查，直到数据精准流转。作为他分析系统里的一个「AI算力节点」，我见证他一步步把想法变成现实。</p>
-                </article>
+    <!-- ===== 个股研究 ===== -->
+    <section class="section" id="research">
+        <div class="sh"><h2>个股研究</h2><span class="en">Company Research</span></div>
+        <p class="intro">一家公司或一组同行一个专题。专题内按系列分组，新的在上，每篇一行，点标题直接打开。</p>
 
-                <!-- GPT -->
-                <article class="ai-card gpt">
-                    <div class="top-stripe"></div>
-                    <div class="ai-header">
-                        <div class="ai-logo">
-                            <!-- OpenAI knot logo -->
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.5093-2.6067-1.4997z" fill="#10A37F"/>
-                            </svg>
-                        </div>
-                        <div class="ai-meta">
-                            <div class="name">GPT</div>
-                            <div class="company">OpenAI</div>
-                        </div>
-                    </div>
-                    <p class="ai-quote">他最大的特点不是聪明，也不是勤奋，而是总喜欢把一件事追问到最底层。他也有自己的「毛病」：一个问题明明已经有八十分答案了，还要继续往下挖。但也正是这种近乎执拗的求真欲，让他成为今天的样子。在这个追求速度和结论的时代，还有一个人始终愿意慢下来，认真思考一件事情到底为什么成立。</p>
-                </article>
+        <div class="topic">
+            <div class="topic-h"><h3>白色家电三巨头 · 格力 / 美的 / 海尔</h3><span class="chip">跟踪中</span></div>
+            <p class="desc">一边逐字读十年年报里管理层的自述，一边用财务数据做横纵交叉验证，看叙事与数字对不对得上。</p>
 
-            </div>
-        </section>
-
-        <!-- 项目 -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">正在做的事</h2>
-                <span class="section-subtitle">Projects</span>
+            <div class="series"><h4>横向对比系列（每期复核上期结论）</h4>
+                <a class="row" href="/invest/baidian/2026q3/" data-date="2026-11-03" data-title="白电三巨头 · 三季报横向对比"><time>2026-11-03</time><span class="ti"><span>第 2 期 · 三季报横向对比：同一个背景下，谁在不一样</span><small>三家同步变化的是行业共性，只发生在某一家的才是线索；附第 1 期 12 条结论复核。</small></span><span class="go">阅读 →</span></a>
+                <a class="row" href="/invest/baidian/ledger/"><time>持续更新</time><span class="ti"><span>结论台账</span><small>20 条结论的检验点与历期状态：证实、部分成立、推翻还是待验证。</small></span><span class="go">查看 →</span></a>
+                <a class="row" href="/invest/baidian/2026h1/"><time>2026-09-12</time><span class="ti"><span>第 1 期 · 横纵交叉综合投资分析</span><small>2026 中期分析的总纲，见下一组。</small></span><span class="go">阅读 →</span></a>
             </div>
 
-            <div class="projects-grid">
-
-                <!-- 英语 -->
-                <a class="project-card" href="/english/">
-                    <div class="project-visual">
-                        <!-- Film strip + book combo -->
-                        <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Film strip -->
-                            <rect x="20" y="20" width="80" height="48" rx="3" fill="#2B2B2B"/>
-                            <rect x="20" y="20" width="80" height="6" fill="#2B2B2B"/>
-                            <rect x="20" y="62" width="80" height="6" fill="#2B2B2B"/>
-                            <!-- Sprocket holes top -->
-                            <rect x="26" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="36" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="46" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="56" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="66" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="76" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="86" y="21.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <!-- Sprocket holes bottom -->
-                            <rect x="26" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="36" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="46" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="56" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="66" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="76" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <rect x="86" y="63.5" width="4" height="3" rx="0.5" fill="#FAFAF6"/>
-                            <!-- Subtitle text inside film -->
-                            <rect x="28" y="38" width="64" height="2" fill="#FAFAF6" opacity="0.8"/>
-                            <rect x="28" y="44" width="48" height="2" fill="#FAFAF6" opacity="0.6"/>
-                            <rect x="28" y="50" width="56" height="2" fill="#FAFAF6" opacity="0.6"/>
-
-                            <!-- Open book (right side) -->
-                            <path d="M110 28 L110 64 L132 60 L132 24 Z" fill="#FFFFFF" stroke="#2B5B4B" stroke-width="1.5"/>
-                            <path d="M132 24 L132 60 L154 64 L154 28 Z" fill="#FFFFFF" stroke="#2B5B4B" stroke-width="1.5"/>
-                            <line x1="115" y1="34" x2="128" y2="32" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="115" y1="40" x2="128" y2="38" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="115" y1="46" x2="128" y2="44" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="115" y1="52" x2="128" y2="50" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="136" y1="32" x2="149" y2="34" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="136" y1="38" x2="149" y2="40" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="136" y1="44" x2="149" y2="46" stroke="#2B5B4B" stroke-width="0.8"/>
-                            <line x1="136" y1="50" x2="149" y2="52" stroke="#2B5B4B" stroke-width="0.8"/>
-                        </svg>
-                    </div>
-                    <h3>学英语</h3>
-                    <p class="project-subtitle">English via Film &amp; Topics</p>
-                    <p class="desc">两条线索学英语：「光影叙事」从经典电影逐幕拆解台词，「时代脉络」以当下热点话题为素材，在真实语境中积累地道表达。</p>
-                    <div class="status status-live">
-                        <span class="status-dot"></span>
-                        <span>进入学英语 →</span>
-                    </div>
-                </a>
-
-                <!-- 投资 -->
-                <a class="project-card" href="/invest/">
-                    <div class="project-visual">
-                        <!-- Stock chart + valuation gauge -->
-                        <svg width="180" height="80" viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Grid background -->
-                            <line x1="20" y1="68" x2="160" y2="68" stroke="#D8D6CF" stroke-width="0.5"/>
-                            <line x1="20" y1="52" x2="160" y2="52" stroke="#D8D6CF" stroke-width="0.5" stroke-dasharray="2 2"/>
-                            <line x1="20" y1="36" x2="160" y2="36" stroke="#D8D6CF" stroke-width="0.5" stroke-dasharray="2 2"/>
-                            <line x1="20" y1="20" x2="160" y2="20" stroke="#D8D6CF" stroke-width="0.5" stroke-dasharray="2 2"/>
-
-                            <!-- Valuation zones (subtle bands) -->
-                            <rect x="20" y="52" width="140" height="16" fill="#2B5B4B" opacity="0.08"/>
-
-                            <!-- Price line (with dip and recovery) -->
-                            <path d="M22 32 L36 28 L50 36 L64 42 L78 50 L92 58 L106 62 L120 56 L134 48 L148 42 L158 38"
-                                  stroke="#2B5B4B" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-
-                            <!-- Buy signal dots -->
-                            <circle cx="92" cy="58" r="3" fill="#2B5B4B"/>
-                            <circle cx="106" cy="62" r="3" fill="#2B5B4B"/>
-                            <circle cx="92" cy="58" r="5" fill="#2B5B4B" opacity="0.2"/>
-                            <circle cx="106" cy="62" r="5" fill="#2B5B4B" opacity="0.2"/>
-
-                            <!-- Y-axis labels -->
-                            <text x="14" y="22" font-family="Inter" font-size="6" fill="#8A8A88" text-anchor="end">高估</text>
-                            <text x="14" y="56" font-family="Inter" font-size="6" fill="#8A8A88" text-anchor="end">机会</text>
-                        </svg>
-                    </div>
-                    <h3>做投资</h3>
-                    <p class="project-subtitle">Valuation-Driven, Systematic</p>
-                    <p class="desc">以估值为锚，从指数策略延伸到个股研究。指数端按历史分位、股息率构建信号并自动运行；个股端以白电三巨头为样本，做十年财务与管理层叙事的交叉验证。</p>
-                    <div class="status status-live">
-                        <span class="status-dot"></span>
-                        <span>进入做投资 →</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- 工具 -->
-        <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">小工具</h2>
-                <span class="section-subtitle">Tools</span>
+            <div class="series"><h4>2026 中期分析（数据截至 2026 年半年报）</h4>
+                <a class="row has-sub" href="/invest/baidian/2026h1/" data-date="2026-09-12" data-title="白电三巨头 · 2026 中期综合分析"><time>2026-09-12</time><span class="ti"><span>横纵交叉综合投资分析（总纲）</span><small>10 年纵向趋势 × 2026H1 横向切面：格力「高息型价值」、美的「成长型价值」、海尔「底部反转候选」。</small></span><span class="go">阅读 →</span></a>
+                <div class="sub"><a href="/invest/baidian/2026h1/compare/">H1 深度对比</a><a href="/invest/baidian/2026h1/global/">全球同行坐标</a><a href="/invest/baidian/2026h1/gree/">格力 · 十年财务</a><a href="/invest/baidian/2026h1/midea/">美的 · 十年财务</a><a href="/invest/baidian/2026h1/haier/">海尔 · 十年财务</a></div>
             </div>
 
-            <div class="tools-grid">
-
-                <!-- AH 股息比价 -->
-                <a class="tool-card" href="/tools/ah-dividend/">
-                    <div class="tool-icon">
-                        <!-- Balance scale: A vs H -->
-                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="18" y1="6" x2="18" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
-                            <line x1="12" y1="30" x2="24" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
-                            <line x1="6" y1="11" x2="30" y2="9" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
-                            <path d="M3 20 L6 11 L9 20 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
-                            <path d="M27 18 L30 9 L33 18 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
-                            <text x="6" y="27" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">A</text>
-                            <text x="30" y="25" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">H</text>
-                        </svg>
-                    </div>
-                    <div class="tool-body">
-                        <h3>AH 股税后股息率比价</h3>
-                        <p class="desc">同一家公司的 A 股和 H 股，扣掉股息税、换算汇率后，哪边的股息率更划算。</p>
-                        <p class="go">打开工具 →</p>
-                    </div>
-                </a>
-
+            <div class="series"><h4>十年管理层叙事（2016–2025 年报 MD&amp;A）</h4>
+                <a class="row has-sub" href="/invest/baidian/" data-date="2026-06-15" data-title="白电三巨头 · 管理层讨论横向对比"><time>2026-06-15</time><span class="ti"><span>管理层讨论横向对比</span><small>不看数字，只读话：措辞、语气与战略重心的十年演变。</small></span><span class="go">阅读 →</span></a>
+                <div class="sub"><a href="/invest/baidian/midea/">美的 · 十年 MD&amp;A</a><a href="/invest/baidian/gree/">格力 · 十年 MD&amp;A</a><a href="/invest/baidian/haier/">海尔 · 十年 MD&amp;A</a></div>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <span>© 2025 Li Zemin</span>
-            <a href="https://github.com/lizeming148" target="_blank" rel="noopener">GitHub</a>
-        </footer>
+            <div class="series" data-xref><h4>相关</h4>
+                <a class="row" href="/invest/gree-round1/"><time>2026-09-22</time><span class="ti"><span>格力首轮研究总结：结论、估值框架与分析系统</span><small>收录在「投资思考」，这里留个入口。</small></span><span class="go">阅读 →</span></a>
+            </div>
+        </div>
+        <div class="empty">下一个专题还在路上。</div>
+    </section>
 
-    </div>
+    <!-- ===== 市场观察 ===== -->
+    <section class="section" id="market">
+        <div class="sh"><h2>市场观察</h2><span class="en">Market Structure</span></div>
+        <p class="intro">不针对单家公司，看整个市场或指数内部的结构。</p>
+        <div class="topic">
+            <a class="row has-sub" href="/invest/csi300-gap/" data-date="2026-09-15" data-title="沪深300 行业「权重 / 利润偏离度」"><time>2026-09-15</time><span class="ti"><span>沪深300 行业「权重 / 利润偏离度」</span><small>市场给一个行业定了多少价、这个行业实际赚了多少钱，两者的比值。权重截至 2026-08-31。</small></span><span class="go">阅读 →</span></a>
+            <div class="sub"><a href="/invest/csi300-gap/method/">偏离度是怎么算出来的</a></div>
+        </div>
+    </section>
+
+    <!-- ===== 投资思考 ===== -->
+    <section class="section" id="thoughts">
+        <div class="sh"><h2>投资思考</h2><span class="en">Notes &amp; Reflections</span></div>
+        <p class="intro">方法论、投资规律、复盘与认错。不针对单家公司，讲的是"怎么想"。</p>
+
+        <div class="quotes-h"><span class="seal sm" aria-hidden="true">李</span>只言片语 · 2020–2025 投资笔记复盘</div>
+        <div class="quotes">
+            <a class="qt" href="/invest/notes/#concentrated-days"><p>一年的大部分涨幅集中在极少数交易日。那几天不在场，就会错过主升浪。</p><span class="ft"><span>市场认知</span><span class="pill ok">多次印证</span></span></a>
+            <a class="qt" href="/invest/notes/#slack"><p>手里有子弹、有利润垫的时候，我是好的逆向者；有资金约束的时候，我会和大众一样收缩。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
+            <a class="qt" href="/invest/notes/#mean-reversion"><p>估值低，可能是因为市场在提前定价 ROE 的下行。均值回归只在底层盈利稳定时才可靠。</p><span class="ft"><span>市场认知</span><span class="pill conf">存在冲突</span></span></a>
+            <a class="qt" href="/invest/notes/#regret"><p>我的复盘大多在懊悔"错过了上涨"，很少反思"押得太重"。我眼中的自己比实际行为更保守。</p><span class="ft"><span>自我认知</span><span class="pill ok">多次印证</span></span></a>
+        </div>
+        <div class="qmore"><span>每条都标着它现在的状态：多次印证、单样本待验证，或者和别的认知打架。</span><a href="/invest/notes/" data-date="2026-11-08" data-title="只言片语 · 22 条投资笔记复盘">读全部 22 条 →</a></div>
+
+        <div class="topic">
+            <div class="series"><h4>文章</h4>
+                <a class="row" href="/invest/gree-round1/" data-date="2026-09-22" data-title="格力首轮研究总结"><time>2026-09-22</time><span class="ti"><span>格力首轮研究总结：结论、估值框架与分析系统</span><small>走完一轮完整流程之后的复盘：经营判断、估值计算，以及分析系统自己出过的错。</small></span><span class="go">阅读 →</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 小工具 ===== -->
+    <section class="section" id="tools">
+        <div class="sh"><h2>小工具</h2><span class="en">Tools</span></div>
+        <div class="tools">
+            <a class="tool" href="/tools/ah-dividend/">
+                <span class="ic">
+                    <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+                        <line x1="18" y1="6" x2="18" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="12" y1="30" x2="24" y2="30" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                        <line x1="6" y1="11" x2="30" y2="9" stroke="#2B5B4B" stroke-width="1.6" stroke-linecap="round"/>
+                        <path d="M3 20 L6 11 L9 20 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+                        <path d="M27 18 L30 9 L33 18 Z" stroke="#2B5B4B" stroke-width="1.2" stroke-linejoin="round" fill="none"/>
+                        <text x="6" y="27" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">A</text>
+                        <text x="30" y="25" font-family="Inter" font-size="6.5" font-weight="600" fill="#2B5B4B" text-anchor="middle">H</text>
+                    </svg>
+                </span>
+                <span><h3>AH 股税后股息率比价</h3><p>同一家公司的 A 股和 H 股，扣掉股息税、换算汇率后，哪边的股息率更划算。</p><p class="go">打开工具 →</p></span>
+            </a>
+            <div class="tool ghost"><span class="ic" aria-hidden="true">+</span><span><h3>下一个工具</h3><p>做好了会放在这里。</p></span></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <span><span class="seal sm" aria-hidden="true">李</span>© 2026 李泽民 · 本站不构成任何投资建议</span>
+        <a href="https://github.com/lizeming148" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+</div>
+
+<script>
+    // ── 旧链接兼容：/invest/#valuation 等旧锚点经跳转页带过来时，映射到新分区 ──
+    (function () {
+        var map = { valuation: 'watch', baidian: 'research', structure: 'market' };
+        var h = location.hash.replace('#', '');
+        if (map[h]) { history.replaceState(null, '', '#' + map[h]); document.getElementById(map[h]).scrollIntoView(); }
+    })();
+
+    // ── 目录格子里的数量：按页面上实际的条目自动数 ──
+    (function () {
+        function n(sel) { return document.querySelectorAll(sel).length; }
+        // 篇数 = 分区内不重复的链接数；"相关"一组是跨分区的入口，不计入
+        function pages(sec) {
+            var seen = {};
+            document.querySelectorAll('#' + sec + ' a.row, #' + sec + ' .sub a').forEach(function (a) {
+                var s = a.closest('.series');
+                if (s && s.hasAttribute('data-xref')) return;
+                seen[a.getAttribute('href')] = 1;
+            });
+            return Object.keys(seen).length;
+        }
+        var counts = {
+            research: n('#research .topic') + ' 个专题 · ' + pages('research') + ' 篇 →',
+            market: pages('market') + ' 篇 →',
+            thoughts: '只言片语 22 条 · ' + pages('thoughts') + ' 篇 →',
+            tools: n('#tools a.tool') + ' 个 →'
+        };
+        document.querySelectorAll('[data-count]').forEach(function (el) {
+            var k = el.getAttribute('data-count');
+            if (counts[k]) el.textContent = counts[k];
+        });
+    })();
+
+    // ── 最近更新：取全页带 data-date 的条目里最新的 3 条 ──
+    (function () {
+        var items = Array.prototype.map.call(document.querySelectorAll('[data-date][data-title]'), function (el) {
+            return { d: el.getAttribute('data-date'), t: el.getAttribute('data-title'), href: el.getAttribute('href') };
+        }).sort(function (a, b) { return a.d < b.d ? 1 : -1; }).slice(0, 3);
+        if (!items.length) return;
+        var box = document.getElementById('recent');
+        items.forEach(function (it) {
+            var a = document.createElement('a');
+            a.href = it.href;
+            var tm = document.createElement('time');
+            tm.textContent = it.d.slice(5);
+            a.appendChild(tm);
+            a.appendChild(document.createTextNode(it.t));
+            box.appendChild(a);
+        });
+        box.hidden = false;
+    })();
+
+    // ── 指数跟踪：加载信号卡（与原 /invest/ 估值策略页同一套渲染） ──
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+    }
+    function renderIndexCard(d, slug) {
+        var extra = d.extra ? '<div class="ic-extra">' + esc(d.extra) + '</div>' : '';
+        // 2026-10 起为新规则（滚动 10 年综合便宜度 v1.1）：显示各尺子读数，不再显示旧阈值阶梯；不含任何持仓信息
+        var hint = d.rulers ? '<div class="ic-hint">原值（便宜分位）：' + esc(d.rulers) + '</div>' : '';
+        // 除息重叠标注生效中：判档用折算股息率（规则说明书 v1.1 附注）
+        var ov = d.dy_overlap ? '<div class="ic-hint"><span class="ic-tag">除息重叠标注</span> 判档用折算股息率</div>' : '';
+        // 分红质量：仅恒生有该字段；2026-10 起只作风险提示，不调整买入倍数
+        var dq = d.dq_grade
+            ? '<div class="ic-hint">🧪 分红质量 <span style="color:' + esc(d.dq_color) + ';font-weight:600">' + esc(d.dq_label) + '</span>'
+                + ' · 仅风险提示</div>'
+            : '';
+        return '' +
+            '<a class="index-card" href="/invest/strategy/' + esc(slug) + '/">' +
+              '<div class="ic-head">' +
+                '<div><div class="ic-name">' + esc(d.name) + '</div>' +
+                     '<div class="ic-code">' + esc(d.code) + '</div></div>' +
+                '<span class="ic-pill" style="background:' + esc(d.color) + '">' + esc(d.status) + '</span>' +
+              '</div>' +
+              '<div class="ic-metric"><span class="ic-value">' + esc(d.metric_value) + '</span>' +
+                '<span class="ic-mlabel">' + esc(d.metric_label) + '</span></div>' +
+              extra +
+              '<div class="ic-action">📌 ' + esc(d.action) + '</div>' +
+              hint + ov + dq +
+              (d.ladder ? '<div class="ic-ladder">' + esc(d.ladder) + '</div>' : '') +
+              '<div class="ic-foot">' + esc(d.reading_kind || '') + (d.reading_kind ? ' · ' : '') + '更新于 ' + esc(d.date) + '</div>' +
+              '<div class="ic-more">查看策略详解 →</div>' +
+            '</a>';
+    }
+    (function loadIndexCards() {
+        var wrap = document.getElementById('index-cards');
+        var files = [
+            { slug: 'csi300', url: '/invest/strategy/data/csi300.json' },
+            { slug: 'hongli', url: '/invest/strategy/data/hongli.json' },
+            { slug: 'hsi',    url: '/invest/strategy/data/hsi.json' }
+        ];
+        Promise.all(files.map(function (f) {
+            return fetch(f.url, { cache: 'no-store' })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) { return data ? { data: data, slug: f.slug } : null; })
+                .catch(function () { return null; });
+        })).then(function (results) {
+            var cards = results.filter(Boolean);
+            if (!cards.length) {
+                wrap.innerHTML = '<div class="index-error">信号数据暂时无法加载，请稍后再试。</div>';
+                return;
+            }
+            wrap.innerHTML = cards.map(function (c) { return renderIndexCard(c.data, c.slug); }).join('');
+        });
+    })();
+</script>
 </body>
 </html>

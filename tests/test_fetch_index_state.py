@@ -95,7 +95,7 @@ class TestOverlapAndPages(unittest.TestCase):
             self.assertIn("d.dy_overlap", t, slug)
             self.assertNotIn("默认 1 万元", t)
             self.assertNotIn("单月飙升", t)
-        with open(os.path.join(ROOT, "invest", "index.html"), encoding="utf-8") as f:
+        with open(os.path.join(ROOT, "index.html"), encoding="utf-8") as f:
             t = f.read()
         self.assertIn("原值（便宜分位）", t)
         self.assertIn("便宜分位：当前值在近 10 年", t)
@@ -126,8 +126,9 @@ class TestGuidePage(unittest.TestCase):
         # 第 3 节（动作规则）只写比例，不写绝对金额
         s3 = g[g.index('id="s3"'):g.index('id="s4"')]
         self.assertIsNone(re.search(r"\d[\d.,]*\s*(万|亿|元)|[¥￥]\s*\d", s3))
-        for page in ("index.html", "strategy/csi300/index.html", "strategy/hongli/index.html", "strategy/hsi/index.html"):
-            with open(os.path.join(ROOT, "invest", *page.split("/")), encoding="utf-8") as f:
+        # 指数信号卡 2026-11 起在首页（/index.html），原 /invest/ 只做跳转
+        for page in ("index.html", "invest/strategy/csi300/index.html", "invest/strategy/hongli/index.html", "invest/strategy/hsi/index.html"):
+            with open(os.path.join(ROOT, *page.split("/")), encoding="utf-8") as f:
                 self.assertIn("/invest/strategy/guide/", f.read(), page)
 
 
