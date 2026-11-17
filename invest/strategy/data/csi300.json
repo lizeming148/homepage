@@ -1,7 +1,7 @@
 {
   "name": "沪深300",
   "code": "000300.SH",
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "status": "偏便宜",
   "color": "#6BA539",
   "metric_label": "综合便宜度",
@@ -13,5 +13,5 @@
   "rule_version": "宽基v1.1(方案D+②b)+行业与策略v1.1.1(红利②b两月确认)",
   "extra": "",
   "dy_overlap": false,
-  "updated_at": "2026-11-17 06:50"
+  "updated_at": "2026-11-18 05:42"
 }
